@@ -5,16 +5,12 @@
 
 
 .data
-vectors:                                                                       ;vectors to check if palindrome
-    v1:     .byte       2, -2, 6, -3, 11, 1, 2, 9, 2, 1, 11, -3, 6, -2, 2
-    v2:     .byte       4, 7, -10, 3, 11, 9, 7, 6, 4, 7, 20, 15, 9, -8, 2 
-    v3:     .byte       10,9, 22, 5, -1, 21, 9, 5, 9, 21, -1, 5, 22, 9,10
-
-flags:
-    f1:     .space      1                                                           ; flags to check if palindrome
-    f2:     .space      1                                                           ; flags to check if palindrome
-    f3:     .space      1                                                           ; flags to check if palindrome
-result:
+v1:     .byte       2, -2, 6, -3, 11, 1, 2, 9, 2, 1, 11, -3, 6, -2, 2
+v2:     .byte       4, 7, -10, 3, 11, 9, 7, 6, 4, 7, 20, 15, 9, -8, 2           ; three array to check if palindrome
+v3:     .byte       10,9, 22, 5, -1, 21, 9, 5, 9, 21, -1, 5, 22, 9,10
+f1:     .space      1                                                           ; flags to check if palindrome
+f2:     .space      1                                                           ; flags to check if palindrome
+f3:     .space      1                                                           ; flags to check if palindrome
 v4:     .space      15                                                          ; final array for results
 
 .text
