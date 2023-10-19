@@ -47,30 +47,35 @@ v7: .space 512
 Main:
     dadd    R1,     R0,     R0                  ; initializing iterator
     daddi   R2,     R0,     64                  ; setting max value for iteration
-
+;2
 Loop:
     l.d     F1,     v1(R1)                      ; load vector to fp register
     l.d     F2,     v2(R1)                      ; load vector to fp register
     l.d     F3,     v3(R1)                      ; load vector to fp register
     l.d     F4,     v4(R1)                      ; load vector to fp register
+;4
+; v5 = (v1*v2) + v3 + v4
+    mul.d   F30,    F1,     F2                  ; adding a temp register letting the multiplication
+    add.d   F5,     F3,     F4                  ; instruction to be parallelized
 
-    mul.d   F5,     F1,     F2                  ; from the equation following the
-    add.d   F5,     F1,     F3                  ; arithmetic logic order to save the result in F5
-    add.d   F5,     F1,     F4
+    add.d   F5,     F30,    F5
     s.d     F5,     v5(R1)                      ; save in memory the register
-
+;8+3+3+1
+; v6 = v5/(v4+v1)
     add.d   F6,     F4,     F1
     div.d   F6,     F5,     F6
     s.d     F6,     v6(R1)
-
+;3+20+1
+; v7 = v6 * (v2+v3)
     add.d   F7,     F2,     F3
     mul.d   F7,     F6,     F7
     s.d     F7,     v7(R1)
 
-
     beq     R1,     R2,     Ending              ; branching if iterator reach max iteration value
     daddi   R1,     R1,     1                   ; incrementing iterator
     j       Loop
+;3+8+4
 
 Ending:
     HALT                                        ; the end
+;1
