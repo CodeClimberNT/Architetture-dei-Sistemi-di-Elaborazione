@@ -50,12 +50,12 @@ lui     - load upper half of register immediate
 slti    - set if less than or equal immediate
 sltiu   - set if less than or equal immediate unsigned
 
-beq     - branch if pair of registers are equal
-bne     - branch if pair of registers are not equal
+beq R1,R2, target   - branch if pair of registers are equal
+bne                 - branch if pair of registers are not equal
 beqz    - branch if register is equal to zero
 bnez    - branch if register is not equal to zero
 
-j       - jump to address
+j   target    - jump to address
 jr      - jump to address in register
 jal     - jump and link to address (call subroutine)
 jalr    - jump and link to address in register (call subroutine)
@@ -83,10 +83,10 @@ dmulu   - unsigned integer multiplication
 ddiv    - signed integer division
 ddivu   - unsigned integer division
 
-add.d   - add floating-point
-sub.d   - subtract floating-point
-mul.d   - multiply floating-point
-div.d   - divide floating-point
+add.d   F1,F2+F3    - add floating-point
+sub.d   F1,F2-F3    - subtract floating-point
+mul.d   F1,F2*F3    - multiply floating-point
+div.d   F1,F2/F3    - divide floating-point
 mov.d   - move floating-point
 cvt.d.l - convert 64-bit integer to a double floating-point format
 cvt.l.d - convert double floating-point to a 64-bit integer format
