@@ -46,7 +46,7 @@ v7: .space 512
 .text
 Main:
     dadd    R1,     R0,     R0                  ; initializing iterator
-    daddi   R2,     R0,     64                  ; setting max value for iteration
+    daddi   R2,     R0,     512                  ; setting max value for iteration
                                                 ; 2
 Loop:
     l.d     F1,     v1(R1)                      ; load vector to fp register
@@ -75,7 +75,7 @@ Loop:
     s.d     F7,     v7(R1)
 
     beq     R1,     R2,     Ending              ; branching if iterator reach max iteration value
-    daddi   R1,     R1,     1                   ; incrementing iterator
+    daddi   R1,     R1,     8                   ; incrementing iterator
     j       Loop
                                                 ; 3+8+4
 
