@@ -56,7 +56,9 @@ Main:
     mtc1    R0,         F10                     ; k
     mtc1    R0,         F11                     ; p
 
-    mtc1    R0,         F12                     ; prepare m result operation register
+
+; 5+5 (5 for first then 1 for the rest)
+
 
 Loop:
 
@@ -68,6 +70,9 @@ Loop:
     and     R30,        R2,     R10             ; use R10 as mask to retrieve last bit of the iterator, if 0 is even, if 1 odd
     bnez    R30,        Odd
 
+; 6+1(the "dsllv" under is always counted (32 times lost, 32 times used))
+
+
 Even:
     dsllv   R12,        R11,    R2              ; m<<i
     mtc1    R12,        F13                     ; move to fp register
@@ -77,6 +82,9 @@ Even:
     mfc1    R11,        F11                     ; m = (int)p
     j       After_if
 
+; 5 + 8 (dont count first dsllv as it s counted in the after branch clock)
+
+
 
 Odd:
     dmul    R12,        R11,    R2              ; m*i
@@ -84,7 +92,6 @@ Odd:
     cvt.d.l F13,        F13                     ; convert to fp format F13=m*i
     div.d   F11,        F1,     F13             ; p=v1/m*i
 
-; 2^i
     daddi   R29,        R0,     2               ; load value of pow base
     dsllv   R30,        R29,    R2              ; 2^i
 
@@ -93,6 +100,8 @@ Odd:
     ddiv    R25,        R25,    R30             ; v4/2^i
     mtc1    R25,        F10
     cvt.d.l F10,        F10                     ; convert to float
+
+; 8+20+20+8(this 8 are single clock execution)
 
 ; k:F10
 ; p:F11
@@ -105,12 +114,9 @@ After_if:
     add.d   F5,         F5,     F30
     s.d     F5,         v5(R1)                  ; save in memory the register
 
-
     add.d   F6,         F10,    F1
     div.d   F6,         F5,     F6
     s.d     F6,         v6(R1)
-
-
 
     add.d   F7,         F2,     F3
     mul.d   F7,         F6,     F7
@@ -121,3 +127,14 @@ After_if:
     bnez    R1,         Loop                    ; loop until iterator reach zero
 
     HALT                                        ; the end
+
+; 8+3 + 3+1 + 3+20+1 + 3+8+1 + 3+1 (lost halt instruction for every iteration) + 1
+
+
+; Main:                   5+5=10 * 1
+; Loop(Loop+after_if): 7 + 55=62 * 64
+; Even:                   5+8=13 * 32
+; Odd:              20+20+8+8=56 * 32
+; Halt:                       +1
+; Total:                        6187
+;
