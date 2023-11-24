@@ -126,7 +126,51 @@ Reset_Handler   PROC
                 EXPORT  Reset_Handler             [WEAK]                                            
                 LDR     R0, =Reset_Handler
 
-				; your code here		
+				; your code here	
+;exercise 1		
+				;Carry = 1
+				MOV R1, #0xFFFFFFFE
+				MOV R3, #0x00000003
+				MOV R4, #0x00000002
+				
+				ADDS R2, R1, R3		; R2 = R1+R3
+				SUBS R5, R4, R2		; R5 = R4-R2
+
+				;Carry = 0	
+				MOV R1, #0x00000010
+				MOV R3, #0x00000000
+				MOV R4, #0x00000005
+				
+				ADDS R2, R1, R3		; R2 = R1+R3
+				SUBS R5, R4, R2		; R5 = R4-R2
+
+				;Overflow 				
+				MOV R1, #0x7FFFFFFF
+				MOV R3, #0x00000001
+				MOV R4, #0x00000005
+				
+				ADDS R2, R1, R3		; R2 = R1+R3
+				SUBS R5, R4, R2		; R5 = R4-R2
+				
+				;Negative
+				MOV R1, #0xFFFFFFFB
+				MOV R3, #0x00000001
+				MOV R4, #0xFFFFFFF0
+				
+				ADDS R2, R1, R3		; R2 = R1+R3
+				SUBS R5, R4, R2		; R5 = R4-R2
+				
+				;Zero
+				MOV R1, #0x00000000
+				MOV R3, #0x00000000
+				MOV R4, #0x00000000
+
+				ADDS R2, R1, R3		; R2 = R1+R3
+				SUBS R5, R4, R2		; R5 = R4-R2
+
+
+
+;exercise 2
 				MOV R2, #0x1
 				MOV R3, #0x2
 							
