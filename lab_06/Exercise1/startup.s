@@ -127,7 +127,6 @@ Reset_Handler   PROC
                 LDR     R0, =Reset_Handler
 
 				; your code here	
-;exercise 1		
 				;Carry = 1
 				MOV R1, #0xFFFFFFFE
 				MOV R3, #0x00000003
@@ -167,31 +166,6 @@ Reset_Handler   PROC
 
 				ADDS R2, R1, R3		; R2 = R1+R3
 				SUBS R5, R4, R2		; R5 = R4-R2
-
-
-
-;exercise 2
-				MOV R2, #0x1
-				MOV R3, #0x2
-							
-				SUBS R1, R2, R3 ;update flag for control
-				BEQ Register_Equal
-;not equal R5 = min(R2,R3)
-				BLT R2_Smaller
-				
-				MOV R5,R3
-				B the_end
-
-R2_Smaller
-				MOV R5, R2
-				B the_end
-				
-;equal R4 = (R3<<1)+R2
-Register_Equal
-				LSL R4, R3, #1
-				ADD R4, R4, R2
-
-the_end
 
                 BX      R0
                 ENDP
