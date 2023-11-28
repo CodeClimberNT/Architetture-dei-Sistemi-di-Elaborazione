@@ -437,11 +437,11 @@ ARM Macro Assembler    Page 7
   287 00000044                 END
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\startup.d -o.\startup.o -I.\RTE\_Target_1 -IC:\Users\nickt\AppDa
-ta\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\nickt\AppData\
-Local\Arm\Packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="__UVISION_VE
-RSION SETA 536" --predefine="_RTE_ SETA 1" --predefine="LPC175x_6x SETA 1" --pr
-edefine="_RTE_ SETA 1" --list=.\startup.lst startup.s
+ork --depend=.\startup.d -o.\startup.o -I.\RTE\_Target_1 -IC:\users\nick\AppDat
+a\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include -IC:\users\nick\AppData\Lo
+cal\Arm\Packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="__EVAL SETA 1"
+ --predefine="__UVISION_VERSION SETA 536" --predefine="_RTE_ SETA 1" --predefin
+e="LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1" --list=.\startup.lst startup.s
 
 
 
@@ -1069,4 +1069,4 @@ Symbol: Stack_Size
       At line 34 in file startup.s
 Comment: Stack_Size used once
 2 symbols
-399 symbols in table
+400 symbols in table
