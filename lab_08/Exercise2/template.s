@@ -101,7 +101,10 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 AREA    |.ARM.__at_0x02FC|, CODE, READONLY
 CRP_Key         DCD     0xFFFFFFFF
                 ENDIF
-
+				
+				AREA	BellissimiDati, DATA, READWRITE, align=3
+DestinationStartAddress	space 14*4
+				
 
                 AREA    |.text|, CODE, READONLY
 
@@ -113,17 +116,41 @@ Reset_Handler   PROC
 				
 				; your code here
 				
-				MOV		R0, #3
+				MOV		R0, #2_11
 				MSR		CONTROL, R0
 				LDR		SP, =Stack_Mem
-				
 				nop
+				
+				MOV		R1,	#1
+				MOV		R2,	#2
+				MOV		R3,	#3
+				MOV		R4,	#4
+				MOV		R5,	#5
+				MOV		R6,	#6
+				MOV		R7,	#7
+				MOV		R8,	#8
 				
 				SVC		0x10	;0x000000DA
 				
-InfLoop         B      	InfLoop
+				SVC		0x7		
+				
+
+				LDR 	R0, =SourceStartAddress
+				LDR 	R1, =DestinationStartAddress
+				PUSH	{R0, R1}
+				SVC		0x48	; 2_01001000 binary value of the SVC number 
+				POP		{R0}
+
+				
+				
+InfLoop         
+				B      	InfLoop
                 ENDP
 
+				LTORG
+SourceStartAddress 	DCD 0x06, 1300, 0x03, 1700, 0x02, 1200, 0x04, 1900
+					DCD 0x05, 1110, 0x01, 1670, 0x07, 1000
+				
 
 ; Dummy Exception Handlers (infinite loops which can be modified)
 
@@ -161,9 +188,37 @@ SVC_Handler     PROC
 				BIC R0, #0xFF000000
 				LSR R0, #16
 				; your code here
-				cmp r0, 0x10
-				bne uscita
-				nop
+				
+				
+				;0<=x<=7 RESET Rx
+				CMP R0, #07
+				MOVLE R2, #0
+				STRLE R2, [SP, R0, LSL #2]
+				BLE uscita
+				
+				;8<=x<=63 NOP
+				CMP R0, #63
+				BLE uscita
+				
+				;x>128 EXIT
+				CMP R0, #128
+				BGE uscita
+				
+				;64<=x<=127 MEMCPY
+				SUB R2, SP, #4		 		;source
+				SUB R3, R2, #4				;destination
+				LSL R4, R0, #26 			;delete all but 6 lsb
+				LSR R4, R4, #26 			;return to correct number in register
+				MOV R5, #0 					;counter
+				CMP R4, R5
+				BEQ uscita 					;if bytes to copy is zero exit
+memcpy			
+				LDR R6, [R2, R5]
+				STR R6, [R3, R5]
+				ADD R5, R5, #1
+				CMP R4, R5
+				BNE memcpy
+				
 				
 uscita			LDMFD SP!, {R0-R12, LR}
 				BX LR
