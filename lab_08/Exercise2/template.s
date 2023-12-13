@@ -102,11 +102,12 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
 CRP_Key         DCD     0xFFFFFFFF
                 ENDIF
 				
-				AREA	BellissimiDati, DATA, READWRITE, align=4
-DestinationStartAddress	space 128
+				AREA	BellissimiDati, DATA, READWRITE
+
+DestinationStartAddress	SPACE 2^6
 				
 
-                AREA    |.text|, CODE, READONLY
+               AREA    |.text|, CODE, READONLY
 
 
 ; Reset Handler
@@ -116,7 +117,7 @@ Reset_Handler   PROC
 				
 				; your code here
 				
-				MOV		R0, #2_11
+				MOV		R0, #2_00
 				MSR		CONTROL, R0
 				LDR		SP, =Stack_Mem
 				nop
@@ -141,20 +142,17 @@ Reset_Handler   PROC
 				LDR 	R0, =SourceStartAddress
 				LDR 	R1, =DestinationStartAddress
 				PUSH 	{R0, R1}
-				SVC		0x48							; 2_01001000 binary value of the SVC number -> 6 lsb => 0x08 
-After_memcpy
-				MOV		R0, #2_11
-				MSR		CONTROL, R0
+				SVC		0x48; 2_01001000 binary value of the SVC number -> 6 lsb => 0x08 
 				POP 	{R0}
 				
 InfLoop         
 				B      	InfLoop
                 ENDP
-
+					
 				LTORG
-				
-SourceStartAddress 	DCD 0x06, 1300, 0x03, 1700, 0x02, 1200, 0x04, 1900
-					DCD 0x05, 1110, 0x01, 1670, 0x07, 1000, 0x08, 1234
+BufferSize			SPACE 	1024
+SourceStartAddress 	DCD 	0x06, 21, 0x03, 240, 0x02, 64, 0x04, 23
+
 				
 
 ; Dummy Exception Handlers (infinite loops which can be modified)
@@ -166,7 +164,7 @@ NMI_Handler     PROC
 HardFault_Handler\
                 PROC
                 EXPORT  HardFault_Handler         [WEAK]
-                B       After_memcpy
+                B       .
                 ENDP
 MemManage_Handler\
                 PROC
@@ -193,44 +191,63 @@ SVC_Handler     PROC
 				BIC R0, #0xFF000000
 				LSR R0, #16
 				; your code here
+				;0<=x<=7 Reset Rx
+                CMP     R0, #7            	;RESET R0-R7
+                BLE     Reset_Registers
 				
-				;0<=x<=7  RESET Rx 
-				CMP R0, #07
-				MOVLE R2, #0
-				STRLE R2, [SP, R0, LSL #2]
-				BLE uscita
+				;8<=x<=15 NOP
+                CMP     R0, #15           	;NOP
+				NOPLE
+                BLE     End_SVC
 				
-				;8<=x<=63 NOP
-				CMP R0, #63
-				BLE uscita
+				;16<=x<=63 Not Implemented
+				CMP     R0, #63           	;Not Implemented
+                BLE     End_SVC
 				
-				;x>128 EXIT
-				CMP R0, #128
-				BGE uscita
+				;64<=x<=127 memcpy
+                CMP     R0, #127          	;MEMCPY
+                BLE     Memcpy_Address
 				
-				;64<=x<=127 MEMCPY
-				;use the psp to retrieve user stack
-				LDMFD R1!, {R2,R3}			;retrieve src and dst from psp
+				;x>=128 Not Implemented
+				B     	End_SVC 			;Not Implemented
 
-				LSL R4, R0, #26 			;delete all but 6 lsb
-				LSR R4, R4, #26 			;return to correct number in register
-				MOV R5, #0 					;counter
-				CMP R4, R5
-				BEQ uscita 					;if bytes to copy is zero exit
-memcpy			
-				LDRB R6, [R2, R5]			;load byte
-				STRB R6, [R3, R5]			;store byte
-				ADD R5, R5, #1
-				CMP R4, R5
-				BNE memcpy
+
+Reset_Registers
+                MOV 	R2, #0					;Reset value
+				STR 	R2, [SP, R0, LSL #2]	;Reset Register
+				B       End_SVC
+
+Memcpy_Address
+				;LDMFD 	R1!, {R2,R3}			;Retrieve src and dst from psp
+				LDR 	R2, [R1]				;Use R1 to retrieve src and dst from psp address
+				LDR 	R3, [R1, #4]
+				BIC 	R4, R0, #0xFFFFFFC0		;Retrieve 6 lsb from svc number
+				MOV 	R5, #0 					;Initialize counter
+				CMP 	R4, R5
+				BEQ 	End_SVC 				;if bytes to copy is zero exit
+Memcpy_Loop			
+				LDRB 	R6, [R2, R5]			;load byte
+				STRB 	R6, [R3, R5]			;store byte
+				ADD 	R5, R5, #1
+				CMP 	R4, R5
+				BNE 	Memcpy_Loop
 				
-				STMFD R1!,{R5} 				;push number of byte copied to psp stack
-				MSR   psp, R1				;update psp location
+				MOV 	R1, #0x10000000			;it works
+				STR 	R5, [R1, #0x100]		;but at what cost
+												; :(
+												;hard coded memory address, very ashamed,
+												;need to figure out how to change psp directly
 				
-				
-uscita			LDMFD SP!, {R0-R12, LR}	
-				BX LR
-				
+				;Cause Hard Fault
+				;STR 	R1!,{R5} 				;push number of byte copied to psp stack
+				;MSR   	PSP, R1					;update psp location
+
+
+				B		End_SVC					;Exit SVC
+
+End_SVC         LDMFD   SP!, {R0-R12, LR}
+                BX      LR
+
                 ENDP
 DebugMon_Handler\
                 PROC
