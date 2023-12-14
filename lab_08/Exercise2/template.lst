@@ -182,7 +182,7 @@ NLY
   117 00000000         
   118 00000000         ; your code here
   119 00000000         
-  120 00000000 F04F 0000       MOV              R0, #2_00
+  120 00000000 F04F 0003       MOV              R0, #2_11
   121 00000004 F380 8814       MSR              CONTROL, R0
   122 00000008 F8DF D040       LDR              SP, =Stack_Mem
   123 0000000C BF00            nop
@@ -669,115 +669,115 @@ ARM Macro Assembler    Page 11
   191 00000490 F020 407F       BIC              R0, #0xFF000000
   192 00000494 EA4F 4010       LSR              R0, #16
   193 00000498         ; your code here
-  194 00000498         ;0<=x<=7 Reset Rx
-  195 00000498 2807            CMP              R0, #7      ;RESET R0-R7
-  196 0000049A DD08            BLE              Reset_Registers
-  197 0000049C         
-  198 0000049C         ;8<=x<=15 NOP
-  199 0000049C 280F            CMP              R0, #15     ;NOP
+  194 00000498         
+  195 00000498         
+  196 00000498 2807            CMP              R0, #7      ;0<=x<=7 Reset Rx
+  197 0000049A DD08            BLE              Reset_Registers
+  198 0000049C         
+  199 0000049C 280F            CMP              R0, #15     ;8<=x<=15 NOP
   200 0000049E BFD8 BF00       NOPLE
-  201 000004A2 DD1C            BLE              End_SVC
+  201 000004A2 DD19            BLE              End_SVC
   202 000004A4         
-  203 000004A4         ;16<=x<=63 Not Implemented
-  204 000004A4 283F            CMP              R0, #63     ;Not Implemented
-  205 000004A6 DD1A            BLE              End_SVC
-  206 000004A8         
-  207 000004A8         ;64<=x<=127 memcpy
-  208 000004A8 287F            CMP              R0, #127    ;MEMCPY
-  209 000004AA DD05            BLE              Memcpy_Address
-  210 000004AC         
-  211 000004AC         ;x>=128 Not Implemented
-  212 000004AC E017            B                End_SVC     ;Not Implemented
-  213 000004AE         
-  214 000004AE         
-  215 000004AE         Reset_Registers
-  216 000004AE F04F 0200       MOV              R2, #0      ;Reset value
-  217 000004B2 F84D 2020       STR              R2, [SP, R0, LSL #2] 
+  203 000004A4 283F            CMP              R0, #63     ;16<=x<=63 Not Impl
+                                                            emented
+  204 000004A6 DD17            BLE              End_SVC
+  205 000004A8         
+  206 000004A8 287F            CMP              R0, #127    ;64<=x<=127 memcpy
+  207 000004AA DD05            BLE              Memcpy_Address
+  208 000004AC         
+  209 000004AC E014            B                End_SVC     ;x>=128 Not Impleme
+                                                            nted
+  210 000004AE         
+  211 000004AE         
+  212 000004AE         Reset_Registers
+  213 000004AE F04F 0200       MOV              R2, #0      ;Reset value
+  214 000004B2 F84D 2020       STR              R2, [SP, R0, LSL #2] 
                                                             ;Reset Register
-  218 000004B6 E012            B                End_SVC
-  219 000004B8         
-  220 000004B8         Memcpy_Address
-  221 000004B8         ;LDMFD  R1!, {R2,R3}   ;Retrieve src and dst from psp
-  222 000004B8 680A            LDR              R2, [R1]    ;Use R1 to retrieve
+  215 000004B6 E00F            B                End_SVC
+  216 000004B8         
+  217 000004B8         Memcpy_Address
+  218 000004B8         ;LDMFD  R1!, {R2,R3}   ;Retrieve src and dst from psp
+  219 000004B8 680A            LDR              R2, [R1]    ;Use R1 to retrieve
                                                              src and dst from p
                                                             sp address
-  223 000004BA 684B            LDR              R3, [R1, #4]
-  224 000004BC F000 043F       BIC              R4, R0, #0xFFFFFFC0 ;Retrieve 6
+  220 000004BA 684B            LDR              R3, [R1, #4]
+  221 000004BC F000 043F       BIC              R4, R0, #0xFFFFFFC0 ;Retrieve 6
                                                              lsb from svc numbe
                                                             r
-  225 000004C0 F04F 0500       MOV              R5, #0      ;Initialize counter
+  222 000004C0 F04F 0500       MOV              R5, #0      ;Initialize counter
                                                             
-  226 000004C4 42AC            CMP              R4, R5
-  227 000004C6 D00A            BEQ              End_SVC     ;if bytes to copy i
+  223 000004C4 42AC            CMP              R4, R5
+  224 000004C6 D007            BEQ              End_SVC     ;if bytes to copy i
                                                             s zero exit
-  228 000004C8         Memcpy_Loop
-  229 000004C8 5D56            LDRB             R6, [R2, R5] ;load byte
-  230 000004CA 555E            STRB             R6, [R3, R5] ;store byte
+  225 000004C8         Memcpy_Loop
+  226 000004C8 5D56            LDRB             R6, [R2, R5] ;load byte
+  227 000004CA 555E            STRB             R6, [R3, R5] ;store byte
+  228 000004CC F105 0501       ADD              R5, R5, #1
 
 
 
 ARM Macro Assembler    Page 12 
 
 
-  231 000004CC F105 0501       ADD              R5, R5, #1
-  232 000004D0 42AC            CMP              R4, R5
-  233 000004D2 D1F9            BNE              Memcpy_Loop
-  234 000004D4         
-  235 000004D4 F04F 5180       MOV              R1, #0x10000000 ;it works
-  236 000004D8 F8C1 5100       STR              R5, [R1, #0x100] 
-                                                            ;but at what cost
-  237 000004DC         ; :(
-  238 000004DC         ;hard coded memory address, very ashamed,
-  239 000004DC         ;need to figure out how to change psp directly
-  240 000004DC         
-  241 000004DC         ;Cause Hard Fault
-  242 000004DC         ;STR  R1!,{R5}     ;push number of byte copied to psp st
-                       ack
-  243 000004DC         ;MSR    PSP, R1     ;update psp location
-  244 000004DC         
-  245 000004DC         
-  246 000004DC E7FF            B                End_SVC     ;Exit SVC
-  247 000004DE         
-  248 000004DE E8BD 5FFF 
+  229 000004D0 42AC            CMP              R4, R5
+  230 000004D2 D1F9            BNE              Memcpy_Loop
+  231 000004D4         
+  232 000004D4 620D            STR              R5, [R1, #32] ;overwrite user l
+                                                            ast push
+  233 000004D6         
+  234 000004D6         
+  235 000004D6 E7FF            B                End_SVC     ;Exit SVC
+  236 000004D8         
+  237 000004D8 E8BD 5FFF 
                        End_SVC LDMFD            SP!, {R0-R12, LR}
-  249 000004E2 4770            BX               LR
-  250 000004E4         
-  251 000004E4                 ENDP
-  253 000004E4         DebugMon_Handler
+  238 000004DC 4770            BX               LR
+  239 000004DE         
+  240 000004DE                 ENDP
+  242 000004DE         DebugMon_Handler
                                PROC
-  254 000004E4                 EXPORT           DebugMon_Handler          [WEAK
+  243 000004DE                 EXPORT           DebugMon_Handler          [WEAK
 ]
-  255 000004E4 E7FE            B                .
-  256 000004E6                 ENDP
-  257 000004E6         PendSV_Handler
+  244 000004DE E7FE            B                .
+  245 000004E0                 ENDP
+  246 000004E0         PendSV_Handler
                                PROC
-  258 000004E6                 EXPORT           PendSV_Handler            [WEAK
+  247 000004E0                 EXPORT           PendSV_Handler            [WEAK
 ]
-  259 000004E6 E7FE            B                .
-  260 000004E8                 ENDP
-  261 000004E8         SysTick_Handler
+  248 000004E0 E7FE            B                .
+  249 000004E2                 ENDP
+  250 000004E2         SysTick_Handler
                                PROC
-  262 000004E8                 EXPORT           SysTick_Handler           [WEAK
+  251 000004E2                 EXPORT           SysTick_Handler           [WEAK
 ]
-  263 000004E8 E7FE            B                .
-  264 000004EA                 ENDP
-  265 000004EA         
-  266 000004EA         Default_Handler
+  252 000004E2 E7FE            B                .
+  253 000004E4                 ENDP
+  254 000004E4         
+  255 000004E4         Default_Handler
                                PROC
-  267 000004EA         
-  268 000004EA                 EXPORT           WDT_IRQHandler            [WEAK
+  256 000004E4         
+  257 000004E4                 EXPORT           WDT_IRQHandler            [WEAK
 ]
-  269 000004EA                 EXPORT           TIMER0_IRQHandler         [WEAK
+  258 000004E4                 EXPORT           TIMER0_IRQHandler         [WEAK
 ]
-  270 000004EA                 EXPORT           TIMER1_IRQHandler         [WEAK
+  259 000004E4                 EXPORT           TIMER1_IRQHandler         [WEAK
 ]
-  271 000004EA                 EXPORT           TIMER2_IRQHandler         [WEAK
+  260 000004E4                 EXPORT           TIMER2_IRQHandler         [WEAK
 ]
-  272 000004EA                 EXPORT           TIMER3_IRQHandler         [WEAK
+  261 000004E4                 EXPORT           TIMER3_IRQHandler         [WEAK
 ]
-  273 000004EA                 EXPORT           UART0_IRQHandler          [WEAK
+  262 000004E4                 EXPORT           UART0_IRQHandler          [WEAK
 ]
-  274 000004EA                 EXPORT           UART1_IRQHandler          [WEAK
+  263 000004E4                 EXPORT           UART1_IRQHandler          [WEAK
+]
+  264 000004E4                 EXPORT           UART2_IRQHandler          [WEAK
+]
+  265 000004E4                 EXPORT           UART3_IRQHandler          [WEAK
+]
+  266 000004E4                 EXPORT           PWM1_IRQHandler           [WEAK
+]
+  267 000004E4                 EXPORT           I2C0_IRQHandler           [WEAK
+]
+  268 000004E4                 EXPORT           I2C1_IRQHandler           [WEAK
 
 
 
@@ -785,120 +785,110 @@ ARM Macro Assembler    Page 13
 
 
 ]
-  275 000004EA                 EXPORT           UART2_IRQHandler          [WEAK
+  269 000004E4                 EXPORT           I2C2_IRQHandler           [WEAK
 ]
-  276 000004EA                 EXPORT           UART3_IRQHandler          [WEAK
+  270 000004E4                 EXPORT           SPI_IRQHandler            [WEAK
 ]
-  277 000004EA                 EXPORT           PWM1_IRQHandler           [WEAK
+  271 000004E4                 EXPORT           SSP0_IRQHandler           [WEAK
 ]
-  278 000004EA                 EXPORT           I2C0_IRQHandler           [WEAK
+  272 000004E4                 EXPORT           SSP1_IRQHandler           [WEAK
 ]
-  279 000004EA                 EXPORT           I2C1_IRQHandler           [WEAK
+  273 000004E4                 EXPORT           PLL0_IRQHandler           [WEAK
 ]
-  280 000004EA                 EXPORT           I2C2_IRQHandler           [WEAK
+  274 000004E4                 EXPORT           RTC_IRQHandler            [WEAK
 ]
-  281 000004EA                 EXPORT           SPI_IRQHandler            [WEAK
+  275 000004E4                 EXPORT           EINT0_IRQHandler          [WEAK
 ]
-  282 000004EA                 EXPORT           SSP0_IRQHandler           [WEAK
+  276 000004E4                 EXPORT           EINT1_IRQHandler          [WEAK
 ]
-  283 000004EA                 EXPORT           SSP1_IRQHandler           [WEAK
+  277 000004E4                 EXPORT           EINT2_IRQHandler          [WEAK
 ]
-  284 000004EA                 EXPORT           PLL0_IRQHandler           [WEAK
+  278 000004E4                 EXPORT           EINT3_IRQHandler          [WEAK
 ]
-  285 000004EA                 EXPORT           RTC_IRQHandler            [WEAK
+  279 000004E4                 EXPORT           ADC_IRQHandler            [WEAK
 ]
-  286 000004EA                 EXPORT           EINT0_IRQHandler          [WEAK
+  280 000004E4                 EXPORT           BOD_IRQHandler            [WEAK
 ]
-  287 000004EA                 EXPORT           EINT1_IRQHandler          [WEAK
+  281 000004E4                 EXPORT           USB_IRQHandler            [WEAK
 ]
-  288 000004EA                 EXPORT           EINT2_IRQHandler          [WEAK
+  282 000004E4                 EXPORT           CAN_IRQHandler            [WEAK
 ]
-  289 000004EA                 EXPORT           EINT3_IRQHandler          [WEAK
+  283 000004E4                 EXPORT           DMA_IRQHandler            [WEAK
 ]
-  290 000004EA                 EXPORT           ADC_IRQHandler            [WEAK
+  284 000004E4                 EXPORT           I2S_IRQHandler            [WEAK
 ]
-  291 000004EA                 EXPORT           BOD_IRQHandler            [WEAK
+  285 000004E4                 EXPORT           ENET_IRQHandler           [WEAK
 ]
-  292 000004EA                 EXPORT           USB_IRQHandler            [WEAK
+  286 000004E4                 EXPORT           RIT_IRQHandler            [WEAK
 ]
-  293 000004EA                 EXPORT           CAN_IRQHandler            [WEAK
+  287 000004E4                 EXPORT           MCPWM_IRQHandler          [WEAK
 ]
-  294 000004EA                 EXPORT           DMA_IRQHandler            [WEAK
+  288 000004E4                 EXPORT           QEI_IRQHandler            [WEAK
 ]
-  295 000004EA                 EXPORT           I2S_IRQHandler            [WEAK
+  289 000004E4                 EXPORT           PLL1_IRQHandler           [WEAK
 ]
-  296 000004EA                 EXPORT           ENET_IRQHandler           [WEAK
+  290 000004E4                 EXPORT           USBActivity_IRQHandler    [WEAK
 ]
-  297 000004EA                 EXPORT           RIT_IRQHandler            [WEAK
+  291 000004E4                 EXPORT           CANActivity_IRQHandler    [WEAK
 ]
-  298 000004EA                 EXPORT           MCPWM_IRQHandler          [WEAK
-]
-  299 000004EA                 EXPORT           QEI_IRQHandler            [WEAK
-]
-  300 000004EA                 EXPORT           PLL1_IRQHandler           [WEAK
-]
-  301 000004EA                 EXPORT           USBActivity_IRQHandler    [WEAK
-]
-  302 000004EA                 EXPORT           CANActivity_IRQHandler    [WEAK
-]
-  303 000004EA         
-  304 000004EA         WDT_IRQHandler
+  292 000004E4         
+  293 000004E4         WDT_IRQHandler
+  294 000004E4         TIMER0_IRQHandler
+  295 000004E4         TIMER1_IRQHandler
+  296 000004E4         TIMER2_IRQHandler
+  297 000004E4         TIMER3_IRQHandler
+  298 000004E4         UART0_IRQHandler
+  299 000004E4         UART1_IRQHandler
+  300 000004E4         UART2_IRQHandler
+  301 000004E4         UART3_IRQHandler
+  302 000004E4         PWM1_IRQHandler
+  303 000004E4         I2C0_IRQHandler
 
 
 
 ARM Macro Assembler    Page 14 
 
 
-  305 000004EA         TIMER0_IRQHandler
-  306 000004EA         TIMER1_IRQHandler
-  307 000004EA         TIMER2_IRQHandler
-  308 000004EA         TIMER3_IRQHandler
-  309 000004EA         UART0_IRQHandler
-  310 000004EA         UART1_IRQHandler
-  311 000004EA         UART2_IRQHandler
-  312 000004EA         UART3_IRQHandler
-  313 000004EA         PWM1_IRQHandler
-  314 000004EA         I2C0_IRQHandler
-  315 000004EA         I2C1_IRQHandler
-  316 000004EA         I2C2_IRQHandler
-  317 000004EA         SPI_IRQHandler
-  318 000004EA         SSP0_IRQHandler
-  319 000004EA         SSP1_IRQHandler
-  320 000004EA         PLL0_IRQHandler
-  321 000004EA         RTC_IRQHandler
-  322 000004EA         EINT0_IRQHandler
-  323 000004EA         EINT1_IRQHandler
-  324 000004EA         EINT2_IRQHandler
-  325 000004EA         EINT3_IRQHandler
-  326 000004EA         ADC_IRQHandler
-  327 000004EA         BOD_IRQHandler
-  328 000004EA         USB_IRQHandler
-  329 000004EA         CAN_IRQHandler
-  330 000004EA         DMA_IRQHandler
-  331 000004EA         I2S_IRQHandler
-  332 000004EA         ENET_IRQHandler
-  333 000004EA         RIT_IRQHandler
-  334 000004EA         MCPWM_IRQHandler
-  335 000004EA         QEI_IRQHandler
-  336 000004EA         PLL1_IRQHandler
-  337 000004EA         USBActivity_IRQHandler
-  338 000004EA         CANActivity_IRQHandler
-  339 000004EA         
-  340 000004EA E7FE            B                .
-  341 000004EC         
-  342 000004EC                 ENDP
-  343 000004EC         
-  344 000004EC         
-  345 000004EC                 ALIGN
-  346 000004EC         
-  347 000004EC         
-  348 000004EC         ; User Initial Stack & Heap
-  349 000004EC         
-  350 000004EC                 EXPORT           __initial_sp
-  351 000004EC                 EXPORT           __heap_base
-  352 000004EC                 EXPORT           __heap_limit
-  353 000004EC         
-  354 000004EC                 END
+  304 000004E4         I2C1_IRQHandler
+  305 000004E4         I2C2_IRQHandler
+  306 000004E4         SPI_IRQHandler
+  307 000004E4         SSP0_IRQHandler
+  308 000004E4         SSP1_IRQHandler
+  309 000004E4         PLL0_IRQHandler
+  310 000004E4         RTC_IRQHandler
+  311 000004E4         EINT0_IRQHandler
+  312 000004E4         EINT1_IRQHandler
+  313 000004E4         EINT2_IRQHandler
+  314 000004E4         EINT3_IRQHandler
+  315 000004E4         ADC_IRQHandler
+  316 000004E4         BOD_IRQHandler
+  317 000004E4         USB_IRQHandler
+  318 000004E4         CAN_IRQHandler
+  319 000004E4         DMA_IRQHandler
+  320 000004E4         I2S_IRQHandler
+  321 000004E4         ENET_IRQHandler
+  322 000004E4         RIT_IRQHandler
+  323 000004E4         MCPWM_IRQHandler
+  324 000004E4         QEI_IRQHandler
+  325 000004E4         PLL1_IRQHandler
+  326 000004E4         USBActivity_IRQHandler
+  327 000004E4         CANActivity_IRQHandler
+  328 000004E4         
+  329 000004E4 E7FE            B                .
+  330 000004E6         
+  331 000004E6                 ENDP
+  332 000004E6         
+  333 000004E6         
+  334 000004E6 00 00           ALIGN
+  335 000004E8         
+  336 000004E8         
+  337 000004E8         ; User Initial Stack & Heap
+  338 000004E8         
+  339 000004E8                 EXPORT           __initial_sp
+  340 000004E8                 EXPORT           __heap_base
+  341 000004E8                 EXPORT           __heap_limit
+  342 000004E8         
+  343 000004E8                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\template.d -o.\template.o -I.\RTE\_Target_1 -IC:\Users\nickt\App
 Data\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\nickt\AppDat
@@ -935,7 +925,7 @@ Symbol: __initial_sp
       At line 19 in file template.s
    Uses
       At line 45 in file template.s
-      At line 350 in file template.s
+      At line 339 in file template.s
 
 3 symbols
 
@@ -966,7 +956,7 @@ Symbol: __heap_base
    Definitions
       At line 31 in file template.s
    Uses
-      At line 351 in file template.s
+      At line 340 in file template.s
 Comment: __heap_base used once
 __heap_limit 00000200
 
@@ -974,7 +964,7 @@ Symbol: __heap_limit
    Definitions
       At line 33 in file template.s
    Uses
-      At line 352 in file template.s
+      At line 341 in file template.s
 Comment: __heap_limit used once
 4 symbols
 
@@ -1060,23 +1050,23 @@ Symbol: .text
    Uses
       None
 Comment: .text unused
-ADC_IRQHandler 000004EA
+ADC_IRQHandler 000004E4
 
 Symbol: ADC_IRQHandler
    Definitions
-      At line 326 in file template.s
+      At line 315 in file template.s
    Uses
       At line 85 in file template.s
-      At line 290 in file template.s
+      At line 279 in file template.s
 
-BOD_IRQHandler 000004EA
+BOD_IRQHandler 000004E4
 
 Symbol: BOD_IRQHandler
    Definitions
-      At line 327 in file template.s
+      At line 316 in file template.s
    Uses
       At line 86 in file template.s
-      At line 291 in file template.s
+      At line 280 in file template.s
 
 BufferSize 00000058
 
@@ -1095,20 +1085,20 @@ Symbol: BusFault_Handler
       At line 50 in file template.s
       At line 176 in file template.s
 
-CANActivity_IRQHandler 000004EA
+CANActivity_IRQHandler 000004E4
 
 Symbol: CANActivity_IRQHandler
    Definitions
-      At line 338 in file template.s
+      At line 327 in file template.s
    Uses
       At line 97 in file template.s
-      At line 302 in file template.s
+      At line 291 in file template.s
 
-CAN_IRQHandler 000004EA
+CAN_IRQHandler 000004E4
 
 Symbol: CAN_IRQHandler
    Definitions
-      At line 329 in file template.s
+      At line 318 in file template.s
    Uses
       At line 88 in file template.s
 
@@ -1117,62 +1107,62 @@ Symbol: CAN_IRQHandler
 ARM Macro Assembler    Page 2 Alphabetic symbol ordering
 Relocatable symbols
 
-      At line 293 in file template.s
+      At line 282 in file template.s
 
-DMA_IRQHandler 000004EA
+DMA_IRQHandler 000004E4
 
 Symbol: DMA_IRQHandler
    Definitions
-      At line 330 in file template.s
+      At line 319 in file template.s
    Uses
       At line 89 in file template.s
-      At line 294 in file template.s
+      At line 283 in file template.s
 
-DebugMon_Handler 000004E4
+DebugMon_Handler 000004DE
 
 Symbol: DebugMon_Handler
    Definitions
-      At line 253 in file template.s
+      At line 242 in file template.s
    Uses
       At line 57 in file template.s
-      At line 254 in file template.s
+      At line 243 in file template.s
 
-Default_Handler 000004EA
+Default_Handler 000004E4
 
 Symbol: Default_Handler
    Definitions
-      At line 266 in file template.s
+      At line 255 in file template.s
    Uses
       None
 Comment: Default_Handler unused
-EINT0_IRQHandler 000004EA
+EINT0_IRQHandler 000004E4
 
 Symbol: EINT0_IRQHandler
    Definitions
-      At line 322 in file template.s
+      At line 311 in file template.s
    Uses
       At line 81 in file template.s
-      At line 286 in file template.s
+      At line 275 in file template.s
 
-EINT1_IRQHandler 000004EA
+EINT1_IRQHandler 000004E4
 
 Symbol: EINT1_IRQHandler
    Definitions
-      At line 323 in file template.s
+      At line 312 in file template.s
    Uses
       At line 82 in file template.s
-      At line 287 in file template.s
+      At line 276 in file template.s
 
-EINT2_IRQHandler 000004EA
+EINT2_IRQHandler 000004E4
 
 Symbol: EINT2_IRQHandler
    Definitions
-      At line 324 in file template.s
+      At line 313 in file template.s
    Uses
       At line 83 in file template.s
-      At line 288 in file template.s
+      At line 277 in file template.s
 
-EINT3_IRQHandler 000004EA
+EINT3_IRQHandler 000004E4
 
 Symbol: EINT3_IRQHandler
    Definitions
@@ -1182,32 +1172,32 @@ Symbol: EINT3_IRQHandler
 ARM Macro Assembler    Page 3 Alphabetic symbol ordering
 Relocatable symbols
 
-      At line 325 in file template.s
+      At line 314 in file template.s
    Uses
       At line 84 in file template.s
-      At line 289 in file template.s
+      At line 278 in file template.s
 
-ENET_IRQHandler 000004EA
+ENET_IRQHandler 000004E4
 
 Symbol: ENET_IRQHandler
    Definitions
-      At line 332 in file template.s
+      At line 321 in file template.s
    Uses
       At line 91 in file template.s
-      At line 296 in file template.s
+      At line 285 in file template.s
 
-End_SVC 000004DE
+End_SVC 000004D8
 
 Symbol: End_SVC
    Definitions
-      At line 248 in file template.s
+      At line 237 in file template.s
    Uses
       At line 201 in file template.s
-      At line 205 in file template.s
-      At line 212 in file template.s
-      At line 218 in file template.s
-      At line 227 in file template.s
-      At line 246 in file template.s
+      At line 204 in file template.s
+      At line 209 in file template.s
+      At line 215 in file template.s
+      At line 224 in file template.s
+      At line 235 in file template.s
 
 HardFault_Handler 0000047A
 
@@ -1218,29 +1208,29 @@ Symbol: HardFault_Handler
       At line 48 in file template.s
       At line 166 in file template.s
 
-I2C0_IRQHandler 000004EA
+I2C0_IRQHandler 000004E4
 
 Symbol: I2C0_IRQHandler
    Definitions
-      At line 314 in file template.s
+      At line 303 in file template.s
    Uses
       At line 73 in file template.s
-      At line 278 in file template.s
+      At line 267 in file template.s
 
-I2C1_IRQHandler 000004EA
+I2C1_IRQHandler 000004E4
 
 Symbol: I2C1_IRQHandler
    Definitions
-      At line 315 in file template.s
+      At line 304 in file template.s
    Uses
       At line 74 in file template.s
-      At line 279 in file template.s
+      At line 268 in file template.s
 
-I2C2_IRQHandler 000004EA
+I2C2_IRQHandler 000004E4
 
 Symbol: I2C2_IRQHandler
    Definitions
-      At line 316 in file template.s
+      At line 305 in file template.s
 
 
 
@@ -1249,16 +1239,16 @@ Relocatable symbols
 
    Uses
       At line 75 in file template.s
-      At line 280 in file template.s
+      At line 269 in file template.s
 
-I2S_IRQHandler 000004EA
+I2S_IRQHandler 000004E4
 
 Symbol: I2S_IRQHandler
    Definitions
-      At line 331 in file template.s
+      At line 320 in file template.s
    Uses
       At line 90 in file template.s
-      At line 295 in file template.s
+      At line 284 in file template.s
 
 InfLoop 00000048
 
@@ -1268,14 +1258,14 @@ Symbol: InfLoop
    Uses
       At line 149 in file template.s
 Comment: InfLoop used once
-MCPWM_IRQHandler 000004EA
+MCPWM_IRQHandler 000004E4
 
 Symbol: MCPWM_IRQHandler
    Definitions
-      At line 334 in file template.s
+      At line 323 in file template.s
    Uses
       At line 93 in file template.s
-      At line 298 in file template.s
+      At line 287 in file template.s
 
 MemManage_Handler 0000047C
 
@@ -1290,17 +1280,17 @@ Memcpy_Address 000004B8
 
 Symbol: Memcpy_Address
    Definitions
-      At line 220 in file template.s
+      At line 217 in file template.s
    Uses
-      At line 209 in file template.s
+      At line 207 in file template.s
 Comment: Memcpy_Address used once
 Memcpy_Loop 000004C8
 
 Symbol: Memcpy_Loop
    Definitions
-      At line 228 in file template.s
+      At line 225 in file template.s
    Uses
-      At line 233 in file template.s
+      At line 230 in file template.s
 Comment: Memcpy_Loop used once
 NMI_Handler 00000478
 
@@ -1317,59 +1307,59 @@ Relocatable symbols
       At line 47 in file template.s
       At line 161 in file template.s
 
-PLL0_IRQHandler 000004EA
+PLL0_IRQHandler 000004E4
 
 Symbol: PLL0_IRQHandler
    Definitions
-      At line 320 in file template.s
+      At line 309 in file template.s
    Uses
       At line 79 in file template.s
-      At line 284 in file template.s
+      At line 273 in file template.s
 
-PLL1_IRQHandler 000004EA
+PLL1_IRQHandler 000004E4
 
 Symbol: PLL1_IRQHandler
    Definitions
-      At line 336 in file template.s
+      At line 325 in file template.s
    Uses
       At line 95 in file template.s
-      At line 300 in file template.s
+      At line 289 in file template.s
 
-PWM1_IRQHandler 000004EA
+PWM1_IRQHandler 000004E4
 
 Symbol: PWM1_IRQHandler
    Definitions
-      At line 313 in file template.s
+      At line 302 in file template.s
    Uses
       At line 72 in file template.s
-      At line 277 in file template.s
+      At line 266 in file template.s
 
-PendSV_Handler 000004E6
+PendSV_Handler 000004E0
 
 Symbol: PendSV_Handler
    Definitions
-      At line 257 in file template.s
+      At line 246 in file template.s
    Uses
       At line 59 in file template.s
-      At line 258 in file template.s
+      At line 247 in file template.s
 
-QEI_IRQHandler 000004EA
+QEI_IRQHandler 000004E4
 
 Symbol: QEI_IRQHandler
    Definitions
-      At line 335 in file template.s
+      At line 324 in file template.s
    Uses
       At line 94 in file template.s
-      At line 299 in file template.s
+      At line 288 in file template.s
 
-RIT_IRQHandler 000004EA
+RIT_IRQHandler 000004E4
 
 Symbol: RIT_IRQHandler
    Definitions
-      At line 333 in file template.s
+      At line 322 in file template.s
    Uses
       At line 92 in file template.s
-      At line 297 in file template.s
+      At line 286 in file template.s
 
 
 
@@ -1377,14 +1367,14 @@ Symbol: RIT_IRQHandler
 ARM Macro Assembler    Page 6 Alphabetic symbol ordering
 Relocatable symbols
 
-RTC_IRQHandler 000004EA
+RTC_IRQHandler 000004E4
 
 Symbol: RTC_IRQHandler
    Definitions
-      At line 321 in file template.s
+      At line 310 in file template.s
    Uses
       At line 80 in file template.s
-      At line 285 in file template.s
+      At line 274 in file template.s
 
 Reset_Handler 00000000
 
@@ -1399,36 +1389,36 @@ Reset_Registers 000004AE
 
 Symbol: Reset_Registers
    Definitions
-      At line 215 in file template.s
+      At line 212 in file template.s
    Uses
-      At line 196 in file template.s
+      At line 197 in file template.s
 Comment: Reset_Registers used once
-SPI_IRQHandler 000004EA
+SPI_IRQHandler 000004E4
 
 Symbol: SPI_IRQHandler
    Definitions
-      At line 317 in file template.s
+      At line 306 in file template.s
    Uses
       At line 76 in file template.s
-      At line 281 in file template.s
+      At line 270 in file template.s
 
-SSP0_IRQHandler 000004EA
+SSP0_IRQHandler 000004E4
 
 Symbol: SSP0_IRQHandler
    Definitions
-      At line 318 in file template.s
+      At line 307 in file template.s
    Uses
       At line 77 in file template.s
-      At line 282 in file template.s
+      At line 271 in file template.s
 
-SSP1_IRQHandler 000004EA
+SSP1_IRQHandler 000004E4
 
 Symbol: SSP1_IRQHandler
    Definitions
-      At line 319 in file template.s
+      At line 308 in file template.s
    Uses
       At line 78 in file template.s
-      At line 283 in file template.s
+      At line 272 in file template.s
 
 SVC_Handler 00000482
 
@@ -1453,52 +1443,52 @@ Symbol: SourceStartAddress
    Uses
       At line 142 in file template.s
 Comment: SourceStartAddress used once
-SysTick_Handler 000004E8
+SysTick_Handler 000004E2
 
 Symbol: SysTick_Handler
    Definitions
-      At line 261 in file template.s
+      At line 250 in file template.s
    Uses
       At line 60 in file template.s
-      At line 262 in file template.s
+      At line 251 in file template.s
 
-TIMER0_IRQHandler 000004EA
+TIMER0_IRQHandler 000004E4
 
 Symbol: TIMER0_IRQHandler
    Definitions
-      At line 305 in file template.s
+      At line 294 in file template.s
    Uses
       At line 64 in file template.s
-      At line 269 in file template.s
+      At line 258 in file template.s
 
-TIMER1_IRQHandler 000004EA
+TIMER1_IRQHandler 000004E4
 
 Symbol: TIMER1_IRQHandler
    Definitions
-      At line 306 in file template.s
+      At line 295 in file template.s
    Uses
       At line 65 in file template.s
-      At line 270 in file template.s
+      At line 259 in file template.s
 
-TIMER2_IRQHandler 000004EA
+TIMER2_IRQHandler 000004E4
 
 Symbol: TIMER2_IRQHandler
    Definitions
-      At line 307 in file template.s
+      At line 296 in file template.s
    Uses
       At line 66 in file template.s
-      At line 271 in file template.s
+      At line 260 in file template.s
 
-TIMER3_IRQHandler 000004EA
+TIMER3_IRQHandler 000004E4
 
 Symbol: TIMER3_IRQHandler
    Definitions
-      At line 308 in file template.s
+      At line 297 in file template.s
    Uses
       At line 67 in file template.s
-      At line 272 in file template.s
+      At line 261 in file template.s
 
-UART0_IRQHandler 000004EA
+UART0_IRQHandler 000004E4
 
 Symbol: UART0_IRQHandler
 
@@ -1508,55 +1498,55 @@ ARM Macro Assembler    Page 8 Alphabetic symbol ordering
 Relocatable symbols
 
    Definitions
-      At line 309 in file template.s
+      At line 298 in file template.s
    Uses
       At line 68 in file template.s
-      At line 273 in file template.s
+      At line 262 in file template.s
 
-UART1_IRQHandler 000004EA
+UART1_IRQHandler 000004E4
 
 Symbol: UART1_IRQHandler
    Definitions
-      At line 310 in file template.s
+      At line 299 in file template.s
    Uses
       At line 69 in file template.s
-      At line 274 in file template.s
+      At line 263 in file template.s
 
-UART2_IRQHandler 000004EA
+UART2_IRQHandler 000004E4
 
 Symbol: UART2_IRQHandler
    Definitions
-      At line 311 in file template.s
+      At line 300 in file template.s
    Uses
       At line 70 in file template.s
-      At line 275 in file template.s
+      At line 264 in file template.s
 
-UART3_IRQHandler 000004EA
+UART3_IRQHandler 000004E4
 
 Symbol: UART3_IRQHandler
    Definitions
-      At line 312 in file template.s
+      At line 301 in file template.s
    Uses
       At line 71 in file template.s
-      At line 276 in file template.s
+      At line 265 in file template.s
 
-USBActivity_IRQHandler 000004EA
+USBActivity_IRQHandler 000004E4
 
 Symbol: USBActivity_IRQHandler
    Definitions
-      At line 337 in file template.s
+      At line 326 in file template.s
    Uses
       At line 96 in file template.s
-      At line 301 in file template.s
+      At line 290 in file template.s
 
-USB_IRQHandler 000004EA
+USB_IRQHandler 000004E4
 
 Symbol: USB_IRQHandler
    Definitions
-      At line 328 in file template.s
+      At line 317 in file template.s
    Uses
       At line 87 in file template.s
-      At line 292 in file template.s
+      At line 281 in file template.s
 
 UsageFault_Handler 00000480
 
@@ -1573,14 +1563,14 @@ ARM Macro Assembler    Page 9 Alphabetic symbol ordering
 Relocatable symbols
 
 
-WDT_IRQHandler 000004EA
+WDT_IRQHandler 000004E4
 
 Symbol: WDT_IRQHandler
    Definitions
-      At line 304 in file template.s
+      At line 293 in file template.s
    Uses
       At line 63 in file template.s
-      At line 268 in file template.s
+      At line 257 in file template.s
 
 54 symbols
 

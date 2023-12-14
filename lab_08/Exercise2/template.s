@@ -117,7 +117,7 @@ Reset_Handler   PROC
 				
 				; your code here
 				
-				MOV		R0, #2_00
+				MOV		R0, #2_11
 				MSR		CONTROL, R0
 				LDR		SP, =Stack_Mem
 				nop
@@ -191,25 +191,22 @@ SVC_Handler     PROC
 				BIC R0, #0xFF000000
 				LSR R0, #16
 				; your code here
-				;0<=x<=7 Reset Rx
-                CMP     R0, #7            	;RESET R0-R7
+				
+				
+                CMP     R0, #7            	;0<=x<=7 Reset Rx
                 BLE     Reset_Registers
 				
-				;8<=x<=15 NOP
-                CMP     R0, #15           	;NOP
+                CMP     R0, #15           	;8<=x<=15 NOP
 				NOPLE
                 BLE     End_SVC
 				
-				;16<=x<=63 Not Implemented
-				CMP     R0, #63           	;Not Implemented
+				CMP     R0, #63           	;16<=x<=63 Not Implemented
                 BLE     End_SVC
 				
-				;64<=x<=127 memcpy
-                CMP     R0, #127          	;MEMCPY
+                CMP     R0, #127          	;64<=x<=127 memcpy
                 BLE     Memcpy_Address
 				
-				;x>=128 Not Implemented
-				B     	End_SVC 			;Not Implemented
+				B     	End_SVC 			;x>=128 Not Implemented
 
 
 Reset_Registers
@@ -232,15 +229,7 @@ Memcpy_Loop
 				CMP 	R4, R5
 				BNE 	Memcpy_Loop
 				
-				MOV 	R1, #0x10000000			;it works
-				STR 	R5, [R1, #0x100]		;but at what cost
-												; :(
-												;hard coded memory address, very ashamed,
-												;need to figure out how to change psp directly
-				
-				;Cause Hard Fault
-				;STR 	R1!,{R5} 				;push number of byte copied to psp stack
-				;MSR   	PSP, R1					;update psp location
+				STR 	R5, [R1, #32]			;overwrite user last push
 
 
 				B		End_SVC					;Exit SVC
