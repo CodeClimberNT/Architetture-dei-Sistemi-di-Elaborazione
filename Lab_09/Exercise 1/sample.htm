@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\sample.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\sample.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Dec 13 12:13:26 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Fri Dec 15 21:51:44 2023
 <BR><P>
-<H3>Maximum Stack Usage =         24 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =         40 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-EINT1_IRQHandler &rArr; LED_Out
+EINT1_IRQHandler &rArr; init_timer &rArr; __NVIC_SetPriority
 <P>
 <H3>
 Functions with no stack information
@@ -196,8 +196,8 @@ Global Symbols
 <P><STRONG><a name="[71]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[3a]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; init_timer &rArr; __NVIC_SetPriority
+<BR><BR>[Stack]<UL><LI>Max Depth = 16 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; BUTTON_init &rArr; __NVIC_SetPriority
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -383,11 +383,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[3b]"></a>main</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, sample.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = main &rArr; init_timer &rArr; __NVIC_SetPriority
+<P><STRONG><a name="[3b]"></a>main</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, sample.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = main &rArr; BUTTON_init &rArr; __NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_timer
-<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_timer
+<BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_timer
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_init
 <LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
@@ -395,22 +394,22 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[47]"></a>LED_On</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<P><STRONG><a name="[46]"></a>LED_On</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 
-<P><STRONG><a name="[48]"></a>LED_Off</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<P><STRONG><a name="[47]"></a>LED_Off</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, funct_led.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 
-<P><STRONG><a name="[46]"></a>LED_Out</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, funct_led.o(.text))
+<P><STRONG><a name="[45]"></a>LED_Out</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, funct_led.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = LED_Out
 </UL>
-<BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
-<LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
+<BR>[Calls]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_On
 </UL>
-<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT1_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT1_IRQHandler
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT0_IRQHandler
 </UL>
 
@@ -423,14 +422,15 @@ Global Symbols
 <P><STRONG><a name="[1f]"></a>EINT0_IRQHandler</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, irq_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = EINT0_IRQHandler &rArr; LED_Out
 </UL>
-<BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[20]"></a>EINT1_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, irq_button.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = EINT1_IRQHandler &rArr; LED_Out
+<P><STRONG><a name="[20]"></a>EINT1_IRQHandler</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, irq_button.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = EINT1_IRQHandler &rArr; init_timer &rArr; __NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
+<BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_timer
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
@@ -456,17 +456,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e]"></a>TIMER0_IRQHandler</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, irq_timer.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TIMER0_IRQHandler
+<P><STRONG><a name="[e]"></a>TIMER0_IRQHandler</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, irq_timer.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIMER0_IRQHandler &rArr; LED_Out
 </UL>
-<BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
+<BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Out
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
 <P><STRONG><a name="[f]"></a>TIMER1_IRQHandler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, irq_timer.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[45]"></a>enable_timer</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[44]"></a>enable_timer</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, lib_timer.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -474,13 +474,13 @@ Global Symbols
 
 <P><STRONG><a name="[79]"></a>reset_timer</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, lib_timer.o(.text), UNUSED)
 
-<P><STRONG><a name="[44]"></a>init_timer</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, lib_timer.o(.text))
+<P><STRONG><a name="[48]"></a>init_timer</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, lib_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = init_timer &rArr; __NVIC_SetPriority
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EINT1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[7a]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
@@ -534,13 +534,13 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[4b]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, lib_timer.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_timer
+<BR><BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_timer
 </UL>
 
 <P><STRONG><a name="[4c]"></a>__NVIC_SetPriority</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_timer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __NVIC_SetPriority
 </UL>
-<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_timer
+<BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_timer
 </UL>
 <P>
 <H3>
