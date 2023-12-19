@@ -10,6 +10,7 @@
 #include "lpc17xx.h"
 #include "timer.h"
 #include "../led/led.h"
+#include "../button_EXINT/button.h"
 
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
@@ -21,11 +22,18 @@
 **
 ******************************************************************************/
 extern unsigned char led_value;					/* defined in funct_led								*/
+extern int RES;													/* defined in IRQ_button							*/
+uint8_t led_duty_on;
+uint8_t previous_led_value = 0;
 void TIMER0_IRQHandler (void)
 {
-	LED_Out(0x0);
-
+	//Disable timer and enable button
+	disable_timer(0);
 	
+	//Led Off
+	LED_Out(0x00);
+	enable_button(0);
+	enable_button(2);
   LPC_TIM0->IR = 1;			/* clear interrupt flag */
   return;
 }
@@ -42,6 +50,13 @@ void TIMER0_IRQHandler (void)
 ******************************************************************************/
 void TIMER1_IRQHandler (void)
 {
+	led_duty_on ^= 1;
+	
+	if(led_duty_on){
+		LED_Out(RES);
+	} else {
+		LED_Out(0x00);
+	}
   LPC_TIM1->IR = 1;			/* clear interrupt flag */
   return;
 }

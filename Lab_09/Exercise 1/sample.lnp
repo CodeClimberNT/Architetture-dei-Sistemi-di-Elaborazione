@@ -7,6 +7,7 @@
 ".\lib_led.o"
 ".\irq_button.o"
 ".\lib_button.o"
+".\morse.o"
 ".\irq_timer.o"
 ".\lib_timer.o"
 --strict --scatter ".\sample.sct"

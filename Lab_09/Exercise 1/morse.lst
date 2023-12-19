@@ -1,0 +1,719 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;;;
+    2 00000000         ;;; morse.s
+    3 00000000         ;;;
+    4 00000000         
+    5 00000000                 AREA             BellissimiDati, DATA, READWRITE
+    6 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00       result_ space            100
+    7 00000064         
+    8 00000064                 AREA             translate_function, CODE, READO
+NLY
+    9 00000000                 EXPORT           translate_morse
+   10 00000000         translate_morse
+   11 00000000         ; Input parameters:
+   12 00000000         ; r0: unsigned char* vett_input
+   13 00000000         ; r1: int vet_input_length
+   14 00000000         ; r2: unsigned char* vett_output
+   15 00000000         ; r3: int vet_output_length
+   16 00000000         ; r4: char change_symbol
+   17 00000000         ; r5: char space
+   18 00000000         ; r6: char sentence_end
+   19 00000000         
+   20 00000000         ; save current SP for a faster access 
+   21 00000000         ; to parameters in the stack
+   22 00000000 46EC            MOV              R12, SP
+   23 00000002         ; save volatile registers
+   24 00000002 E92D 4DF0       STMFD            SP!,{R4-R8,R10-R11,LR}
+   25 00000006         ; extract argument 4, 5 and 6 into R4, R5 and R6
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   26 00000006 E8BC 0070       LDMFD            R12!,{R4-R6}
+   27 0000000A         ;Renaming registers
+   28 0000000A        0 
+                       vett_input
+                               RN               R0
+   29 0000000A        1 
+                       vet_input_length
+                               RN               R1
+   30 0000000A        2 
+                       vett_output
+                               RN               R2
+   31 0000000A        3 
+                       vet_output_length
+                               RN               R3
+   32 0000000A        4 
+                       change_symbol
+                               RN               R4
+   33 0000000A        5 
+                       space_symbol
+                               RN               R5
+   34 0000000A        6 
+                       sentence_end
+                               RN               R6
+   35 0000000A        7 
+                       curr_morse
+                               RN               R7
+   36 0000000A        8 
+                       morse_tree
+                               RN               R8
+   37 0000000A        9 
+                       i       RN               R9
+   38 0000000A        A 
+                       j       RN               R10
+   39 0000000A        B 
+                       offset  RN               R11
+   40 0000000A        C 
+                       converted_char
+                               RN               R12
+   41 0000000A         
+   42 0000000A 00000020 
+                       SPACE_ASCII
+                               EQU              32
+   43 0000000A         
+   44 0000000A F04F 0900       MOV              i, #0
+   45 0000000E F04F 0A00       MOV              j, #0
+   46 00000012         Resetting_new_char
+   47 00000012 F04F 0B10       MOV              offset, #16 ;first iteration of
+                                                            fset of 16
+   48 00000016         ;resetting morse_tree starting position
+   49 00000016 F8DF 8048       LDR              morse_tree, =Morse_to_ASCII_tre
+e
+   50 0000001A F108 081F       ADD              morse_tree, morse_tree, #31
+   51 0000001E         Morse_binary_search
+   52 0000001E F810 7009       LDRB             curr_morse, [vett_input, i]
+   53 00000022 F109 0901       ADD              i, i, #1
+   54 00000026         
+   55 00000026         
+   56 00000026         
+   57 00000026 2F01            CMP              curr_morse, #1
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   58 00000028 BF08 44D8       ADDEQ            morse_tree, morse_tree, offset 
+                                                            ;if dash(1) go to t
+                                                            he right with of of
+                                                            fset
+   59 0000002C BFB8 EBA8 
+              080B             SUBLT            morse_tree, morse_tree, offset 
+                                                            ;if dot(0) go to th
+                                                            e left with offset
+   60 00000032         
+   61 00000032 EA4F 0B5B       LSR              offset, #1  ;reduce the offset 
+                                                            value to converge i
+                                                            n the binary search
+                                                             (16->8->4->2->1)
+   62 00000036         
+   63 00000036 2F01            CMP              curr_morse, #1
+   64 00000038 DDF1            BLE              Morse_binary_search
+   65 0000003A         
+   66 0000003A         ;here only when search finished
+   67 0000003A F898 C000       LDRB             converted_char, [morse_tree]
+   68 0000003E F802 C00A       STRB             converted_char, [vett_output, j
+]
+   69 00000042 F10A 0A01       ADD              j, j, #1
+   70 00000046 42AF            CMP              curr_morse, space_symbol
+   71 00000048 DBE3            BLT              Resetting_new_char 
+                                                            ;lt means continue
+   72 0000004A DC06            BGT              ending_funct ;gt means sentence
+                                                            _end character so e
+                                                            xit
+   73 0000004C         ;if space symbol add it to the output vector
+   74 0000004C F04F 0C20       MOV              converted_char, #SPACE_ASCII
+   75 00000050 F802 C00A       STRB             converted_char, [vett_output, j
+]
+   76 00000054 F10A 0A01       ADD              j, j, #1
+   77 00000058 E7DB            B                Resetting_new_char
+   78 0000005A         
+   79 0000005A         
+   80 0000005A         ending_funct
+   81 0000005A         ;R0 return value
+   82 0000005A 4650            MOV              R0, j
+   83 0000005C         
+   84 0000005C         ; restore volatile registers and return from function
+   85 0000005C E8BD 8DF0       LDMFD            SP!,{R4-R8,R10-R11,PC}
+   86 00000060         
+   87 00000060 00000000        LTORG
+   88 00000064 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00       Boundary
+                               space            1024
+   89 00000464         
+   90 00000464 35 48 34 
+              53 00 56 
+              33 49 00 
+              46 00 55 
+              00 00 32 
+              45 00 4C 
+              00 52 00 
+              00 00 41 
+              00 50 00 
+              57 00 4A 
+              31       Morse_to_ASCII_tree
+                               DCB              53,72,52,83,00,86,51,73,00,70,0
+0,85,00,00,50,69,00,76,00,82,00,00,00,65,00,80,00,87,00,74,49
+   91 00000483 00              DCB              00
+   92 00000484 36 42 00 
+              44 00 58 
+              00 4E 00 
+              43 00 4B 
+              00 59 00 
+              54 37 5A 
+              00 47 00 
+              51 00 4D 
+              38 00 00 
+              4F 39 00 
+              30               DCB              54,66,00,68,00,88,00,78,00,67,0
+
+
+
+ARM Macro Assembler    Page 10 
+
+
+0,75,00,89,00,84,55,90,00,71,00,81,00,77,56,00,00,79,57,00,48
+   93 000004A3         
+   94 000004A3         ;Ordered morse alphabet (*=invalid char in this exercise
+                       )
+   95 000004A3         ;[5,H,4,S,*,V,3,I,*,F,*,U,*,*,2,E,*,L,*,R,*,*,*,A,*,P,*,
+                       W,*,J,1]
+   96 000004A3         ;START
+   97 000004A3         ;[6,B,*,D,*,X,*,N,*,C,*,K,*,Y,*,T,7,Z,*,G,*,Q,*,M,8,*,*,
+                       O,9,*,0]
+   98 000004A3         ;ASCII CONVERSION
+   99 000004A3         ;DOT LEFT
+  100 000004A3         ;[53,72,52,83,0,86,51,73,0,70,0,85,0,0,50,69,0,76,0,82,0
+                       ,0,0,65,0,80,0,87,0,74,49]
+  101 000004A3         ;START
+  102 000004A3         ;[54,66,0,68,0,88,0,78,0,67,0,75,0,89,0,84,55,90,0,71,0,
+                       81,0,77,56,0,0,79,57,0,48]  
+  103 000004A3         ;DASH RIGHT  
+  104 000004A3                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\morse.d -o.\morse.o -I.\RTE\_Target_1 -IC:\Users\nickt\AppData\L
+ocal\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\nickt\AppData\Loca
+l\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="__EVAL SETA 1" -
+-predefine="__UVISION_VERSION SETA 539" --predefine="_RTE_ SETA 1" --predefine=
+"LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1" --list=.\morse.lst button_EXINT\
+morse.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+BellissimiDati 00000000
+
+Symbol: BellissimiDati
+   Definitions
+      At line 5 in file button_EXINT\morse.s
+   Uses
+      None
+Comment: BellissimiDati unused
+result_ 00000000
+
+Symbol: result_
+   Definitions
+      At line 6 in file button_EXINT\morse.s
+   Uses
+      None
+Comment: result_ unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Boundary 00000064
+
+Symbol: Boundary
+   Definitions
+      At line 88 in file button_EXINT\morse.s
+   Uses
+      None
+Comment: Boundary unused
+Morse_binary_search 0000001E
+
+Symbol: Morse_binary_search
+   Definitions
+      At line 51 in file button_EXINT\morse.s
+   Uses
+      At line 64 in file button_EXINT\morse.s
+Comment: Morse_binary_search used once
+Morse_to_ASCII_tree 00000464
+
+Symbol: Morse_to_ASCII_tree
+   Definitions
+      At line 90 in file button_EXINT\morse.s
+   Uses
+      At line 49 in file button_EXINT\morse.s
+Comment: Morse_to_ASCII_tree used once
+Resetting_new_char 00000012
+
+Symbol: Resetting_new_char
+   Definitions
+      At line 46 in file button_EXINT\morse.s
+   Uses
+      At line 71 in file button_EXINT\morse.s
+      At line 77 in file button_EXINT\morse.s
+
+ending_funct 0000005A
+
+Symbol: ending_funct
+   Definitions
+      At line 80 in file button_EXINT\morse.s
+   Uses
+      At line 72 in file button_EXINT\morse.s
+Comment: ending_funct used once
+translate_function 00000000
+
+Symbol: translate_function
+   Definitions
+      At line 8 in file button_EXINT\morse.s
+   Uses
+      None
+Comment: translate_function unused
+translate_morse 00000000
+
+Symbol: translate_morse
+   Definitions
+      At line 10 in file button_EXINT\morse.s
+   Uses
+      At line 9 in file button_EXINT\morse.s
+Comment: translate_morse used once
+7 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+SPACE_ASCII 00000020
+
+Symbol: SPACE_ASCII
+   Definitions
+      At line 42 in file button_EXINT\morse.s
+   Uses
+      At line 74 in file button_EXINT\morse.s
+Comment: SPACE_ASCII used once
+1 symbol
+359 symbols in table

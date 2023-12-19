@@ -87,7 +87,7 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
   if ( timer_num == 0 )
   {
 	LPC_TIM0->MR0 = TimerInterval;
-
+	
 //*** <<< Use Configuration Wizard in Context Menu >>> ***
 // <h> timer0 MCR
 //   <e.0> MR0I

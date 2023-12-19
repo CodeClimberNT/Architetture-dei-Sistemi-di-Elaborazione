@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>SIMULATOR</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.\button_EXINT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -454,6 +454,11 @@
               <FileType>1</FileType>
               <FilePath>.\button_EXINT\lib_button.c</FilePath>
             </File>
+            <File>
+              <FileName>morse.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\button_EXINT\morse.s</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -495,5 +500,14 @@
     </components>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>sample</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

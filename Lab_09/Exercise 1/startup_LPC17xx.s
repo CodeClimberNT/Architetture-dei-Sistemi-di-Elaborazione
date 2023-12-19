@@ -24,6 +24,8 @@
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
+
+
 Stack_Size      EQU     0x00000200
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
@@ -116,6 +118,7 @@ CRP_Key         DCD     0xFFFFFFFF
                 AREA    |.text|, CODE, READONLY
 
 
+
 ; Reset Handler
 
 Reset_Handler   PROC
@@ -124,7 +127,6 @@ Reset_Handler   PROC
                 LDR     R0, =__main
                 BX      R0
                 ENDP
-
 
 ; Dummy Exception Handlers (infinite loops which can be modified)                
 

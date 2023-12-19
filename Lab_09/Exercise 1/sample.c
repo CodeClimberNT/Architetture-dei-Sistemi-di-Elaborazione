@@ -33,19 +33,19 @@ int main (void) {
 	SystemInit();  												/* System Initialization (i.e., PLL)  */
   LED_init();                           /* LED Initialization                 */
   BUTTON_init();												/* BUTTON Initialization              */
-
+	init_timer(0, 0x017D7840 * 3);				/* TIMER0 Initialization              */
 																				/* K = T*Fr = [s]*[Hz] = [s]*[1/s]	  */
 																				/* T = K / Fr = 0x017D7840 / 25MHz    */
 																				/* T = K / Fr = 25000000 / 25MHz      */
 																				/* T = 1s	(one second)   							*/
-	enable_timer(0);
+	init_timer(1, 0x017D7840);
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= 0xFFFFFFFFD;	
 	
 
   while (1) {                           /* Loop forever                       */	
-		//__ASM("wfi");
+		__ASM("wfi");
   }
 
 }
