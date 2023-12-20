@@ -25,3 +25,51 @@ void BUTTON_init(void) {
   NVIC_EnableIRQ(EINT0_IRQn);              /* enable irq in nvic                 */
 	NVIC_SetPriority(EINT0_IRQn, 3);				 /* decreasing priority	from EINT2->0	 */
 }
+
+void disable_button( uint8_t button_num )
+{
+	 __disable_irq();		// Disable interrupts globally
+	
+	
+	switch(button_num){
+		case 0:
+			NVIC_DisableIRQ(EINT0_IRQn); 						//disable Interrupt 
+			LPC_PINCON->PINSEL4    &= ~(1 << 20); 	//enable pin in input to be read
+		break;
+		case 1:
+			NVIC_DisableIRQ(EINT1_IRQn);
+			LPC_PINCON->PINSEL4    &= ~(1 << 22);
+		break;
+		case 2:
+			NVIC_DisableIRQ(EINT2_IRQn);
+			LPC_PINCON->PINSEL4    &= ~(1 << 24);
+		break;
+	}
+	
+	
+	__enable_irq();		// Re-enable interrupts globally after configuration change
+}
+
+void enable_button( uint8_t button_num )
+{
+	__disable_irq();  // Disable interrupts globally
+	
+	
+	switch(button_num){
+		case 0:
+			NVIC_EnableIRQ(EINT0_IRQn);
+			LPC_PINCON->PINSEL4    |= (1 << 20);
+		break;
+		case 1:	
+			NVIC_EnableIRQ(EINT1_IRQn);
+			LPC_PINCON->PINSEL4    |= (1 << 22);
+		break;
+		case 2:
+			NVIC_EnableIRQ(EINT2_IRQn);
+			LPC_PINCON->PINSEL4    |= (1 << 24);
+		break;
+	}
+	
+	
+	__enable_irq();  // Re-enable interrupts globally after configuration change
+}

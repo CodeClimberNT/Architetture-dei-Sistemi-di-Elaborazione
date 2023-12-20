@@ -518,7 +518,8 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 {
     short dx,dy;      /* 定义X Y轴上增加的变量值 */
     short temp;       /* 起点 终点大小比较 交换数据时的中间变量 */
-
+	
+	
     if( x0 > x1 )     /* X轴上起点大于终点 交换数据 */
     {
 	    temp = x1;
@@ -667,6 +668,15 @@ void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_
     while ( *str != 0 );
 }
 
+void LCD_DrawRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color ){
+	LCD_DrawLine(x0, y0, x1, y0, color); //top edge
+	LCD_DrawLine(x1, y0, x1, y1, color); //right edge
+	LCD_DrawLine(x1, y1, x0, y1, color); //down edge
+	LCD_DrawLine(x0, y1, x0, y0, color); //left edge
+}
+void LCD_DrawSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color ){
+	LCD_DrawRect(x0, y0, x0+len, y0+len, color); //square is just a special Rect
+}
 
 
 /*********************************************************************************************************

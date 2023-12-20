@@ -1,6 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork 
--I.\RTE\_Target_1
--IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include
--IC:\Keil_v5\ARM\PACK\Keil\LPC1700_DFP\2.7.0\Device\Include
--D__UVISION_VERSION="526" -D_RTE_ -DLPC175x_6x -DSIMULATOR
--o .\irq_rit.o --omf_browse .\irq_rit.crf --depend .\irq_rit.d "RIT\IRQ_RIT.c"
