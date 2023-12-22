@@ -12,4 +12,4 @@
 .\sample.o: timer/timer.h
 .\sample.o: RIT/RIT.h
 .\sample.o: joystick/joystick.h
-.\sample.o: Game/init.h
+.\sample.o: Game/game.h

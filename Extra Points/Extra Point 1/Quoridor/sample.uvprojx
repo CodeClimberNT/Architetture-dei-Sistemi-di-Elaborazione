@@ -405,14 +405,34 @@
           <GroupName>Game</GroupName>
           <Files>
             <File>
-              <FileName>init.c</FileName>
+              <FileName>init_game.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Game\init.c</FilePath>
+              <FilePath>.\Game\init_game.c</FilePath>
             </File>
             <File>
-              <FileName>init.h</FileName>
+              <FileName>game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Game\game.c</FilePath>
+            </File>
+            <File>
+              <FileName>util_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Game\util_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>game.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Game\init.h</FilePath>
+              <FilePath>.\Game\game.h</FilePath>
+            </File>
+            <File>
+              <FileName>player.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Game\player.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Game\board.h</FilePath>
             </File>
           </Files>
         </Group>

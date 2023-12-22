@@ -4,9 +4,7 @@
 #include "../timer/timer.h"
 #include "../RIT/RIT.h"
 #include "../joystick/joystick.h"
-#include "init.h"
-
-
+#include "game.h"
 
 /*
  White          0xFFFF

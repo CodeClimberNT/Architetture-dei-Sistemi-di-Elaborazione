@@ -342,7 +342,6 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
 	default:
 		return (0);
   }
-	return (0);
 }
 
 /******************************************************************************

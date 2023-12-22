@@ -27,7 +27,7 @@
 #include "timer/timer.h"
 #include "RIT/RIT.h"
 #include "joystick/joystick.h"
-#include "Game/init.h"
+#include "Game/game.h"
 #define SIMULATOR 1
 
 #ifdef SIMULATOR
