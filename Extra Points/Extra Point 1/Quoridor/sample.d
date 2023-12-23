@@ -13,3 +13,9 @@
 .\sample.o: RIT/RIT.h
 .\sample.o: joystick/joystick.h
 .\sample.o: Game/game.h
+.\sample.o: Game/init.h
+.\sample.o: Game/player.h
+.\sample.o: Game/board.h
+.\sample.o: Game/draw_function.h
+.\sample.o: Game/game_option.h
+.\sample.o: Game/ui.h

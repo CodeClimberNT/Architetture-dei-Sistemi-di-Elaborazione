@@ -40,7 +40,7 @@ int main(void)
 {	
 	SystemInit();  												/* System Initialization (i.e., PLL)  */
 	PeripheralInit();
-	GameInit();
+	Setup();
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= ~(0x2);						
 	
