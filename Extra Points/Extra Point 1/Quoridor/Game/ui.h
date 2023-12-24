@@ -1,7 +1,17 @@
 #ifndef __UI_H  // Include guard
 #define __UI_H
 
-//Height for all ui
+
+// Starting UI
+#define READY_UI_WIDTH  MAX_X * 0.8
+#define READY_UI_HEIGHT 80
+
+#define READY_UI_XPOS  (MAX_X - READY_UI_WIDTH)/2 	//CENTER HORIZONTAL
+#define READY_UI_YPOS  (MAX_Y - READY_UI_HEIGHT)/2  //CENTER VERTICAL
+
+
+
+//Height for game ui
 #define UI_HEIGHT 2*SQUARE_SIZE
 
 #define UI_YPOS (SQUARE_SIZE + WALL_WIDTH) * NUM_ROWS + SQUARE_SIZE/3

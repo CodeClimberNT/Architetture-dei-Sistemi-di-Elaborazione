@@ -45,18 +45,24 @@ void Board_Init(){
 
 void UI_Init(){
 	
-	LCD_DrawLine(P1_UI_XPOS-1, P1_UI_YPOS-1, P1_UI_XPOS-1, P1_UI_YPOS-1 + UI_HEIGHT, Black);				//P1 UI shadow
-	LCD_DrawLine(P1_UI_XPOS-1, P1_UI_YPOS-1, P1_UI_XPOS-1 + P_UI_WIDTH, P1_UI_YPOS-1, Black);				//P1 UI shadow
-	LCD_DrawRect(P1_UI_XPOS, P1_UI_YPOS, P1_UI_XPOS + P_UI_WIDTH, P1_UI_YPOS + UI_HEIGHT, Black);		//P1 UI
+	//LCD_DrawLine(P1_UI_XPOS-1, P1_UI_YPOS-1, P1_UI_XPOS-1, P1_UI_YPOS-1 + UI_HEIGHT, Black);				//P1 UI shadow
+	//LCD_DrawLine(P1_UI_XPOS-1, P1_UI_YPOS-1, P1_UI_XPOS-1 + P_UI_WIDTH, P1_UI_YPOS-1, Black);				//P1 UI shadow
+	//LCD_DrawRect(P1_UI_XPOS, P1_UI_YPOS, P1_UI_XPOS + P_UI_WIDTH, P1_UI_YPOS + UI_HEIGHT, Black);		//P1 UI
 	
-	LCD_DrawLine(T_UI_XPOS-1, T_UI_YPOS-1, T_UI_XPOS-1, T_UI_YPOS-1 + UI_HEIGHT, Black); 							//left shadow
-	LCD_DrawLine(T_UI_XPOS-1, T_UI_YPOS-1, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS-1, Black); 							//top shadow
-	LCD_DrawLine(T_UI_XPOS+1 + T_UI_WIDTH, T_UI_YPOS-1, T_UI_XPOS+1 + T_UI_WIDTH, T_UI_YPOS-1 + UI_HEIGHT, Black); //right shadow
-	LCD_DrawRect(T_UI_XPOS, T_UI_YPOS, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS + UI_HEIGHT, Black); 					//TIMER
+	LCD_DrawRectWithShadow(P1_UI_XPOS, P1_UI_YPOS, P1_UI_XPOS + P_UI_WIDTH, P1_UI_YPOS + UI_HEIGHT, Black, NORTH_OVEST, Black); //P1 UI
 	
-	LCD_DrawLine(P2_UI_XPOS+1, P2_UI_YPOS-1, P2_UI_XPOS+1 + P_UI_WIDTH , P2_UI_YPOS-1, Black); 					//top shadow
-	LCD_DrawLine(P2_UI_XPOS+1 + P_UI_WIDTH, P2_UI_YPOS-1, P2_UI_XPOS+1 + P_UI_WIDTH, P2_UI_YPOS-1 + UI_HEIGHT, Black); //right shadow
-	LCD_DrawRect(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black); 			//P2 UI
+	//LCD_DrawLine(T_UI_XPOS-1, T_UI_YPOS-1, T_UI_XPOS-1, T_UI_YPOS-1 + UI_HEIGHT, Black); 							//left shadow
+	//LCD_DrawLine(T_UI_XPOS-1, T_UI_YPOS-1, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS-1, Black); 							//top shadow
+	//LCD_DrawLine(T_UI_XPOS+1 + T_UI_WIDTH, T_UI_YPOS-1, T_UI_XPOS+1 + T_UI_WIDTH, T_UI_YPOS-1 + UI_HEIGHT, Black); //right shadow
+	//LCD_DrawRect(T_UI_XPOS, T_UI_YPOS, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS + UI_HEIGHT, Black); 					//TIMER
+	
+	LCD_DrawRectWithShadow(T_UI_XPOS, T_UI_YPOS, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS + UI_HEIGHT, Black, OVEST_NORTH_EAST, Black); //TIMER
+	
+	
+	//LCD_DrawLine(P2_UI_XPOS+1, P2_UI_YPOS-1, P2_UI_XPOS+1 + P_UI_WIDTH , P2_UI_YPOS-1, Black); 					//top shadow
+	//LCD_DrawLine(P2_UI_XPOS+1 + P_UI_WIDTH, P2_UI_YPOS-1, P2_UI_XPOS+1 + P_UI_WIDTH, P2_UI_YPOS-1 + UI_HEIGHT, Black); //right shadow
+	//LCD_DrawRect(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black); 			//P2 UI
+	LCD_DrawRectWithShadow(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black, NORTH_EAST, Black); //P2 UI
 	
 	GUI_Text(P1_UI_XPOS+5, P1_UI_YPOS+5,(uint8_t *) "P1 WALL", Black, White);
 	GUI_Text(P2_UI_XPOS+5, P2_UI_YPOS+5,(uint8_t *) "P2 WALL", Black, White);

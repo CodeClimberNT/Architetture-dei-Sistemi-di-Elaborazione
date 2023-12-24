@@ -13,6 +13,7 @@
 .\sample.o: RIT/RIT.h
 .\sample.o: joystick/joystick.h
 .\sample.o: Game/game.h
+.\sample.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
 .\sample.o: Game/init.h
 .\sample.o: Game/player.h
 .\sample.o: Game/board.h

@@ -1,6 +1,7 @@
 .\game.o: Game\game.c
 .\game.o: Game\game.h
 .\game.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdint.h
+.\game.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
 .\game.o: Game\../GLCD/GLCD.h
 .\game.o: C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\LPC17xx.h
 .\game.o: C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h

@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+".\output\startup_lpc17xx.o"
+".\output\sample.o"
+".\output\init_game.o"
+".\output\game.o"
+".\output\util_game.o"
+".\output\core_cm3.o"
+".\output\system_lpc17xx.o"
+".\output\funct_led.o"
+".\output\lib_led.o"
+".\output\irq_button.o"
+".\output\lib_button.o"
+".\output\funct_joystick.o"
+".\output\lib_joystick.o"
+".\output\irq_rit.o"
+".\output\lib_rit.o"
+".\output\irq_timer.o"
+".\output\lib_timer.o"
+".\output\asciilib.o"
+".\output\glcd.o"
+".\output\hzlib.o"
+".\output\touchpanel.o"
+--strict --scatter ".\output\sample.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\sample.map" -o .\output\sample.axf

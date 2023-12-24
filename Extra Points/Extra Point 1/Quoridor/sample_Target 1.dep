@@ -15,7 +15,8 @@ I (TouchPanel/TouchPanel.h)(0x65810AF5)
 I (timer/timer.h)(0x65810AF5)
 I (RIT/RIT.h)(0x61B5E082)
 I (joystick/joystick.h)(0x61B5E082)
-I (Game/game.h)(0x658709BF)
+I (Game/game.h)(0x6588124E)
+I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game/init.h)(0x658705E4)
 I (Game/player.h)(0x658702E7)
 I (Game/board.h)(0x6586D345)
@@ -31,7 +32,8 @@ I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cms
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
-I (Game\game.h)(0x658709BF)
+I (Game\game.h)(0x6588124E)
+I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game\../GLCD/GLCD.h)(0x6585B882)
 I (Game\init.h)(0x658705E4)
 I (Game\player.h)(0x658702E7)
@@ -40,8 +42,9 @@ I (Game\draw_function.h)(0x6586CE71)
 I (Game\game_option.h)(0x6586B206)
 I (Game\ui.h)(0x658700D0)
 F (.\Game\game.c)(0x65870912)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\game.o --omf_browse .\game.crf --depend .\game.d)
-I (Game\game.h)(0x658709BF)
+I (Game\game.h)(0x6588124E)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
+I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game\../GLCD/GLCD.h)(0x6585B882)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\LPC17xx.h)(0x5E1DC4B4)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x626FAD4E)
@@ -57,8 +60,9 @@ I (Game\draw_function.h)(0x6586CE71)
 I (Game\game_option.h)(0x6586B206)
 I (Game\ui.h)(0x658700D0)
 F (.\Game\util_game.c)(0x6586CE71)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\util_game.o --omf_browse .\util_game.crf --depend .\util_game.d)
-I (Game\game.h)(0x658709BF)
+I (Game\game.h)(0x6588124E)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
+I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game\../GLCD/GLCD.h)(0x6585B882)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\LPC17xx.h)(0x5E1DC4B4)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x626FAD4E)
@@ -73,7 +77,7 @@ I (Game\board.h)(0x6586D345)
 I (Game\draw_function.h)(0x6586CE71)
 I (Game\game_option.h)(0x6586B206)
 I (Game\ui.h)(0x658700D0)
-F (.\Game\game.h)(0x658709BF)()
+F (.\Game\game.h)(0x6588124E)()
 F (.\Game\player.h)(0x658702E7)()
 F (.\Game\board.h)(0x6586D345)()
 F (.\Game\draw_function.h)(0x6586CE71)()

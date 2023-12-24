@@ -6,9 +6,55 @@ void LCD_DrawRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 	LCD_DrawLine(x1, y1, x0, y1, color); //down edge
 	LCD_DrawLine(x0, y1, x0, y0, color); //left edge
 }
+
+void LCD_DrawShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , SHADOW_DIRECTION dir, uint16_t color){
+
+	switch(dir){
+		case NORTH:
+			LCD_DrawLine(x0+1, y0-1, x1-1, y0-1, color);
+			break;
+		case NORTH_EAST:
+			LCD_DrawLine(x0+1, y0-1, x1+1, y0-1, color);
+			LCD_DrawLine(x1+1, y0-1, x1+1, y1-1, color);
+			break;
+		case EAST:
+			LCD_DrawLine(x1+1, y0+1, x1+1, y1-1, color);
+			break;
+		case SUD_EAST:
+			GUI_Text(x0,y0,(uint8_t*)"TO IMPLEMENT", White,Black);
+			break;
+		case SUD:
+			LCD_DrawLine(x0+1, y1+1, x1+1, y1+1, color);
+			break;
+		case SUD_OVEST:
+			GUI_Text(x0,y0,(uint8_t*)"TO IMPLEMENT", White,Black);
+			break;
+		case OVEST:
+			LCD_DrawLine(x0-1, y0+1, x0-1, y1-1, color);
+			break;
+		case NORTH_OVEST:
+			LCD_DrawLine(x0-1, y0-1, x1-1, y0-1, color);
+			LCD_DrawLine(x0-1, y0-1, x0-1, y1-1, color);
+			break;
+		case OVEST_NORTH_EAST:
+			LCD_DrawLine(x0-1, y0-1, x0-1, y1-1, color);	//ovest
+			LCD_DrawLine(x0-1, y0-1, x1+1, y0-1, color);  //north
+			LCD_DrawLine(x1+1, y0-1, x1+1, y1-1, color);	//east
+			break;
+	}
+	
+}
+
+
+void LCD_DrawRectWithShadow( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t rect_color, SHADOW_DIRECTION dir, uint16_t shadow_color ){
+	LCD_DrawRect(x0, y0, x1, y1, rect_color);
+	LCD_DrawShadow(x0, y0, x1, y1, dir, shadow_color);
+}
+
 void LCD_DrawSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color ){
 	LCD_DrawRect(x0, y0, x0+len, y0+len, color); //square is just a special Rect
 }
+
 void LCD_FillRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color ){
 	uint16_t i;
 	

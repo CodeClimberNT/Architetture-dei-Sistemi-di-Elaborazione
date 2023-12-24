@@ -53,9 +53,11 @@ int main(void)
 
 void PeripheralInit(){
 	LCD_Initialization();
-	//init_timer(0, 0x1312D0 ); 						/* 50ms * 25MHz = 1.25*10^6 = 0x1312D0 */
-	//init_timer(0, 0x6108 ); 						  /* 1ms * 25MHz = 25*10^3 = 0x6108 */
-	//init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2 */
+	
+	init_timer(0, 0x17D7840 );							/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
+	//init_timer(0, 0x1312D0 ); 						/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
+	//init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
+	//init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
 	
 	//init_RIT(0x1312D0); //50ms
 	
