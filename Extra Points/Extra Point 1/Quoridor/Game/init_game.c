@@ -17,12 +17,15 @@
 */
 extern struct Player player0;
 extern struct Player player1;
+extern uint8_t timeLeft;
 
 void Game_Init(){
+	LCD_Clear(GameBG);
 	Board_Init();
 	UI_Init();
 	Player_Init();
 	Wall_Counter_Init();
+	Timer_Counter_Init();
 	return;
 }
 
@@ -38,34 +41,21 @@ void Board_Init(){
 		}
 	}
 	
-	Draw_Wall(SQUARE_SIZE, 0, Vertical);
-	
-	Draw_Wall(0, WALL_WIDTH + (SQUARE_SIZE*2), Horizontal);
+	Position_Wall(0,0,Vertical);
+	Position_Wall(5,5,Horizontal);
+	Position_Wall(5,5,Vertical);
 }
 
 void UI_Init(){
 	
-	//LCD_DrawLine(P1_UI_XPOS-1, P1_UI_YPOS-1, P1_UI_XPOS-1, P1_UI_YPOS-1 + UI_HEIGHT, Black);				//P1 UI shadow
-	//LCD_DrawLine(P1_UI_XPOS-1, P1_UI_YPOS-1, P1_UI_XPOS-1 + P_UI_WIDTH, P1_UI_YPOS-1, Black);				//P1 UI shadow
-	//LCD_DrawRect(P1_UI_XPOS, P1_UI_YPOS, P1_UI_XPOS + P_UI_WIDTH, P1_UI_YPOS + UI_HEIGHT, Black);		//P1 UI
-	
 	LCD_DrawRectWithShadow(P1_UI_XPOS, P1_UI_YPOS, P1_UI_XPOS + P_UI_WIDTH, P1_UI_YPOS + UI_HEIGHT, Black, NORTH_OVEST, Black); //P1 UI
-	
-	//LCD_DrawLine(T_UI_XPOS-1, T_UI_YPOS-1, T_UI_XPOS-1, T_UI_YPOS-1 + UI_HEIGHT, Black); 							//left shadow
-	//LCD_DrawLine(T_UI_XPOS-1, T_UI_YPOS-1, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS-1, Black); 							//top shadow
-	//LCD_DrawLine(T_UI_XPOS+1 + T_UI_WIDTH, T_UI_YPOS-1, T_UI_XPOS+1 + T_UI_WIDTH, T_UI_YPOS-1 + UI_HEIGHT, Black); //right shadow
-	//LCD_DrawRect(T_UI_XPOS, T_UI_YPOS, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS + UI_HEIGHT, Black); 					//TIMER
+	GUI_Text(P1_UI_XPOS+5, P1_UI_YPOS+5,(uint8_t *) "P1 WALL", Black, White);
+
+	LCD_DrawRectWithShadow(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black, NORTH_EAST, Black); //P2 UI
+	GUI_Text(P2_UI_XPOS+5, P2_UI_YPOS+5,(uint8_t *) "P2 WALL", Black, White);
 	
 	LCD_DrawRectWithShadow(T_UI_XPOS, T_UI_YPOS, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS + UI_HEIGHT, Black, OVEST_NORTH_EAST, Black); //TIMER
-	
-	
-	//LCD_DrawLine(P2_UI_XPOS+1, P2_UI_YPOS-1, P2_UI_XPOS+1 + P_UI_WIDTH , P2_UI_YPOS-1, Black); 					//top shadow
-	//LCD_DrawLine(P2_UI_XPOS+1 + P_UI_WIDTH, P2_UI_YPOS-1, P2_UI_XPOS+1 + P_UI_WIDTH, P2_UI_YPOS-1 + UI_HEIGHT, Black); //right shadow
-	//LCD_DrawRect(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black); 			//P2 UI
-	LCD_DrawRectWithShadow(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black, NORTH_EAST, Black); //P2 UI
-	
-	GUI_Text(P1_UI_XPOS+5, P1_UI_YPOS+5,(uint8_t *) "P1 WALL", Black, White);
-	GUI_Text(P2_UI_XPOS+5, P2_UI_YPOS+5,(uint8_t *) "P2 WALL", Black, White);
+	GUI_Text(T_UI_XPOS+7, T_UI_YPOS+5,(uint8_t *) "TIME LEFT", Black, White);
 }
 
 void Player_Init(){
@@ -83,13 +73,16 @@ struct Player Create_Player(uint8_t Id){
   defaultPlayer.Id = Id;
   defaultPlayer.Position.x = x;
   defaultPlayer.Position.y = y;
-  defaultPlayer.wallsRemaining = 8;
+  defaultPlayer.wallsRemaining = MAX_WALLS;
 	
 	 return defaultPlayer;
 };
 
 
 void Wall_Counter_Init(){
-	Update_Wall_Counter(0, 8);
-	Update_Wall_Counter(1, 8);
+	Update_Wall_Counter();
+}
+
+void Timer_Counter_Init(){
+	Update_Timer_Left();
 }

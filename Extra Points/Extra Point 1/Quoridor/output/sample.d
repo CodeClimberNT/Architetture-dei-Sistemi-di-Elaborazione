@@ -8,12 +8,14 @@
 .\output\sample.o: C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h
 .\output\sample.o: C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h
 .\output\sample.o: GLCD/GLCD.h
-.\output\sample.o: TouchPanel/TouchPanel.h
 .\output\sample.o: timer/timer.h
+.\output\sample.o: button_EXINT/button.h
 .\output\sample.o: RIT/RIT.h
 .\output\sample.o: joystick/joystick.h
 .\output\sample.o: Game/game.h
 .\output\sample.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
+.\output\sample.o: Game/../button_EXINT/button.h
+.\output\sample.o: Game/../joystick/joystick.h
 .\output\sample.o: Game/init.h
 .\output\sample.o: Game/player.h
 .\output\sample.o: Game/board.h

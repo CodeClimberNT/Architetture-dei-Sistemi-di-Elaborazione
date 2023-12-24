@@ -9,6 +9,10 @@
 .\output\init_game.o: C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h
 .\output\init_game.o: Game\game.h
 .\output\init_game.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
+.\output\init_game.o: Game\../timer/timer.h
+.\output\init_game.o: Game\../button_EXINT/button.h
+.\output\init_game.o: Game\../RIT/RIT.h
+.\output\init_game.o: Game\../joystick/joystick.h
 .\output\init_game.o: Game\../GLCD/GLCD.h
 .\output\init_game.o: Game\init.h
 .\output\init_game.o: Game\player.h

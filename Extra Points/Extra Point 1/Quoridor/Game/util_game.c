@@ -68,19 +68,19 @@ void LCD_FillSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color ){
 }
 
 void Draw_Wall(uint16_t x0, uint16_t y0, WALL_DIRECTION wall_dir){
-	uint16_t x1, y1;
+	uint16_t x1,y1;
 	switch (wall_dir) {
 		case Horizontal:
 			x1 = x0 + WALL_LENGTH;
 			y1 = y0 + WALL_WIDTH;
 			break;
 		case Vertical:
-			y1 = y0 + WALL_LENGTH+1; //off by one (only vertical !!), fix for now, later will try find the culprit
 			x1 = x0 + WALL_WIDTH;
+			y1 = y0 + WALL_LENGTH + 1; //need to fix this
 			break;
 		default:
 			return;
 	}
-	LCD_FillRect(x0,y0,x1,y1,DarkGray);
+	LCD_FillRect(x0, y0, x1, y1, DarkGray);
 }
 

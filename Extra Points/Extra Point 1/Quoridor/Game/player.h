@@ -22,6 +22,7 @@ struct Player {
 
 void Player_Init(void);
 struct Player Create_Player(uint8_t Id);
-uint8_t Update_Wall_Counter(uint8_t Id, uint8_t value);
+void Update_Wall_Counter(void);
+void Update_Timer_Left(void);
 
 #endif  // __PLAYER_H

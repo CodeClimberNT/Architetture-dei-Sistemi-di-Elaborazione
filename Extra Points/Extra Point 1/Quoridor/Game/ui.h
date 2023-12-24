@@ -18,7 +18,7 @@
 
 //Width for player and timer
 #define P_UI_WIDTH 64
-#define T_UI_WIDTH 72
+#define T_UI_WIDTH 82
 
 //Pos for players ui
 #define P1_UI_XPOS 10
@@ -27,7 +27,7 @@
 #define P2_UI_YPOS UI_YPOS
 
 //Pos for timer ui
-#define T_UI_XPOS (P1_UI_XPOS + P_UI_WIDTH + 10)
+#define T_UI_XPOS (P1_UI_XPOS + P_UI_WIDTH + 5)
 #define T_UI_YPOS	UI_YPOS
 
 #define T_UI_HEIGHT 70

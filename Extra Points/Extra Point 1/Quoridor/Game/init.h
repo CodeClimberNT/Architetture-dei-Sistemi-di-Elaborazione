@@ -6,4 +6,5 @@ void Board_Init(void);
 void UI_Init(void);
 
 void Wall_Counter_Init(void);
+void Timer_Counter_Init(void);
 #endif  // __INIT_H
