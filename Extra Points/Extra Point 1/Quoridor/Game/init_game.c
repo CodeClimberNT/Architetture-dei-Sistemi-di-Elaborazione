@@ -17,15 +17,17 @@
 */
 extern struct Player player0;
 extern struct Player player1;
+extern struct UI timer_ui;
+extern struct UI player0_ui;
+extern struct UI player1_ui;
+
 extern uint8_t timeLeft;
 
-void Game_Init(){
+void Start_Game(){
 	LCD_Clear(GameBG);
 	Board_Init();
-	UI_Init();
 	Player_Init();
-	Wall_Counter_Init();
-	Timer_Counter_Init();
+	UI_Init();
 	return;
 }
 
@@ -41,48 +43,79 @@ void Board_Init(){
 		}
 	}
 	
-	Position_Wall(0,0,Vertical);
-	Position_Wall(5,5,Horizontal);
-	Position_Wall(5,5,Vertical);
 }
 
 void UI_Init(){
+	char p1_wall_remaining[2];
+	char p2_wall_remaining[2];
+	char time_value[2];
 	
-	LCD_DrawRectWithShadow(P1_UI_XPOS, P1_UI_YPOS, P1_UI_XPOS + P_UI_WIDTH, P1_UI_YPOS + UI_HEIGHT, Black, NORTH_OVEST, Black); //P1 UI
-	GUI_Text(P1_UI_XPOS+5, P1_UI_YPOS+5,(uint8_t *) "P1 WALL", Black, White);
+	sprintf(p1_wall_remaining, "%u", MAX_WALLS);
+	
+	player0_ui = Create_UI(0, P0_UI_XPOS, P0_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P0_UI_XPOS+5, P0_UI_YPOS+5, "P1 WALL", P0_UI_XPOS+P_UI_WIDTH/2 - 5, P0_UI_YPOS+UI_HEIGHT-20, p1_wall_remaining);
+	
+	
+	sprintf(p2_wall_remaining, "%u", MAX_WALLS);
+	player1_ui = Create_UI(1, P1_UI_XPOS, P1_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P1_UI_XPOS+5, P1_UI_YPOS+5, "P2 WALL", P1_UI_XPOS+P_UI_WIDTH/2 - 5, P1_UI_YPOS+UI_HEIGHT-20, p2_wall_remaining);
+	
+	
+	sprintf(time_value, "%u", timeLeft);
+	timer_ui = Create_UI(2, T_UI_XPOS, T_UI_YPOS, UI_HEIGHT, T_UI_WIDTH, T_UI_XPOS+5, T_UI_YPOS+5, "TIME LEFT", T_UI_XPOS+T_UI_WIDTH/2 - 5, T_UI_YPOS+UI_HEIGHT-20, time_value);
+	
+	
+	LCD_DrawRectWithShadow(player0_ui.ui_Position.x, player0_ui.ui_Position.y, player0_ui.width, player0_ui.height, Black, SUD_EAST, Black); //P0 UI
+	GUI_Text(player0_ui.title_position.x, player0_ui.title_position.y, (uint8_t *)player0_ui.title_text, Black, White);
 
-	LCD_DrawRectWithShadow(P2_UI_XPOS, P2_UI_YPOS, P2_UI_XPOS + P_UI_WIDTH, P2_UI_YPOS + UI_HEIGHT, Black, NORTH_EAST, Black); //P2 UI
-	GUI_Text(P2_UI_XPOS+5, P2_UI_YPOS+5,(uint8_t *) "P2 WALL", Black, White);
+	LCD_DrawRectWithShadow(player1_ui.ui_Position.x, player1_ui.ui_Position.y, player1_ui.width, player1_ui.height, Black, SUD_EAST, Black); //P1 UI
+	GUI_Text(player1_ui.title_position.x, player1_ui.title_position.y, (uint8_t *)player1_ui.title_text, Black, White);
 	
-	LCD_DrawRectWithShadow(T_UI_XPOS, T_UI_YPOS, T_UI_XPOS + T_UI_WIDTH, T_UI_YPOS + UI_HEIGHT, Black, OVEST_NORTH_EAST, Black); //TIMER
-	GUI_Text(T_UI_XPOS+7, T_UI_YPOS+5,(uint8_t *) "TIME LEFT", Black, White);
+	LCD_DrawRectWithShadow(timer_ui.ui_Position.x, timer_ui.ui_Position.y, timer_ui.width, timer_ui.height, Black, SUD_EAST, Black); //TIMER UI
+	GUI_Text(timer_ui.title_position.x, timer_ui.title_position.y, (uint8_t *)timer_ui.title_text, Black, White);
+	
+	UI_Counter_Init();
+}
+
+
+struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y ,char *title_text,	
+									uint16_t val_x, uint16_t val_y, char *value_text){
+	struct UI ui; 
+	
+  ui.id = id;
+										
+	ui.ui_Position.x = ui_x;
+	ui.ui_Position.y = ui_y;
+	ui.height = height;
+	ui.width = width;
+	
+  ui.title_position.x = tit_x;
+	ui.title_position.y = tit_y;
+	ui.title_text = title_text;
+	ui.value_position.x = val_x;
+	ui.value_position.y = val_y;
+	ui.value_text = value_text;
+
+	return ui;
 }
 
 void Player_Init(){
-	player0 = Create_Player(0);
-	player1 = Create_Player(1);
+	player0 = Create_Player(0, 3, 6);
+	player1 = Create_Player(1, 3, 0);
 }
 
-struct Player Create_Player(uint8_t Id){
-	uint16_t x = 3 ,y = 6; //value for player0
-	struct Player defaultPlayer; 
+struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y ){
+	struct Player player; 
 	
-	if(Id == 1)
-		y=0;
+  player.id = id;
+  player.Position.x = x;
+  player.Position.y = y;
+  player.wallsRemaining = MAX_WALLS;
 	
-  defaultPlayer.Id = Id;
-  defaultPlayer.Position.x = x;
-  defaultPlayer.Position.y = y;
-  defaultPlayer.wallsRemaining = MAX_WALLS;
-	
-	 return defaultPlayer;
+	 return player;
 };
 
 
-void Wall_Counter_Init(){
-	Update_Wall_Counter();
-}
-
-void Timer_Counter_Init(){
-	Update_Timer_Left();
+void UI_Counter_Init(){
+	Update_UI(player0_ui);
+	Update_UI(player1_ui);
+	Update_UI(timer_ui);
 }

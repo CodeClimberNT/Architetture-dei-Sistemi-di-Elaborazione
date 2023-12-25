@@ -10,7 +10,7 @@ void EINT0_IRQHandler (void)	  	/* INT0														 */
 	if(!started){
 		
 		started = 1;
-		Game_Init();
+		Start_Game();
 	}
 	LPC_SC->EXTINT &= (1 << 0);     /* clear pending interrupt         */
 }

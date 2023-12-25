@@ -15,9 +15,3 @@
 .\output\irq_button.o: button_EXINT\../Game/../RIT/RIT.h
 .\output\irq_button.o: button_EXINT\../Game/../joystick/joystick.h
 .\output\irq_button.o: button_EXINT\../Game/../GLCD/GLCD.h
-.\output\irq_button.o: button_EXINT\../Game/init.h
-.\output\irq_button.o: button_EXINT\../Game/player.h
-.\output\irq_button.o: button_EXINT\../Game/board.h
-.\output\irq_button.o: button_EXINT\../Game/draw_function.h
-.\output\irq_button.o: button_EXINT\../Game/game_option.h
-.\output\irq_button.o: button_EXINT\../Game/ui.h

@@ -14,9 +14,3 @@
 .\output\util_game.o: C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h
 .\output\util_game.o: C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h
 .\output\util_game.o: C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h
-.\output\util_game.o: Game\init.h
-.\output\util_game.o: Game\player.h
-.\output\util_game.o: Game\board.h
-.\output\util_game.o: Game\draw_function.h
-.\output\util_game.o: Game\game_option.h
-.\output\util_game.o: Game\ui.h

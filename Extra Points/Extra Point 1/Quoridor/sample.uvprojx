@@ -424,36 +424,6 @@
               <FileType>5</FileType>
               <FilePath>.\Game\game.h</FilePath>
             </File>
-            <File>
-              <FileName>player.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Game\player.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Game\board.h</FilePath>
-            </File>
-            <File>
-              <FileName>draw_function.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Game\draw_function.h</FilePath>
-            </File>
-            <File>
-              <FileName>game_option.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Game\game_option.h</FilePath>
-            </File>
-            <File>
-              <FileName>ui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Game\ui.h</FilePath>
-            </File>
-            <File>
-              <FileName>init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Game\init.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

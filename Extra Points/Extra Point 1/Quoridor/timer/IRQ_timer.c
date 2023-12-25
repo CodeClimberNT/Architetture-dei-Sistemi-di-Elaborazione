@@ -10,9 +10,10 @@
 #include <string.h>
 #include "lpc17xx.h"
 #include "timer.h"
-#include "../GLCD/GLCD.h" 
-#include "../TouchPanel/TouchPanel.h"
+#include "../Game/game.h"
 
+
+extern uint8_t timeLeft;
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
 **
@@ -25,6 +26,7 @@
 
 void TIMER0_IRQHandler (void)
 {
+	timeLeft--;
   LPC_TIM0->IR = 1;			/* clear interrupt flag */
   return;
 }

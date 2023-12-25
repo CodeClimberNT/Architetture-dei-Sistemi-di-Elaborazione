@@ -14,9 +14,3 @@
 .\output\init_game.o: Game\../RIT/RIT.h
 .\output\init_game.o: Game\../joystick/joystick.h
 .\output\init_game.o: Game\../GLCD/GLCD.h
-.\output\init_game.o: Game\init.h
-.\output\init_game.o: Game\player.h
-.\output\init_game.o: Game\board.h
-.\output\init_game.o: Game\draw_function.h
-.\output\init_game.o: Game\game_option.h
-.\output\init_game.o: Game\ui.h

@@ -16,9 +16,3 @@
 .\output\sample.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
 .\output\sample.o: Game/../button_EXINT/button.h
 .\output\sample.o: Game/../joystick/joystick.h
-.\output\sample.o: Game/init.h
-.\output\sample.o: Game/player.h
-.\output\sample.o: Game/board.h
-.\output\sample.o: Game/draw_function.h
-.\output\sample.o: Game/game_option.h
-.\output\sample.o: Game/ui.h
