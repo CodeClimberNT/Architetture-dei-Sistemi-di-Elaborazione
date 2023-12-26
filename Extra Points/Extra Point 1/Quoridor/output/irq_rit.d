@@ -9,3 +9,9 @@
 .\output\irq_rit.o: C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h
 .\output\irq_rit.o: RIT\RIT.h
 .\output\irq_rit.o: RIT\../led/led.h
+.\output\irq_rit.o: RIT\../Game/game.h
+.\output\irq_rit.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
+.\output\irq_rit.o: RIT\../Game/../timer/timer.h
+.\output\irq_rit.o: RIT\../Game/../button_EXINT/button.h
+.\output\irq_rit.o: RIT\../Game/../joystick/joystick.h
+.\output\irq_rit.o: RIT\../Game/../GLCD/GLCD.h

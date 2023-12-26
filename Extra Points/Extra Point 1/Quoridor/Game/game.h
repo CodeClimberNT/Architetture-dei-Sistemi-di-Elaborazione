@@ -81,6 +81,7 @@
 
 
 /*******************ENUM DEFINITION**********************/
+typedef enum {TRANSISTION, PLAYER, WALL} GAME_STATE;
 typedef enum {Vertical, Horizontal} WALL_DIRECTION;
 typedef enum {UP, RIGHT, DOWN, LEFT} DIRECTION;
 typedef enum {NORTH, NORTH_EAST, EAST, SUD_EAST, SUD, SUD_OVEST, OVEST, NORTH_OVEST, OVEST_NORTH_EAST} SHADOW_DIRECTION;
@@ -88,8 +89,8 @@ typedef enum {NORTH, NORTH_EAST, EAST, SUD_EAST, SUD, SUD_OVEST, OVEST, NORTH_OV
 
 /*******************STRUCT DEFINITION**********************/
 struct Vector2D {
-    uint16_t x;
-    uint16_t y;
+    int16_t x;
+    int16_t y;
 };
 
 struct Player {
@@ -100,9 +101,11 @@ struct Player {
 };
 
 struct Wall {
+		struct Vector2D position;
     uint8_t placed;
     WALL_DIRECTION direction;
 		uint8_t isPhantom;
+		uint16_t color;
 };
 
 
@@ -157,13 +160,21 @@ void LCD_DrawShadow( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 ,SHADOW_
 
 void Draw_Checkers(void);
 
+void Move(DIRECTION dir);
+
 void Position_Player(struct Player player);
-struct Player Move_Player(struct Player player, uint8_t new_x, uint8_t new_y);
+struct Player Move_Player(struct Player player, struct Vector2D vec2d);
+void Remove_Player(struct Player player);
 
-void Position_Wall(uint8_t x, uint8_t y, WALL_DIRECTION wall_dir, uint8_t isPhantom, uint16_t color);
-void Move_Wall(uint8_t prev_x, uint8_t prev_y, WALL_DIRECTION prev_wall_dir, uint8_t new_x, uint8_t new_y, WALL_DIRECTION new_wall_dir);
+void Position_Wall(struct Wall wall);
+void Preview_Wall(struct Wall wall);
+struct Wall Move_Wall(struct Wall wall, struct Vector2D vec2d);
+struct Wall Rotate_Wall(struct Wall wall, WALL_DIRECTION new_dir);
+void Remove_Wall(struct Wall wall);
 
 
+
+struct Vector2D GetPos(DIRECTION dir);
 								
 void wait_delay(int count);
 #endif  // __GAME_H

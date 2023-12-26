@@ -1,5 +1,23 @@
 #include "game.h"
 
+void Peripheral_Init(){
+	LCD_Initialization();
+	
+	init_timer(0, 0x17D7840 );							/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
+	//init_timer(0, 0x1312D0 ); 						/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
+	//init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
+	//init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
+	
+	init_RIT(0x1312D0); 										/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
+	BUTTON_init();
+	disable_button(1);
+	disable_button(2);
+	joystick_init();
+}
+
+
+
+
 void wait_delay(int count)
 {
 	while(count--);
@@ -107,6 +125,9 @@ void Draw_Checkers(){
 			}
 		}
 }
+
+
+
 void Position_Player(struct Player player){
 	uint16_t x0,y0;
 	
@@ -117,48 +138,47 @@ void Position_Player(struct Player player){
 	LCD_FillSquare(x0,y0,PLAYER_SIZE, player.color);
 }
 
-struct Player Move_Player(struct Player player, uint8_t new_x, uint8_t new_y){
-	uint16_t x0,y0,x1,y1;
+struct Player Move_Player(struct Player player, struct Vector2D vec2d){
 	
-	//board position to spatial position
-	x0 = player.Position.x * (SQUARE_SIZE + WALL_WIDTH)+1;
-	y0 = player.Position.y * (SQUARE_SIZE + WALL_WIDTH)+1;
-	//erase player old position
-	LCD_FillSquare(x0,y0,PLAYER_SIZE, GameBG);
+	Remove_Player(player);
 	
 	//update player to new position
-	player.Position.x = new_x;
-	player.Position.y = new_y;
+	player.Position.x = vec2d.x;
+	player.Position.y = vec2d.y;
 	
-	//board position to spatial position
-	x1 = player.Position.x * (SQUARE_SIZE + WALL_WIDTH)+1;
-	y1 = player.Position.y * (SQUARE_SIZE + WALL_WIDTH)+1;
 	
 	//draw player new position
-	LCD_FillSquare(x1,y1,PLAYER_SIZE, player.color);
+	Position_Player(player);
 	
 	return player;
 }
 
-void Position_Wall(uint8_t x, uint8_t y, WALL_DIRECTION wall_dir, uint8_t isPhantom, uint16_t color){
+void Remove_Player(struct Player player){
+	player.color = White;
+	Position_Player(player);
+}
+
+
+
+void Preview_Wall(struct Wall wall){
 	
 	uint16_t x0,y0,x1,y1,discount = 2;
 	
 	
 	// Convert Matrix to Spatial position
-	if(wall_dir == Vertical){
-		x0 = x * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE; 
-		y0 = y * (SQUARE_SIZE + WALL_WIDTH);
+	if(wall.direction == Vertical){
+		x0 = wall.position.x * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE; 
+		y0 = wall.position.y * (SQUARE_SIZE + WALL_WIDTH);
 	} else { //if Horizontal
-		x0 = x * (SQUARE_SIZE + WALL_WIDTH);
-		y0 = y * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE;
+		x0 = wall.position.x * (SQUARE_SIZE + WALL_WIDTH);
+		y0 = wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE;
 	}
 		
 	
 	//Draw Wall
 
 	
-	switch (wall_dir) {
+	switch (wall.direction) {
 		case Horizontal:
 			x1 = x0 + WALL_LENGTH;
 			y1 = y0 + WALL_WIDTH ;
@@ -170,10 +190,9 @@ void Position_Wall(uint8_t x, uint8_t y, WALL_DIRECTION wall_dir, uint8_t isPhan
 		default:
 			return;
 	}
-	if(isPhantom && color != GameBG){
-		color = PhantomWallColor;
-	}
-	if(isPhantom){
+	
+	//to avoid over
+	if(wall.isPhantom){
 		x0 += discount; 
 		y0 += discount;
 		x1 -= discount; 
@@ -181,11 +200,61 @@ void Position_Wall(uint8_t x, uint8_t y, WALL_DIRECTION wall_dir, uint8_t isPhan
 	}
 	
 	
-	LCD_FillRect(x0, y0, x1, y1, color);
+	LCD_FillRect(x0, y0, x1, y1, wall.color);
 }
 
-void Move_Wall(uint8_t prev_x, uint8_t prev_y, WALL_DIRECTION prev_wall_dir, uint8_t new_x, uint8_t new_y, WALL_DIRECTION new_wall_dir){
-	uint8_t isPhantom = 1;
-	Position_Wall(prev_x, prev_y, prev_wall_dir, isPhantom, GameBG);
-	Position_Wall(new_x, new_y, new_wall_dir, isPhantom, PhantomWallColor);
+struct Wall Move_Wall(struct Wall wall, struct Vector2D vec2d){
+	//remove previous position
+	Remove_Wall(wall);
+	
+	//update new position
+	wall.position.x += vec2d.x;
+	wall.position.y += vec2d.y;
+	
+	//draw new position
+	Preview_Wall(wall);
+	return wall;
+}
+
+struct Wall Rotate_Wall(struct Wall wall, WALL_DIRECTION new_dir){
+	//remove previous preview
+	Remove_Wall(wall);
+	
+	//update new direction
+	wall.direction = new_dir;
+	
+	//draw new preview
+	Preview_Wall(wall);
+	
+	return wall;
+}
+
+void Remove_Wall(struct Wall wall){
+	wall.color = White;
+	Preview_Wall(wall);
+}
+
+struct Vector2D GetPos(DIRECTION dir){
+	struct Vector2D vec2d;
+	
+	switch(dir){
+		case UP:
+			vec2d.x = 0;
+			vec2d.y = -1;
+			break;
+		case RIGHT:
+			vec2d.x = +1;
+			vec2d.y = 0;
+			break;
+		case DOWN:
+			vec2d.x = 0;
+			vec2d.y = +1;
+			break;
+		case LEFT:
+			vec2d.x = -1;
+			vec2d.y = 0;
+			break;
+	}
+	
+	return vec2d;
 }

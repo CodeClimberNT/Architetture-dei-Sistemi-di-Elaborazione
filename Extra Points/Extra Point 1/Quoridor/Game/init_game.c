@@ -3,18 +3,8 @@
 #include "game.h"
 
 
-/*
- White          0xFFFF
- Black          0x0000
- Grey           0xF7DE
- Blue           0x001F
- Blue2          0x051F
- Red            0xF800
- Magenta        0xF81F
- Green          0x07E0
- Cyan           0x7FFF
- Yellow         0xFFE0
-*/
+extern GAME_STATE game_state;
+
 extern struct Player player0;
 extern struct Player player1;
 extern struct UI timer_ui;
@@ -33,15 +23,11 @@ void Start_Game(){
 
 void Board_Init(){
 	Draw_Checkers();
+	
 	Position_Player(player0);
 	Position_Player(player1);
 	
-	wait_delay(50000);
-
-	player0 = Move_Player(player0, player0.Position.x, player0.Position.y-1);
-	wait_delay(50000);
-	player1 = Move_Player(player1, player1.Position.x-1, player1.Position.y);
-	
+	game_state = PLAYER;
 }
 
 void UI_Init(){

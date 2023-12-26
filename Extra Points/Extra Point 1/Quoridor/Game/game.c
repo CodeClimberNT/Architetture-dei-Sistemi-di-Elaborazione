@@ -8,16 +8,19 @@ volatile struct UI timer_ui;
 volatile struct UI player0_ui;
 volatile struct UI player1_ui;
 
+volatile struct Wall wall;
+
 volatile uint8_t currPlayer = 0;
 volatile uint8_t timeLeft = MAX_TIME;
-volatile uint8_t currWallUI[2];
 
 struct Wall WallMatrixPosition [NUM_ROWS-1][NUM_COLUMNS-1] = {0}; 
 //consider wall position in the junction between the player position (assume you cannot position a wall outside the board to have a 1 block lenght wall)
-//e.g. 	[] []
-// 			  X
-//			[] []
-//wall position will be in the X and based on his propreties (Horizontal/Vertical) will block the respective Player Position
+//e.g.  [] [] [] 
+// 			  X  X  
+//			[] [] []
+//wall position will be in the X (where the [] rappresent the player position) and based on his propreties (Horizontal/Vertical) will block the respective Player Position
+
+GAME_STATE game_state = TRANSISTION;
 
 uint32_t lastMove;
 //uint8_t started = 0;
@@ -48,17 +51,25 @@ void End_Turn(){
 	timeLeft = MAX_TIME;
 }
 
-void Peripheral_Init(){
-	LCD_Initialization();
+void Move(DIRECTION dir){
+	struct Vector2D vec2d;
 	
-	init_timer(0, 0x17D7840 );							/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
-	//init_timer(0, 0x1312D0 ); 						/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
-	//init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
-	//init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
+	//Mapping enum dir to actual relative direction for movement
+	vec2d = GetPos(dir);
 	
-	init_RIT(0x1312D0); 										/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
-	BUTTON_init();
-	disable_button(1);
-	disable_button(2);
-	joystick_init();
+	switch (game_state){
+		case PLAYER:
+			if(currPlayer == 0){
+				Move_Player(player0, vec2d);
+			} else {
+				Move_Player(player1, vec2d);
+			}
+			break;
+		case WALL:
+			wall = Move_Wall(wall, vec2d);
+			break;
+		default:
+			GUI_Text(0,0,(uint8_t *)"ERROR: MOVING STATE NOT READY", Black, White);
+	}
 }
+
