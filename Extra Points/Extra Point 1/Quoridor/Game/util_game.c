@@ -2,6 +2,7 @@
 
 extern GAME_STATE game_state;
 extern MOVING_ENTITY moving_entity;
+extern uint8_t WallMatrixPosition [NUM_ROWS-1][NUM_COLUMNS-1];
 
 void Peripheral_Init(){
 	LCD_Initialization();
@@ -38,7 +39,6 @@ void LCD_DrawRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 }
 
 void LCD_DrawShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , SHADOW_DIRECTION dir, uint16_t color){
-
 	switch(dir){
 		case NORTH:
 			LCD_DrawLine(x0+1, y0-1, x1-1, y0-1, color);
@@ -137,7 +137,6 @@ void Update_Board(struct Player player, struct Wall *WallMatrixPosition){
 }
 
 
-
 void Update_UI(struct UI ui){
 	//erase previous text
 	LCD_FillRect(ui.value_position.x, ui.value_position.y, ui.value_position.x + 20, ui.value_position.y + 15, GameBG);
@@ -170,10 +169,6 @@ void Position_Player(struct Player player){
 }
 
 struct Player Move_Player(struct Player player, struct Vector2D vec2d){
-	
-	
-	
-	
 	//update player to new position
 	//check movement overflow
 	if(	( vec2d.x ==  1   && player.Position.x != (NUM_COLUMNS-1)) 	|| //RIGHT border
@@ -199,6 +194,22 @@ void Remove_Player(struct Player player){
 	Position_Player(player);
 }
 
+struct Wall Create_Wall(struct Wall wall){
+	uint8_t i=0,j=0;
+	
+	//find first free position spawn a wall
+	for(i=0; WallMatrixPosition[i][j]==1; i++){
+		for(j=0; WallMatrixPosition[i][j]==1 && j<NUM_COLUMNS_WALL; j++){ //increas j untill find a spot in the matrix or check all the rows
+		}
+	}
+	
+	wall.position.x = i;
+	wall.position.y = j;
+	wall.direction = Horizontal;
+	wall.color = PhantomWallColor;
+	
+	return wall;
+}
 
 void Preview_Wall(struct Wall wall){
 	uint16_t x0,y0,x1,y1,discount = 2;
@@ -237,12 +248,27 @@ void Preview_Wall(struct Wall wall){
 }
 
 struct Wall Move_Wall(struct Wall wall, struct Vector2D vec2d){
+	struct Vector2D newPos;
+	uint8_t i,j;
+	newPos.x = (wall.position.x + vec2d.x) % NUM_COLUMNS_WALL;
+	newPos.y = (wall.position.y + vec2d.y) % NUM_ROWS_WALL;
+	
+	//loop unless found a free spot
+	while(WallMatrixPosition[newPos.x][newPos.y]){
+		newPos.x = (++newPos.x)%NUM_COLUMNS_WALL;
+		
+		newPos.x = (++newPos.x)%NUM_COLUMNS_WALL;
+	}
+	
+	for(; WallMatrixPosition[newPos.x][newPos.y]==1 && newPos.x < newPos.x;){}
 	//remove previous position
 	Remove_Wall(wall);
 	
+	
+	
+	
 	//update new position
-	wall.position.x += vec2d.x;
-	wall.position.y += vec2d.y;
+	wall.position = newPos;
 	
 	//draw new position
 	Preview_Wall(wall);

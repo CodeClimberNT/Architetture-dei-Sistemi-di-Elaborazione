@@ -42,6 +42,8 @@
 //BOARD OPTIONS
 #define NUM_ROWS		7
 #define NUM_COLUMNS	7
+#define NUM_ROWS_WALL NUM_ROWS-1
+#define NUM_COLUMNS_WALL NUM_COLUMNS-1
 #define WALL_WIDTH  6 
 #define SQUARE_SIZE (MAX_X - (NUM_ROWS - 1) * WALL_WIDTH) / NUM_ROWS
 #define PLAYER_SIZE SQUARE_SIZE-2
@@ -168,11 +170,13 @@ void Position_Player(struct Player player);
 struct Player Move_Player(struct Player player, struct Vector2D vec2d);
 void Remove_Player(struct Player player);
 
+struct Wall Create_Wall(struct Wall wall);
 void Position_Wall(struct Wall wall);
 void Preview_Wall(struct Wall wall);
 struct Wall Move_Wall(struct Wall wall, struct Vector2D vec2d);
 struct Wall Rotate_Wall(struct Wall wall, WALL_DIRECTION new_dir);
 void Remove_Wall(struct Wall wall);
+
 
 
 

@@ -17,18 +17,18 @@ volatile char p2_wall_remaining[2];
 volatile char time_value[2];
 
 
-struct Wall WallMatrixPosition [NUM_ROWS-1][NUM_COLUMNS-1] = {0}; 
+volatile uint8_t WallMatrixPosition [NUM_ROWS_WALL][NUM_COLUMNS_WALL] = {0}; 
 //consider wall position in the junction between the player position (assume you cannot position a wall outside the board to have a 1 block lenght wall)
 //e.g.  [] [] [] 
 // 			  X  X  
 //			[] [] []
 //wall position will be in the X (where the [] rappresent the player position) and based on his propreties (Horizontal/Vertical) will block the respective Player Position
 
-GAME_STATE game_state = TRANSITION;
-MOVING_ENTITY moving_entity = PLAYER;
-uint32_t lastMove;
-//uint8_t started = 0;
-uint8_t started = 1; /********************REMOVE THIS WHEN FINISH DEBUGGING***************/
+volatile GAME_STATE game_state = TRANSITION;
+volatile MOVING_ENTITY moving_entity = PLAYER;
+volatile uint32_t lastMove;
+//volatile uint8_t started = 0;
+volatile uint8_t started = 1; /********************REMOVE THIS WHEN FINISH DEBUGGING***************/
 
 void Setup(){
 	Peripheral_Init();
@@ -54,6 +54,16 @@ void End_Turn(){
 	game_state = TRANSITION;
 	currPlayer ^= 1; 			//alternate between 0 and 1
 	timeLeft = MAX_TIME;
+}
+
+void Switch_Player_Wall(){
+	game_state = TRANSITION;
+	if(moving_entity == PLAYER){
+		moving_entity = WALL;
+		wall = Create_Wall(wall);
+	}
+	else
+		moving_entity = PLAYER;
 }
 
 void Move(DIRECTION dir){

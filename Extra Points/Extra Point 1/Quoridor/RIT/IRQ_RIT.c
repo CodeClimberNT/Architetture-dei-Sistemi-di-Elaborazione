@@ -34,6 +34,7 @@ void RIT_IRQHandler (void)
 	
 	/* Joytick J_Select pressed p1.25*/
 	if((LPC_GPIO1->FIOPIN & (1<<25)) == 0){	
+		
 	}
 	
 	/* Joytick UP p1.29*/
