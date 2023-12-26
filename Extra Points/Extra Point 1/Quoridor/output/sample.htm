@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\output\sample.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\output\sample.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Dec 26 18:45:38 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Dec 26 19:07:49 2023
 <BR><P>
 <H3>Maximum Stack Usage =        272 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -515,8 +515,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[74]"></a>End_Turn</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, game.o(.text))
+<P><STRONG><a name="[6e]"></a>End_Turn</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, game.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 </UL>
 
 <P><STRONG><a name="[48]"></a>Move</STRONG> (Thumb, 356 bytes, Stack size 48 bytes, game.o(.text))
@@ -596,7 +597,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_UI
 </UL>
@@ -657,46 +658,47 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 </UL>
 
-<P><STRONG><a name="[5b]"></a>Move_Player</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, util_game.o(.text))
+<P><STRONG><a name="[5b]"></a>Move_Player</STRONG> (Thumb, 132 bytes, Stack size 24 bytes, util_game.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = Move_Player &rArr; Remove_Player &rArr; Position_Player &rArr; LCD_FillSquare &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Player
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;End_Turn
 <LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Player
 </UL>
 <BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move
 </UL>
 
-<P><STRONG><a name="[6e]"></a>Preview_Wall</STRONG> (Thumb, 170 bytes, Stack size 40 bytes, util_game.o(.text))
+<P><STRONG><a name="[6f]"></a>Preview_Wall</STRONG> (Thumb, 170 bytes, Stack size 40 bytes, util_game.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = Preview_Wall &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
 </UL>
-<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_Wall
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
+<BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_Wall
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Wall
 </UL>
 
-<P><STRONG><a name="[6f]"></a>Remove_Wall</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, util_game.o(.text))
+<P><STRONG><a name="[70]"></a>Remove_Wall</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, util_game.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = Remove_Wall &rArr; Preview_Wall &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 </UL>
-<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_Wall
+<BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_Wall
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Wall
 </UL>
 
 <P><STRONG><a name="[5c]"></a>Move_Wall</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, util_game.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = Move_Wall &rArr; Remove_Wall &rArr; Preview_Wall &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 </UL>
 <BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move
 </UL>
 
-<P><STRONG><a name="[70]"></a>Rotate_Wall</STRONG> (Thumb, 42 bytes, Stack size 32 bytes, util_game.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<P><STRONG><a name="[71]"></a>Rotate_Wall</STRONG> (Thumb, 42 bytes, Stack size 32 bytes, util_game.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 </UL>
 
 <P><STRONG><a name="[5a]"></a>GetPos</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, util_game.o(.text))
@@ -712,8 +714,8 @@ Global Symbols
 <P><STRONG><a name="[60]"></a>BUTTON_init</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, lib_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = BUTTON_init &rArr; __NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 </UL>
 <BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Peripheral_Init
 </UL>
@@ -721,7 +723,7 @@ Global Symbols
 <P><STRONG><a name="[61]"></a>disable_button</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, lib_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = disable_button
 </UL>
-<BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
 <BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Peripheral_Init
 </UL>
@@ -729,7 +731,7 @@ Global Symbols
 <P><STRONG><a name="[65]"></a>enable_button</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, lib_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = enable_button
 </UL>
-<BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 </UL>
 <BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Peripheral_Enable
 </UL>
@@ -751,7 +753,7 @@ Global Symbols
 <LI>Call Chain = TIMER0_IRQHandler &rArr; Update_UI &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;End_Turn
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;End_Turn
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_UI
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
@@ -960,16 +962,16 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[71]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, lib_button.o(.text))
+<P><STRONG><a name="[72]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, lib_button.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_button
 <LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init
 </UL>
 
-<P><STRONG><a name="[73]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, lib_button.o(.text))
+<P><STRONG><a name="[74]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, lib_button.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_button
 </UL>
 
-<P><STRONG><a name="[72]"></a>__NVIC_SetPriority</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_button.o(.text))
+<P><STRONG><a name="[73]"></a>__NVIC_SetPriority</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lib_button.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __NVIC_SetPriority
 </UL>
 <BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_init

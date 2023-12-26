@@ -70,6 +70,7 @@ void Move(DIRECTION dir){
 			} else {
 				player1 = Move_Player(player1, vec2d);
 			}
+			
 			break;
 		case WALL:
 			wall = Move_Wall(wall, vec2d);
@@ -77,5 +78,6 @@ void Move(DIRECTION dir){
 		default:
 			GUI_Text(0,0,(uint8_t *)"ERROR: MOVING STATE NOT READY", Black, White);
 	}
+	
 }
 

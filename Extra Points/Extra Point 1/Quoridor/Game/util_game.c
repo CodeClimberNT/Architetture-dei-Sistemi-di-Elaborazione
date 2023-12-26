@@ -11,7 +11,7 @@ void Peripheral_Init(){
 	//init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
 	//init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
 	
-	init_RIT(0xF4240); 										/* 50ms  * 100MHz = 5*10^6 = 0x4C4B40  */
+	init_RIT(0x7A120); 										/* 50ms  * 100MHz = 5*10^6 = 0x4C4B40  */
 	BUTTON_init();
 	disable_button(1);
 	disable_button(2);
@@ -171,16 +171,26 @@ void Position_Player(struct Player player){
 
 struct Player Move_Player(struct Player player, struct Vector2D vec2d){
 	
-	Remove_Player(player);
+	
+	
 	
 	//update player to new position
-	player.Position.x += vec2d.x;
-	player.Position.y += vec2d.y;
+	//check movement overflow
+	if(	( vec2d.x ==  1   && player.Position.x != (NUM_COLUMNS-1)) 	|| //RIGHT border
+			( vec2d.x == -1   && player.Position.x != (0))							|| //LEFT border
+			( vec2d.y == -1   && player.Position.y != (0))							|| //TOP border
+			( vec2d.y ==  1   && player.Position.y != (NUM_ROWS-1))     ){ //BOTTOM border
+		
+		Remove_Player(player);
+
+		player.Position.x += vec2d.x;
+		player.Position.y += vec2d.y;
+		//draw player new position
+		Position_Player(player);
+		End_Turn(); 																										//don't end turn unless player move
+	}
 	
-	
-	//draw player new position
-	Position_Player(player);
-	
+
 	return player;
 }
 
