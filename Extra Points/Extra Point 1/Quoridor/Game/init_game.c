@@ -12,6 +12,10 @@ extern struct UI player0_ui;
 extern struct UI player1_ui;
 
 extern uint8_t timeLeft;
+extern char p1_wall_remaining[2];
+extern char p2_wall_remaining[2];
+extern char time_value[2];
+
 
 void Start_Game(){
 	LCD_Clear(GameBG);
@@ -26,16 +30,9 @@ void Board_Init(){
 	
 	Position_Player(player0);
 	Position_Player(player1);
-	
-	game_state = PLAYER;
 }
 
 void UI_Init(){
-	char p1_wall_remaining[2];
-	char p2_wall_remaining[2];
-	char time_value[2];
-	
-	
 	sprintf(p1_wall_remaining, "%u", MAX_WALLS);
 	player0_ui = Create_UI(0, P0_UI_XPOS, P0_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P0_UI_XPOS+5, P0_UI_YPOS+5, "P1 WALL", P0_UI_XPOS+P_UI_WIDTH/2 - 5, P0_UI_YPOS+UI_HEIGHT-20, p1_wall_remaining);
 	
@@ -48,39 +45,19 @@ void UI_Init(){
 	timer_ui = Create_UI(2, T_UI_XPOS, T_UI_YPOS, UI_HEIGHT, T_UI_WIDTH, T_UI_XPOS+5, T_UI_YPOS+5, "TIME LEFT", T_UI_XPOS+T_UI_WIDTH/2 - 5, T_UI_YPOS+UI_HEIGHT-20, time_value);
 	
 	
-	LCD_DrawRectWithShadow(player0_ui.ui_Position.x, player0_ui.ui_Position.y, player0_ui.width, player0_ui.height, Black, SUD_EAST, Black); //P0 UI
+	LCD_DrawRectWithShadow(player0_ui.ui_Position.x, player0_ui.ui_Position.y, player0_ui.width, player0_ui.height, Black, SUD_OVEST, Black); //P0 UI
 	GUI_Text(player0_ui.title_position.x, player0_ui.title_position.y, (uint8_t *)player0_ui.title_text, Black, White);
 
-	LCD_DrawRectWithShadow(player1_ui.ui_Position.x, player1_ui.ui_Position.y, player1_ui.width, player1_ui.height, Black, SUD_EAST, Black); //P1 UI
+	LCD_DrawRectWithShadow(player1_ui.ui_Position.x, player1_ui.ui_Position.y, player1_ui.width, player1_ui.height, Black, SUD_OVEST, Black); //P1 UI
 	GUI_Text(player1_ui.title_position.x, player1_ui.title_position.y, (uint8_t *)player1_ui.title_text, Black, White);
 	
-	LCD_DrawRectWithShadow(timer_ui.ui_Position.x, timer_ui.ui_Position.y, timer_ui.width, timer_ui.height, Black, SUD_EAST, Black); //TIMER UI
+	LCD_DrawRectWithShadow(timer_ui.ui_Position.x, timer_ui.ui_Position.y, timer_ui.width, timer_ui.height, Black, SUD_OVEST, Black); //TIMER UI
 	GUI_Text(timer_ui.title_position.x, timer_ui.title_position.y, (uint8_t *)timer_ui.title_text, Black, White);
 	
 	UI_Counter_Init();
 }
 
 
-struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y ,char *title_text,	
-									uint16_t val_x, uint16_t val_y, char *value_text){
-	struct UI ui; 
-	
-  ui.id = id;
-										
-	ui.ui_Position.x = ui_x;
-	ui.ui_Position.y = ui_y;
-	ui.height = height;
-	ui.width = width;
-	
-  ui.title_position.x = tit_x;
-	ui.title_position.y = tit_y;
-	ui.title_text = title_text;
-	ui.value_position.x = val_x;
-	ui.value_position.y = val_y;
-	ui.value_text = value_text;
-
-	return ui;
-}
 
 void Player_Init(){
 	player0 = Create_Player(0, 3, 6, P0_Color);

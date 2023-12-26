@@ -485,11 +485,6 @@
           <GroupName>joystick</GroupName>
           <Files>
             <File>
-              <FileName>funct_joystick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\joystick\funct_joystick.c</FilePath>
-            </File>
-            <File>
               <FileName>lib_joystick.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\joystick\lib_joystick.c</FilePath>

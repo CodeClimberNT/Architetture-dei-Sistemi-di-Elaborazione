@@ -27,13 +27,13 @@ extern GAME_STATE game_state;
 void RIT_IRQHandler (void)
 {					
 	//If game is processing exit and do nothing
-	if(game_state == TRANSISTION){
-		goto exit;
+	if(game_state == TRANSITION){
+		LPC_RIT->RICTRL |= 0x1;
+		return;
 	}
 	
 	/* Joytick J_Select pressed p1.25*/
 	if((LPC_GPIO1->FIOPIN & (1<<25)) == 0){	
-		
 	}
 	
 	/* Joytick UP p1.29*/
@@ -55,11 +55,9 @@ void RIT_IRQHandler (void)
 	else if((LPC_GPIO1->FIOPIN & (1<<27)) == 0){
 		Move(LEFT);
 	}
-	exit:
-  LPC_RIT->RICTRL |= 0x1;	/* clear interrupt flag */
-  return;
+	
+	LPC_RIT->RICTRL |= 0x1;	/* clear interrupt flag */
 }
-
 /******************************************************************************
 **                            End Of File
 ******************************************************************************/

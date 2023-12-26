@@ -1,25 +1,31 @@
 #include "game.h"
 
+extern GAME_STATE game_state;
+extern MOVING_ENTITY moving_entity;
+
 void Peripheral_Init(){
 	LCD_Initialization();
-	
-	init_timer(0, 0x17D7840 );							/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
+	//0x17D7840
+	init_timer(0, 0x26259F); 								/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
 	//init_timer(0, 0x1312D0 ); 						/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
 	//init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
 	//init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
 	
-	init_RIT(0x1312D0); 										/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
+	init_RIT(0xF4240); 										/* 50ms  * 100MHz = 5*10^6 = 0x4C4B40  */
 	BUTTON_init();
 	disable_button(1);
 	disable_button(2);
 	joystick_init();
 }
 
+void Peripheral_Enable(){
+	enable_timer(0);
+	enable_RIT();
+	enable_button(1);
+	enable_button(2);
+}
 
-
-
-void wait_delay(int count)
-{
+void wait_delay(int count){
 	while(count--);
 }
 
@@ -52,7 +58,8 @@ void LCD_DrawShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , SHADOW_
 			LCD_DrawLine(x0+1, y1+1, x1-1, y1+1, color);
 			break;
 		case SUD_OVEST:
-			GUI_Text(x0,y0,(uint8_t*)"TO IMPLEMENT", White,Black);
+			LCD_DrawLine(x0-1, y0+1, x0-1, y1+1, color);
+			LCD_DrawLine(x0-1, y1+1, x1-1, y1+1, color);
 			break;
 		case OVEST:
 			LCD_DrawLine(x0-1, y0+1, x0-1, y1-1, color);
@@ -67,9 +74,7 @@ void LCD_DrawShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , SHADOW_
 			LCD_DrawLine(x1+1, y0-1, x1+1, y1-1, color);	//east
 			break;
 	}
-	
 }
-
 
 void LCD_DrawRectWithShadow( uint16_t x0, uint16_t y0, uint16_t width, uint16_t heigth, uint16_t rect_color, SHADOW_DIRECTION dir, uint16_t shadow_color ){
 	LCD_DrawRect(x0, y0, x0+width, y0+heigth, rect_color);
@@ -92,6 +97,29 @@ void LCD_FillSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color ){
 	LCD_FillRect(x0, y0, x0+len, y0+len, color);
 }
 
+
+struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y ,char *title_text,	
+									uint16_t val_x, uint16_t val_y, char *value_text){
+	struct UI ui; 
+	
+  ui.id = id;
+										
+	ui.ui_Position.x = ui_x;
+	ui.ui_Position.y = ui_y;
+	ui.height = height;
+	ui.width = width;
+	
+  ui.title_position.x = tit_x;
+	ui.title_position.y = tit_y;
+	ui.title_text = title_text;
+	ui.value_position.x = val_x;
+	ui.value_position.y = val_y;
+	ui.value_text = value_text;
+
+	return ui;
+}
+
+
 void Update_Board(struct Player player, struct Wall *WallMatrixPosition){
 	uint8_t i,j;
 	uint16_t rows = NUM_ROWS*2-1;
@@ -109,8 +137,12 @@ void Update_Board(struct Player player, struct Wall *WallMatrixPosition){
 }
 
 
+
 void Update_UI(struct UI ui){
-		GUI_Text(ui.value_position.x, ui.value_position.y, (uint8_t *) ui.value_text, Black, White);
+	//erase previous text
+	LCD_FillRect(ui.value_position.x, ui.value_position.y, ui.value_position.x + 20, ui.value_position.y + 15, GameBG);
+	//update new text
+	GUI_Text(ui.value_position.x, ui.value_position.y, (uint8_t *) ui.value_text, Black, White);
 }
 
 void Draw_Checkers(){
@@ -118,14 +150,13 @@ void Draw_Checkers(){
 
 		for(i=0; i<NUM_ROWS; i++){
 			for(j=0; j<NUM_COLUMNS; j++){
-				uint16_t x = i * (SQUARE_SIZE + WALL_WIDTH);
-				uint16_t y = j * (SQUARE_SIZE + WALL_WIDTH);
+				uint16_t x = j * (SQUARE_SIZE + WALL_WIDTH);
+				uint16_t y = i * (SQUARE_SIZE + WALL_WIDTH);
 
 				LCD_DrawSquare(x, y, SQUARE_SIZE, Black);
 			}
 		}
 }
-
 
 
 void Position_Player(struct Player player){
@@ -135,7 +166,7 @@ void Position_Player(struct Player player){
 	x0 = player.Position.x * (SQUARE_SIZE + WALL_WIDTH)+1;
 	y0 = player.Position.y * (SQUARE_SIZE + WALL_WIDTH)+1;
 
-	LCD_FillSquare(x0,y0,PLAYER_SIZE, player.color);
+	LCD_FillSquare(x0, y0, PLAYER_SIZE, player.color);
 }
 
 struct Player Move_Player(struct Player player, struct Vector2D vec2d){
@@ -143,8 +174,8 @@ struct Player Move_Player(struct Player player, struct Vector2D vec2d){
 	Remove_Player(player);
 	
 	//update player to new position
-	player.Position.x = vec2d.x;
-	player.Position.y = vec2d.y;
+	player.Position.x += vec2d.x;
+	player.Position.y += vec2d.y;
 	
 	
 	//draw player new position
@@ -159,11 +190,8 @@ void Remove_Player(struct Player player){
 }
 
 
-
 void Preview_Wall(struct Wall wall){
-	
 	uint16_t x0,y0,x1,y1,discount = 2;
-	
 	
 	// Convert Matrix to Spatial position
 	if(wall.direction == Vertical){
@@ -174,10 +202,7 @@ void Preview_Wall(struct Wall wall){
 		y0 = wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE;
 	}
 		
-	
 	//Draw Wall
-
-	
 	switch (wall.direction) {
 		case Horizontal:
 			x1 = x0 + WALL_LENGTH;
@@ -191,14 +216,12 @@ void Preview_Wall(struct Wall wall){
 			return;
 	}
 	
-	//to avoid over
 	if(wall.isPhantom){
 		x0 += discount; 
 		y0 += discount;
 		x1 -= discount; 
 		y1 -= discount;
 	}
-	
 	
 	LCD_FillRect(x0, y0, x1, y1, wall.color);
 }
@@ -234,6 +257,7 @@ void Remove_Wall(struct Wall wall){
 	Preview_Wall(wall);
 }
 
+
 struct Vector2D GetPos(DIRECTION dir){
 	struct Vector2D vec2d;
 	
@@ -255,6 +279,5 @@ struct Vector2D GetPos(DIRECTION dir){
 			vec2d.y = 0;
 			break;
 	}
-	
 	return vec2d;
 }

@@ -35,6 +35,8 @@
 extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emulator to find the symbol (can be placed also inside system_LPC17xx.h but since it is RO, it needs more work)
 #endif
 
+extern GAME_STATE game_state;
+extern MOVING_ENTITY moving_entity;
 	
 int main(void)
 {	
@@ -45,6 +47,7 @@ int main(void)
 	
   while (1)	
   {
+		game_state = IDLE;
 		__ASM("wfi");
   }
 }

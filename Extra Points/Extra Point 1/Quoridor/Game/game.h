@@ -81,7 +81,8 @@
 
 
 /*******************ENUM DEFINITION**********************/
-typedef enum {TRANSISTION, PLAYER, WALL} GAME_STATE;
+typedef enum {TRANSITION, IDLE} GAME_STATE;
+typedef enum {PLAYER, WALL} MOVING_ENTITY;
 typedef enum {Vertical, Horizontal} WALL_DIRECTION;
 typedef enum {UP, RIGHT, DOWN, LEFT} DIRECTION;
 typedef enum {NORTH, NORTH_EAST, EAST, SUD_EAST, SUD, SUD_OVEST, OVEST, NORTH_OVEST, OVEST_NORTH_EAST} SHADOW_DIRECTION;
@@ -130,6 +131,7 @@ void Setup(void);
 
 //INIT FUNCTION
 void Peripheral_Init(void);
+void Peripheral_Enable(void);
 void Start_Game(void);
 void Board_Init(void);
 void UI_Init(void);
@@ -149,7 +151,7 @@ void UI_Init(void);
 struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y ,char title_text[2], uint16_t val_x, uint16_t val_y, char value_text[2]);
 
 void Update_UI(struct UI ui);
-
+void Decrease_Timer(void);
 
 void LCD_DrawRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
 void LCD_DrawSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color );

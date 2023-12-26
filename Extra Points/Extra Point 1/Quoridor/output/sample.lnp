@@ -10,7 +10,6 @@
 ".\output\lib_led.o"
 ".\output\irq_button.o"
 ".\output\lib_button.o"
-".\output\funct_joystick.o"
 ".\output\lib_joystick.o"
 ".\output\irq_rit.o"
 ".\output\lib_rit.o"

@@ -12,7 +12,8 @@
 #include "timer.h"
 #include "../Game/game.h"
 
-
+extern struct UI timer_ui;
+extern char time_value[2];
 extern uint8_t timeLeft;
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
@@ -26,7 +27,13 @@ extern uint8_t timeLeft;
 
 void TIMER0_IRQHandler (void)
 {
-	timeLeft--;
+	if(timeLeft>0){
+		sprintf(time_value, "%u", --timeLeft);
+		Update_UI(timer_ui);
+	} else
+		End_Turn();
+
+
   LPC_TIM0->IR = 1;			/* clear interrupt flag */
   return;
 }
