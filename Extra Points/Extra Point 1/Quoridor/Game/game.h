@@ -21,6 +21,21 @@
 
 
 /*******************CONSTANT DEFINITION**********************/
+//COLOR DEFINITION
+#define GameBG White
+#define DarkGray 0x7BEF
+#define ChristmasRed 0xF800
+#define ChristmasGreen 0xE60
+#define QuoridorRed 0xA9A9
+
+#define P0_Color Blue2
+#define P1_Color Red
+
+#define WallColor 0xF731
+#define PhantomWallColor DarkGray
+
+
+//PLAYER OPTIONS
 #define MAX_WALLS	8
 #define MAX_TIME	20 //seconds
 
@@ -29,8 +44,8 @@
 #define NUM_COLUMNS	7
 #define WALL_WIDTH  6 
 #define SQUARE_SIZE (MAX_X - (NUM_ROWS - 1) * WALL_WIDTH) / NUM_ROWS
+#define PLAYER_SIZE SQUARE_SIZE-2
 #define WALL_LENGTH (SQUARE_SIZE * 2 + WALL_WIDTH) //wall takes two square plus the wall width in the interception
-
 
 
 
@@ -70,14 +85,7 @@ typedef enum {Vertical, Horizontal} WALL_DIRECTION;
 typedef enum {UP, RIGHT, DOWN, LEFT} DIRECTION;
 typedef enum {NORTH, NORTH_EAST, EAST, SUD_EAST, SUD, SUD_OVEST, OVEST, NORTH_OVEST, OVEST_NORTH_EAST} SHADOW_DIRECTION;
 
-/*******************COLOR DEFINITION**********************/
-#define GameBG White
-#define DarkGray 0x7BEF
-#define ChristmasRed 0xF800
-#define ChristmasGreen 0xE60
-#define QuoridorRed 0xA9A9
 
-#define PhantomWallColor DarkGray
 /*******************STRUCT DEFINITION**********************/
 struct Vector2D {
     uint16_t x;
@@ -88,7 +96,15 @@ struct Player {
     uint8_t id;
     struct Vector2D Position;
     uint8_t wallsRemaining; 
+		uint16_t color;
 };
+
+struct Wall {
+    uint8_t placed;
+    WALL_DIRECTION direction;
+		uint8_t isPhantom;
+};
+
 
 struct UI {
     uint8_t id;
@@ -124,25 +140,30 @@ void Waiting_Player(void);
 void End_Turn(void);
 //PLAYER FUNCTION
 void Player_Init(void);
-struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y );
+struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color );
 
 void UI_Init(void);
-struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, 
-								uint16_t tit_x, uint16_t tit_y ,char title_text[2],	
-									uint16_t val_x, uint16_t val_y, char value_text[2]);
-
-
-    
-
+struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y ,char title_text[2], uint16_t val_x, uint16_t val_y, char value_text[2]);
 
 void Update_UI(struct UI ui);
+
 
 void LCD_DrawRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
 void LCD_DrawSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color );
 void LCD_FillRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
 void LCD_FillSquare( uint16_t x0, uint16_t y0, uint16_t len, uint16_t color );
-void Position_Wall(uint8_t x, uint8_t y, WALL_DIRECTION wall_dir, uint8_t isPhantom, uint16_t color);
 void LCD_DrawRectWithShadow( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t rect_color, SHADOW_DIRECTION dir, uint16_t shadow_color );
 void LCD_DrawShadow( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 ,SHADOW_DIRECTION dir,  uint16_t color );
 
+void Draw_Checkers(void);
+
+void Position_Player(struct Player player);
+struct Player Move_Player(struct Player player, uint8_t new_x, uint8_t new_y);
+
+void Position_Wall(uint8_t x, uint8_t y, WALL_DIRECTION wall_dir, uint8_t isPhantom, uint16_t color);
+void Move_Wall(uint8_t prev_x, uint8_t prev_y, WALL_DIRECTION prev_wall_dir, uint8_t new_x, uint8_t new_y, WALL_DIRECTION new_wall_dir);
+
+
+								
+void wait_delay(int count);
 #endif  // __GAME_H

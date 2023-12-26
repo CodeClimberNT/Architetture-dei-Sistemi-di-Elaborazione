@@ -25,23 +25,22 @@ extern uint8_t timeLeft;
 
 void Start_Game(){
 	LCD_Clear(GameBG);
-	Board_Init();
 	Player_Init();
+	Board_Init();
 	UI_Init();
 	return;
 }
 
 void Board_Init(){
-	uint8_t i,j;
+	Draw_Checkers();
+	Position_Player(player0);
+	Position_Player(player1);
+	
+	wait_delay(50000);
 
-	for(i=0; i<NUM_ROWS; i++){
-		for(j=0; j<NUM_COLUMNS; j++){
-			uint16_t x = i * (SQUARE_SIZE + WALL_WIDTH);
-      uint16_t y = j * (SQUARE_SIZE + WALL_WIDTH);
-
-			LCD_DrawSquare(x, y, SQUARE_SIZE, Black);
-		}
-	}
+	player0 = Move_Player(player0, player0.Position.x, player0.Position.y-1);
+	wait_delay(50000);
+	player1 = Move_Player(player1, player1.Position.x-1, player1.Position.y);
 	
 }
 
@@ -50,8 +49,8 @@ void UI_Init(){
 	char p2_wall_remaining[2];
 	char time_value[2];
 	
-	sprintf(p1_wall_remaining, "%u", MAX_WALLS);
 	
+	sprintf(p1_wall_remaining, "%u", MAX_WALLS);
 	player0_ui = Create_UI(0, P0_UI_XPOS, P0_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P0_UI_XPOS+5, P0_UI_YPOS+5, "P1 WALL", P0_UI_XPOS+P_UI_WIDTH/2 - 5, P0_UI_YPOS+UI_HEIGHT-20, p1_wall_remaining);
 	
 	
@@ -98,19 +97,20 @@ struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, u
 }
 
 void Player_Init(){
-	player0 = Create_Player(0, 3, 6);
-	player1 = Create_Player(1, 3, 0);
+	player0 = Create_Player(0, 3, 6, P0_Color);
+	player1 = Create_Player(1, 3, 0, P1_Color);
 }
 
-struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y ){
+struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color ){
 	struct Player player; 
 	
   player.id = id;
   player.Position.x = x;
   player.Position.y = y;
   player.wallsRemaining = MAX_WALLS;
+	player.color = color;
 	
-	 return player;
+	return player;
 };
 
 

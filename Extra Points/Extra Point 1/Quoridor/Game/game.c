@@ -12,7 +12,7 @@ volatile uint8_t currPlayer = 0;
 volatile uint8_t timeLeft = MAX_TIME;
 volatile uint8_t currWallUI[2];
 
-uint8_t WallMatrixPosition [NUM_ROWS-1][NUM_COLUMNS-1] = {0}; 
+struct Wall WallMatrixPosition [NUM_ROWS-1][NUM_COLUMNS-1] = {0}; 
 //consider wall position in the junction between the player position (assume you cannot position a wall outside the board to have a 1 block lenght wall)
 //e.g. 	[] []
 // 			  X
