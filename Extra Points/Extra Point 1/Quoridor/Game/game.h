@@ -45,6 +45,7 @@
 #define NUM_ROWS_WALL NUM_ROWS-1
 #define NUM_COLUMNS_WALL NUM_COLUMNS-1
 #define WALL_WIDTH  6 
+#define HALF_WALL_WIDTH  WALL_WIDTH/2
 #define SQUARE_SIZE (MAX_X - (NUM_ROWS - 1) * WALL_WIDTH) / NUM_ROWS
 #define PLAYER_SIZE SQUARE_SIZE-2
 #define WALL_LENGTH (SQUARE_SIZE * 2 + WALL_WIDTH) //wall takes two square plus the wall width in the interception
@@ -92,41 +93,41 @@ typedef enum {NORTH, NORTH_EAST, EAST, SUD_EAST, SUD, SUD_OVEST, OVEST, NORTH_OV
 
 /*******************STRUCT DEFINITION**********************/
 struct Vector2D {
-    int16_t x;
-    int16_t y;
+	int16_t x;
+	int16_t y;
 };
 
 struct Player {
-    uint8_t id;
-    struct Vector2D Position;
-    uint8_t wallsRemaining; 
-		uint16_t color;
+	uint8_t id;
+	struct Vector2D Position;
+	uint8_t wallsRemaining; 
+	uint16_t color;
 };
 
 struct Wall {
-		struct Vector2D position;
-    uint8_t placed;
-    WALL_DIRECTION direction;
-		uint8_t isPhantom;
-		uint16_t color;
+	struct Vector2D position;
+	WALL_DIRECTION direction;
+	uint16_t color;
+	uint16_t bkcolor;
 };
 
 
 struct UI {
-    uint8_t id;
-    struct Vector2D ui_Position;
-		struct Vector2D title_position;
-		char *title_text;
-		struct Vector2D value_position;
-	  char *value_text;
-    uint16_t height; 
-		uint16_t width;
+	uint8_t id;
+	struct Vector2D ui_Position;
+	struct Vector2D title_position;
+	char *title_text;
+	struct Vector2D value_position;
+	char *value_text;
+	uint16_t height; 
+	uint16_t width;
 };
 
 
 /*******************UTILS FUNCTIONS**********************/
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
+#define MOD(x, y) ((x % y + y) % y)
 
 /*******************GAME FUNCTION**********************/
 void Setup(void);
@@ -145,6 +146,9 @@ void UI_Counter_Init(void);
 //GAME MODE FUNCTION
 void Waiting_Player(void);
 void End_Turn(void);
+
+void Switch_Player_Wall(void);
+
 //PLAYER FUNCTION
 void Player_Init(void);
 struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color );
@@ -153,6 +157,9 @@ void UI_Init(void);
 struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y ,char title_text[2], uint16_t val_x, uint16_t val_y, char value_text[2]);
 
 void Update_UI(struct UI ui);
+
+void Update_Timer(uint8_t time_value);
+	
 void Decrease_Timer(void);
 
 void LCD_DrawRect( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
@@ -167,20 +174,21 @@ void Draw_Checkers(void);
 void Move(DIRECTION dir);
 
 void Position_Player(struct Player player);
-struct Player Move_Player(struct Player player, struct Vector2D vec2d);
+struct Player Move_Player(struct Player player, DIRECTION dir);
 void Remove_Player(struct Player player);
 
 struct Wall Create_Wall(struct Wall wall);
 void Position_Wall(struct Wall wall);
 void Preview_Wall(struct Wall wall);
-struct Wall Move_Wall(struct Wall wall, struct Vector2D vec2d);
+struct Wall Move_Wall(struct Wall wall, DIRECTION dir);
 struct Wall Rotate_Wall(struct Wall wall, WALL_DIRECTION new_dir);
 void Remove_Wall(struct Wall wall);
 
 
 
 
-struct Vector2D GetPos(DIRECTION dir);
-								
+struct Vector2D Get_Relative_Pos(DIRECTION dir);
+struct Vector2D Find_Free_Spot(struct Vector2D vec2d);
+					
 void wait_delay(int count);
 #endif  // __GAME_H

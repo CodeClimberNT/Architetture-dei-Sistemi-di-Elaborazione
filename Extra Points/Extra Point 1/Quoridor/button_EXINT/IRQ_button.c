@@ -17,6 +17,7 @@ void EINT0_IRQHandler (void)	  	/* INT0														 */
 
 void EINT1_IRQHandler (void)	  	/* KEY1														 */
 {
+	Switch_Player_Wall();
 	LPC_SC->EXTINT &= (1 << 1);     /* clear pending interrupt         */
 }
 

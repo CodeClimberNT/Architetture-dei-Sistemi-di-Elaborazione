@@ -17,7 +17,7 @@ volatile char p2_wall_remaining[2];
 volatile char time_value[2];
 
 
-volatile uint8_t WallMatrixPosition [NUM_ROWS_WALL][NUM_COLUMNS_WALL] = {0}; 
+volatile uint8_t WallMatrixPosition [NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {0}; 
 //consider wall position in the junction between the player position (assume you cannot position a wall outside the board to have a 1 block lenght wall)
 //e.g.  [] [] [] 
 // 			  X  X  
@@ -54,6 +54,7 @@ void End_Turn(){
 	game_state = TRANSITION;
 	currPlayer ^= 1; 			//alternate between 0 and 1
 	timeLeft = MAX_TIME;
+	Update_Timer(timeLeft);
 }
 
 void Switch_Player_Wall(){
@@ -62,32 +63,30 @@ void Switch_Player_Wall(){
 		moving_entity = WALL;
 		wall = Create_Wall(wall);
 	}
-	else
+	else{
+		Remove_Wall(wall);
 		moving_entity = PLAYER;
+	}
 }
 
+
 void Move(DIRECTION dir){
-	struct Vector2D vec2d;
 	game_state = TRANSITION;
-	
-	//Mapping enum direction to actual relative position for movement
-	vec2d = GetPos(dir);
 	
 	switch (moving_entity){
 		case PLAYER:
 			if(currPlayer == 0){
-				player0 = Move_Player(player0, vec2d);
+				player0 = Move_Player(player0, dir);
 			} else {
-				player1 = Move_Player(player1, vec2d);
+				player1 = Move_Player(player1, dir);
 			}
-			
 			break;
+			
 		case WALL:
-			wall = Move_Wall(wall, vec2d);
+			wall = Move_Wall(wall, dir);
 			break;
 		default:
-			GUI_Text(0,0,(uint8_t *)"ERROR: MOVING STATE NOT READY", Black, White);
+			GUI_Text(0,0,(uint8_t *)"ERROR: \"moving_entity\" WRONG VALUE", Black, White);
 	}
-	
 }
 

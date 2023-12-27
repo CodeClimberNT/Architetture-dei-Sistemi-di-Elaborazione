@@ -28,8 +28,7 @@ extern uint8_t timeLeft;
 void TIMER0_IRQHandler (void)
 {
 	if(timeLeft>0){
-		sprintf(time_value, "%u", --timeLeft);
-		Update_UI(timer_ui);
+		Update_Timer(--timeLeft);
 	} else
 		End_Turn();
 
