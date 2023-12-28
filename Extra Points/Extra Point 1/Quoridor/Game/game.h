@@ -34,6 +34,7 @@
 #define WallColor 0xF731
 #define PhantomWallColor DarkGray
 #define WALL_DISCOUNT 1
+
 // PLAYER OPTIONS
 #define MAX_WALLS 8
 #define MAX_TIME 20  // seconds
@@ -78,6 +79,11 @@
 
 #define T_UI_HEIGHT 70
 #define T_UI_WIDTH 82
+
+
+//Color Buffer
+#define COLOR_BUFFER_LENGTH	MAX_X
+#define COLOR_BUFFER_HEIGHT (SQUARE_SIZE+WALL_WIDTH)*NUM_ROWS
 
 /*******************ENUM DEFINITION**********************/
 typedef enum { TRANSITION,
@@ -124,7 +130,6 @@ struct Wall {
   struct Vector2D position;
   WALL_DIRECTION direction;
   uint16_t color;
-  uint16_t bkcolor;
 	uint8_t discount;
 };
 
@@ -198,10 +203,15 @@ struct Wall Rotate_Wall(struct Wall m_wall);
 void Remove_Wall(struct Wall wall);
 uint8_t Can_Place_Wall(struct Wall m_wall);
 
-struct Rect Get_Rect_Position(struct Wall m_wall);
+struct Rect Get_Position_Of(struct Wall m_wall);
 
 struct Vector2D Get_Relative_Pos(DIRECTION dir);
 struct Vector2D Find_Free_Spot(struct Vector2D vec2d);
 
 void wait_delay(int count);
+
+void Create_Color_Buffer(void);
+void Draw_Color_Buffer(void);
+
+
 #endif  // __GAME_H

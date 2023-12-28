@@ -18,9 +18,9 @@ volatile uint8_t cooldown;
 
 volatile uint8_t WallMatrixPosition[NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {0};
 // consider wall position in the junction between the player position (assume you cannot position a wall outside the board to have a 1 block lenght wall)
-// e.g.     [] [] []
-//  	      X  X
-//			[] [] []
+// e.g.  [] [] []
+//  	     X  X
+//			 [] [] []
 // wall position will be in the X (where the [] rappresent the player position) and based on his propreties (Horizontal/Vertical) will block the respective Player Position
 
 volatile GAME_STATE game_state = TRANSITION;

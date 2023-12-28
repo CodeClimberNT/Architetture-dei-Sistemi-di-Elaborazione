@@ -8,6 +8,8 @@ extern struct UI timer_ui;
 extern char time_value[2];
 extern uint8_t timeLeft;
 
+uint16_t color_buffer[COLOR_BUFFER_LENGTH][COLOR_BUFFER_HEIGHT];
+
 void Peripheral_Init() {
   LCD_Initialization();
   // 0x17D7840
@@ -42,40 +44,40 @@ void LCD_DrawRect(uint16_t m_x0, uint16_t y0, uint16_t m_x1, uint16_t m_y1, uint
   LCD_DrawLine(m_x0, m_y1, m_x0, y0, color);    // left edge
 }
 
-void LCD_DrawShadow(uint16_t m_x0, uint16_t y0, uint16_t m_x1, uint16_t m_y1, SHADOW_DIRECTION direction, uint16_t color) {
+void LCD_DrawShadow(uint16_t m_x0, uint16_t m_y0, uint16_t m_x1, uint16_t m_y1, SHADOW_DIRECTION direction, uint16_t color) {
   switch (direction) {
     case NORTH:
-      LCD_DrawLine(m_x0 + 1, y0 - 1, m_x1 - 1, y0 - 1, color);
+      LCD_DrawLine(m_x0 + 1, m_y0 - 1, m_x1 - 1, m_y0 - 1, color);
       break;
     case NORTH_EAST:
-      LCD_DrawLine(m_x0 + 1, y0 - 1, m_x1 + 1, y0 - 1, color);
-      LCD_DrawLine(m_x1 + 1, y0 - 1, m_x1 + 1, m_y1 - 1, color);
+      LCD_DrawLine(m_x0 + 1, m_y0 - 1, m_x1 + 1, m_y0 - 1, color);
+      LCD_DrawLine(m_x1 + 1, m_y0 - 1, m_x1 + 1, m_y1 - 1, color);
       break;
     case EAST:
-      LCD_DrawLine(m_x1 + 1, y0 + 1, m_x1 + 1, m_y1 - 1, color);
+      LCD_DrawLine(m_x1 + 1, m_y0 + 1, m_x1 + 1, m_y1 - 1, color);
       break;
     case SUD_EAST:
-      LCD_DrawLine(m_x1 + 1, y0 + 1, m_x1 + 1, m_y1 + 1, color);
+      LCD_DrawLine(m_x1 + 1, m_y0 + 1, m_x1 + 1, m_y1 + 1, color);
       LCD_DrawLine(m_x0 + 1, m_y1 + 1, m_x1 + 1, m_y1 + 1, color);
       break;
     case SUD:
       LCD_DrawLine(m_x0 + 1, m_y1 + 1, m_x1 - 1, m_y1 + 1, color);
       break;
     case SUD_OVEST:
-      LCD_DrawLine(m_x0 - 1, y0 + 1, m_x0 - 1, m_y1 + 1, color);
+      LCD_DrawLine(m_x0 - 1, m_y0 + 1, m_x0 - 1, m_y1 + 1, color);
       LCD_DrawLine(m_x0 - 1, m_y1 + 1, m_x1 - 1, m_y1 + 1, color);
       break;
     case OVEST:
-      LCD_DrawLine(m_x0 - 1, y0 + 1, m_x0 - 1, m_y1 - 1, color);
+      LCD_DrawLine(m_x0 - 1, m_y0 + 1, m_x0 - 1, m_y1 - 1, color);
       break;
     case NORTH_OVEST:
-      LCD_DrawLine(m_x0 - 1, y0 - 1, m_x1 - 1, y0 - 1, color);
-      LCD_DrawLine(m_x0 - 1, y0 - 1, m_x0 - 1, m_y1 - 1, color);
+      LCD_DrawLine(m_x0 - 1, m_y0 - 1, m_x1 - 1, m_y0 - 1, color);
+      LCD_DrawLine(m_x0 - 1, m_y0 - 1, m_x0 - 1, m_y1 - 1, color);
       break;
     case OVEST_NORTH_EAST:
-      LCD_DrawLine(m_x0 - 1, y0 - 1, m_x0 - 1, m_y1 - 1, color);  // ovest
-      LCD_DrawLine(m_x0 - 1, y0 - 1, m_x1 + 1, y0 - 1, color);    // north
-      LCD_DrawLine(m_x1 + 1, y0 - 1, m_x1 + 1, m_y1 - 1, color);  // east
+      LCD_DrawLine(m_x0 - 1, m_y0 - 1, m_x0 - 1, m_y1 - 1, color);    
+      LCD_DrawLine(m_x0 - 1, m_y0 - 1, m_x1 + 1, m_y0 - 1, color);    
+      LCD_DrawLine(m_x1 + 1, m_y0 - 1, m_x1 + 1, m_y1 - 1, color);    
       break;
   }
 }
@@ -176,10 +178,10 @@ struct Player Move_Player(struct Player m_player, DIRECTION dir) {
   struct Vector2D m_vec2d = Get_Relative_Pos(dir);
 
   // check movement overflow
-  if ((dir == RIGHT && m_player.Position.x != (NUM_COLUMNS - 1)) ||  // RIGHT border
-      (dir == LEFT && m_player.Position.x != (0)) ||                 // LEFT border
-      (dir == UP && m_player.Position.y != (0)) ||                   // TOP border
-      (dir == DOWN && m_player.Position.y != (NUM_ROWS - 1)))        // BOTTOM border
+  if ((dir == RIGHT && m_player.Position.x != (NUM_COLUMNS - 1)) ||   // RIGHT border
+      (dir == LEFT  && m_player.Position.x != (0))               ||   // LEFT border
+      (dir == UP    && m_player.Position.y != (0))               ||   // TOP border
+      (dir == DOWN  && m_player.Position.y != (NUM_ROWS - 1)))        // BOTTOM border
   {
     Remove_Player(m_player);
 
@@ -199,35 +201,35 @@ void Remove_Player(struct Player m_player) {
 }
 
 void Place_Wall(struct Wall m_wall){
-game_state = TRANSITION;
- if(!Can_Place_Wall(m_wall))
+	game_state = TRANSITION;
+	if(!Can_Place_Wall(m_wall))
 	 return; //If wall can't be place do nothing
- 
- m_wall.color = WallColor;
- Preview_Wall(m_wall);
- End_Turn();
+
+	m_wall.color = WallColor;
+	Preview_Wall(m_wall);
+	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = 1;
+	End_Turn();
 }
 
 struct Wall Preview_Wall(struct Wall m_wall) {
-	struct Rect m_rect = Get_Rect_Position(m_wall);
+	struct Rect m_rect = Get_Position_Of(m_wall);
   
+	Draw_Color_Buffer();
+	
   LCD_FillRect(m_rect.x0, m_rect.y0, m_rect.x1, m_rect.y1, m_wall.color);
   return m_wall;
 }
 
 struct Wall Create_Wall(struct Wall m_wall) {
-  uint16_t x, y;
+
   m_wall.position.x = 2;
   m_wall.position.y = 3;
   m_wall.direction = Horizontal;
   m_wall.color = PhantomWallColor;
 	m_wall.discount = WALL_DISCOUNT;
+
+	Create_Color_Buffer();
 	
-  x = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE + HALF_WALL_WIDTH;
-  y = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE + HALF_WALL_WIDTH;
-	
-  m_wall.bkcolor = LCD_GetPoint(x, y);
-	LCD_SetPoint(x, y, Red);
   return Preview_Wall(m_wall);
 }
 
@@ -237,9 +239,6 @@ struct Wall Move_Wall(struct Wall m_wall, DIRECTION direction) {
   Remove_Wall(m_wall);
 
   // update new position
-  // m_wall.position.x = (m_wall.position.x + m_vec2d.x) % NUM_COLUMNS_WALL;
-  // m_wall.position.y = (m_wall.position.y + m_vec2d.y) % NUM_ROWS_WALL;
-
   m_wall.position.x = (m_wall.position.x + m_vec2d.x);
   m_wall.position.y = (m_wall.position.y + m_vec2d.y);
 
@@ -272,15 +271,14 @@ struct Wall Rotate_Wall(struct Wall m_wall){
 }
 
 void Remove_Wall(struct Wall m_wall) {
-  m_wall.color = m_wall.bkcolor;
-  Preview_Wall(m_wall);
+  Draw_Color_Buffer();
 }
 
 uint8_t Can_Place_Wall(struct Wall m_wall){
 	return 1; //CHECK IF WALL CAN BE PLACED
 }
 
-struct Rect Get_Rect_Position(struct Wall m_wall){
+struct Rect Get_Position_Of(struct Wall m_wall){
 	struct Rect m_rect;
 	
 	// Convert Matrix to Spatial position
@@ -313,6 +311,7 @@ struct Rect Get_Rect_Position(struct Wall m_wall){
 	return m_rect;
 }
 
+
 struct Vector2D Get_Relative_Pos(DIRECTION dir) {
   struct Vector2D m_vec2d;
 
@@ -335,4 +334,22 @@ struct Vector2D Get_Relative_Pos(DIRECTION dir) {
       break;
   }
   return m_vec2d;
+}
+
+void Create_Color_Buffer(){
+	uint16_t i,j;
+	for(j=0; j<COLOR_BUFFER_HEIGHT; j++){
+		for(i=0; i<COLOR_BUFFER_LENGTH; i++){
+			color_buffer[i][j] = LCD_GetPoint(i,j);
+		}
+	}
+}
+
+void Draw_Color_Buffer(){
+	uint16_t i,j;
+	for(j=0; j<COLOR_BUFFER_HEIGHT; j++){
+		for(i=0; i<COLOR_BUFFER_LENGTH; i++){
+			LCD_SetPoint(i, j, color_buffer[i][j]);
+		}
+	}
 }
