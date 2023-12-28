@@ -8,9 +8,10 @@
 **--------------------------------------------------------------------------------------------------------
 *********************************************************************************************************/
 #include <string.h>
+
+#include "../Game/game.h"
 #include "lpc17xx.h"
 #include "timer.h"
-#include "../Game/game.h"
 
 extern struct UI timer_ui;
 extern char time_value[2];
@@ -25,18 +26,15 @@ extern uint8_t timeLeft;
 **
 ******************************************************************************/
 
-void TIMER0_IRQHandler (void)
-{
-	if(timeLeft>0){
-		Update_Timer(--timeLeft);
-	} else
-		End_Turn();
+void TIMER0_IRQHandler(void) {
+  if (timeLeft > 0) {
+    Update_Timer(--timeLeft);
+  } else
+    End_Turn();
 
-
-  LPC_TIM0->IR = 1;			/* clear interrupt flag */
+  LPC_TIM0->IR = 1; /* clear interrupt flag */
   return;
 }
-
 
 /******************************************************************************
 ** Function name:		Timer1_IRQHandler
@@ -47,21 +45,18 @@ void TIMER0_IRQHandler (void)
 ** Returned value:		None
 **
 ******************************************************************************/
-void TIMER1_IRQHandler (void)
-{
-  LPC_TIM1->IR = 1;			/* clear interrupt flag */
+void TIMER1_IRQHandler(void) {
+  LPC_TIM1->IR = 1; /* clear interrupt flag */
   return;
 }
 
-void TIMER2_IRQHandler (void)
-{
-  LPC_TIM2->IR = 1;			/* clear interrupt flag */
+void TIMER2_IRQHandler(void) {
+  LPC_TIM2->IR = 1; /* clear interrupt flag */
   return;
 }
 
-void TIMER3_IRQHandler (void)
-{
-  LPC_TIM3->IR = 1;			/* clear interrupt flag */
+void TIMER3_IRQHandler(void) {
+  LPC_TIM3->IR = 1; /* clear interrupt flag */
   return;
 }
 /******************************************************************************

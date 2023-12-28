@@ -1,27 +1,43 @@
+#include "../Game/game.h"
 #include "button.h"
 #include "lpc17xx.h"
-#include "../Game/game.h"
 
-extern int down;
 extern uint8_t started;
+extern struct Wall wall;
+extern GAME_STATE game_state;
+extern MOVING_ENTITY moving_entity;
+extern uint8_t cooldown;
 
-void EINT0_IRQHandler (void)	  	/* INT0														 */
-{		
-	if(!started){
-		started = 1;
-		Start_Game();
-	}
-	LPC_SC->EXTINT &= (1 << 0);     /* clear pending interrupt         */
+
+void EINT0_IRQHandler(void) /* INT0														 */
+{
+  if (!started) {
+    started = 1;
+    Start_Game();
+  }
+  LPC_SC->EXTINT &= (1 << 0); /* clear pending interrupt         */
 }
 
-
-void EINT1_IRQHandler (void)	  	/* KEY1														 */
+void EINT1_IRQHandler(void) /* KEY1														 */
 {
-	Switch_Player_Wall();
-	LPC_SC->EXTINT &= (1 << 1);     /* clear pending interrupt         */
+	if (game_state == TRANSITION || cooldown > 0) {
+    LPC_SC->EXTINT &= (1 << 1);
+    return;
+  }
+	
+  Switch_Player_Wall();
+	
+  LPC_SC->EXTINT &= (1 << 1); /* clear pending interrupt         */
 }
 
-void EINT2_IRQHandler (void)	  	/* KEY2														 */
+void EINT2_IRQHandler(void) /* KEY2														 */
 {
-  LPC_SC->EXTINT &= (1 << 2);     /* clear pending interrupt         */    
+	if (game_state == TRANSITION || moving_entity == PLAYER || cooldown > 0) {
+    LPC_SC->EXTINT &= (1 << 2);
+    return;
+  }
+	
+	wall = Rotate_Wall(wall);
+	
+  LPC_SC->EXTINT &= (1 << 2); /* clear pending interrupt         */
 }
