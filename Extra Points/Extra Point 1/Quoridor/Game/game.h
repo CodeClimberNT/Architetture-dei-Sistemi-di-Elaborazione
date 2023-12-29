@@ -82,8 +82,8 @@
 
 
 //Color Buffer
-#define COLOR_BUFFER_LENGTH	MAX_X
-#define COLOR_BUFFER_HEIGHT (SQUARE_SIZE+WALL_WIDTH)*NUM_ROWS
+#define WALL_COLOR_BUFFER_LENGTH	(SQUARE_SIZE*2) + WALL_WIDTH
+#define WALL_COLOR_BUFFER_HEIGHT 	(SQUARE_SIZE*2) + WALL_WIDTH
 
 /*******************ENUM DEFINITION**********************/
 typedef enum { TRANSITION,
@@ -187,6 +187,10 @@ void LCD_FillSquare(uint16_t x0, uint16_t y0, uint16_t len, uint16_t color);
 void LCD_DrawRectWithShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t rect_color, SHADOW_DIRECTION dir, uint16_t shadow_color);
 void LCD_DrawShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, SHADOW_DIRECTION dir, uint16_t color);
 
+void LCD_ClearRect(struct Rect m_rect);
+void LCD_ClearSquare(struct Vector2D m_start_pos, uint16_t m_len);
+
+void Update_Update_Wall(struct Rect m_rect);
 void Draw_Checkers(void);
 
 void Move(DIRECTION dir);
@@ -195,6 +199,7 @@ void Position_Player(struct Player player);
 struct Player Move_Player(struct Player player, DIRECTION dir);
 void Remove_Player(struct Player player);
 
+void Draw_Wall(void);
 struct Wall Create_Wall(struct Wall wall);
 void Place_Wall(struct Wall wall);
 struct Wall Preview_Wall(struct Wall wall);
@@ -209,9 +214,11 @@ struct Vector2D Get_Relative_Pos(DIRECTION dir);
 struct Vector2D Find_Free_Spot(struct Vector2D vec2d);
 
 void wait_delay(int count);
+/*
+void Create_Color_Buffer(uint16_t *p_buffer_vec, struct Vector2D m_start_pos ,uint16_t m_buffer_lenght, uint16_t m_buffer_height);
+void Draw_Color_Buffer(uint16_t *p_buffer_vec, struct Vector2D m_start_pos ,uint16_t m_buffer_lenght, uint16_t m_buffer_height);
 
-void Create_Color_Buffer(void);
-void Draw_Color_Buffer(void);
-
-
+void Create_Wall_Color_Buffer(struct Wall m_wall);
+void Draw_Wall_Color_Buffer(struct Wall m_wall);
+*/
 #endif  // __GAME_H

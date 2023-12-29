@@ -8,7 +8,10 @@ extern struct UI timer_ui;
 extern char time_value[2];
 extern uint8_t timeLeft;
 
-uint16_t color_buffer[COLOR_BUFFER_LENGTH][COLOR_BUFFER_HEIGHT];
+extern struct Player player0;
+extern struct Player player1;
+
+uint16_t wall_color_buffer[WALL_COLOR_BUFFER_LENGTH][WALL_COLOR_BUFFER_HEIGHT];
 
 void Peripheral_Init() {
   LCD_Initialization();
@@ -37,11 +40,11 @@ void wait_delay(int count) {
     ;
 }
 
-void LCD_DrawRect(uint16_t m_x0, uint16_t y0, uint16_t m_x1, uint16_t m_y1, uint16_t color) {
-  LCD_DrawLine(m_x0, y0, m_x1, y0, color);      // top edge
-  LCD_DrawLine(m_x1, y0, m_x1, m_y1, color);    // right edge
+void LCD_DrawRect(uint16_t m_x0, uint16_t m_y0, uint16_t m_x1, uint16_t m_y1, uint16_t color) {
+  LCD_DrawLine(m_x0, m_y0, m_x1, m_y0, color);      // top edge
+  LCD_DrawLine(m_x1, m_y0, m_x1, m_y1, color);    // right edge
   LCD_DrawLine(m_x1, m_y1, m_x0, m_y1, color);  // down edge
-  LCD_DrawLine(m_x0, m_y1, m_x0, y0, color);    // left edge
+  LCD_DrawLine(m_x0, m_y1, m_x0, m_y0, color);    // left edge
 }
 
 void LCD_DrawShadow(uint16_t m_x0, uint16_t m_y0, uint16_t m_x1, uint16_t m_y1, SHADOW_DIRECTION direction, uint16_t color) {
@@ -82,25 +85,33 @@ void LCD_DrawShadow(uint16_t m_x0, uint16_t m_y0, uint16_t m_x1, uint16_t m_y1, 
   }
 }
 
-void LCD_DrawRectWithShadow(uint16_t m_x0, uint16_t y0, uint16_t width, uint16_t heigth, uint16_t rect_color, SHADOW_DIRECTION dir, uint16_t shadow_color) {
-  LCD_DrawRect(m_x0, y0, m_x0 + width, y0 + heigth, rect_color);
-  LCD_DrawShadow(m_x0, y0, m_x0 + width, y0 + heigth, dir, shadow_color);
+void LCD_DrawRectWithShadow(uint16_t m_x0, uint16_t m_y0, uint16_t width, uint16_t heigth, uint16_t rect_color, SHADOW_DIRECTION dir, uint16_t shadow_color) {
+  LCD_DrawRect(m_x0, m_y0, m_x0 + width, m_y0 + heigth, rect_color);
+  LCD_DrawShadow(m_x0, m_y0, m_x0 + width, m_y0 + heigth, dir, shadow_color);
 }
 
-void LCD_DrawSquare(uint16_t m_x0, uint16_t y0, uint16_t len, uint16_t color) {
-  LCD_DrawRect(m_x0, y0, m_x0 + len, y0 + len, color);  // square is just a special Rect
+void LCD_DrawSquare(uint16_t m_x0, uint16_t m_y0, uint16_t len, uint16_t color) {
+  LCD_DrawRect(m_x0, m_y0, m_x0 + len, m_y0 + len, color);  // square is just a special Rect
 }
 
-void LCD_FillRect(uint16_t m_x0, uint16_t y0, uint16_t m_x1, uint16_t m_y1, uint16_t color) {
+void LCD_FillRect(uint16_t m_x0, uint16_t m_y0, uint16_t m_x1, uint16_t m_y1, uint16_t color) {
   uint16_t i;
 
-  for (i = y0; i <= m_y1; i++) {
+  for (i = m_y0; i <= m_y1; i++) {
     LCD_DrawLine(m_x0, i, m_x1, i, color);
   }
 }
 
-void LCD_FillSquare(uint16_t m_x0, uint16_t y0, uint16_t len, uint16_t color) {
-  LCD_FillRect(m_x0, y0, m_x0 + len, y0 + len, color);
+void LCD_FillSquare(uint16_t m_x0, uint16_t m_y0, uint16_t len, uint16_t color) {
+  LCD_FillRect(m_x0, m_y0, m_x0 + len, m_y0 + len, color);
+}
+
+void LCD_ClearRect(struct Rect m_rect){
+	LCD_FillRect(m_rect.x0, m_rect.y0, m_rect.x1, m_rect.y1, GameBG);	
+}
+
+void LCD_ClearSquare(struct Vector2D m_start_pos, uint16_t m_len){
+	LCD_FillSquare(m_start_pos.x, m_start_pos.y, m_len, GameBG);	
 }
 
 struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, uint16_t width, uint16_t tit_x, uint16_t tit_y, char *title_text,
@@ -136,42 +147,33 @@ void Update_Timer(uint8_t value) {
   Update_UI(timer_ui);
 }
 
-void Update_Board(struct Player m_player, struct Wall *WallMatrixPosition) {
-  uint8_t i, j;
-  uint16_t rows = NUM_ROWS * 2 - 1;
-  uint16_t cols = NUM_COLUMNS * 2 - 1;
-
-  for (i = 0; i < rows; i++) {
-    for (j = 0; j < cols; j++) {
-      uint16_t x = i * (SQUARE_SIZE + WALL_WIDTH);
-      uint16_t y = j * (SQUARE_SIZE + WALL_WIDTH);
-
-      LCD_DrawSquare(x, y, SQUARE_SIZE, Black);
-    }
-  }
-}
 
 void Draw_Checkers() {
   uint8_t i, j;
-
-  for (i = 0; i < NUM_ROWS; i++) {
-    for (j = 0; j < NUM_COLUMNS; j++) {
-      uint16_t x = j * (SQUARE_SIZE + WALL_WIDTH);
-      uint16_t y = i * (SQUARE_SIZE + WALL_WIDTH);
-
+	
+	for (j = 0; j < NUM_ROWS; j++) {
+		for (i = 0; i < NUM_COLUMNS; i++) {
+      uint16_t x = i * (SQUARE_SIZE + WALL_WIDTH);
+      uint16_t y = j * (SQUARE_SIZE + WALL_WIDTH);
       LCD_DrawSquare(x, y, SQUARE_SIZE, Black);
+			
+			if(player0.Position.x == i && player0.Position.y == j)
+				Position_Player(player0);
+			
+			if(player1.Position.x == i && player1.Position.y == j)
+				Position_Player(player1);
     }
   }
 }
 
 void Position_Player(struct Player m_player) {
-  uint16_t m_x0, y0;
+  uint16_t m_x0, m_y0;
 
   // board position to spatial position
   m_x0 = m_player.Position.x * (SQUARE_SIZE + WALL_WIDTH) + 1;
-  y0 = m_player.Position.y * (SQUARE_SIZE + WALL_WIDTH) + 1;
+  m_y0 = m_player.Position.y * (SQUARE_SIZE + WALL_WIDTH) + 1;
 
-  LCD_FillSquare(m_x0, y0, PLAYER_SIZE, m_player.color);
+  LCD_FillSquare(m_x0, m_y0, PLAYER_SIZE, m_player.color);
 }
 
 struct Player Move_Player(struct Player m_player, DIRECTION dir) {
@@ -200,6 +202,32 @@ void Remove_Player(struct Player m_player) {
   Position_Player(m_player);
 }
 
+
+void Update_Wall(struct Rect m_rect){
+	LCD_ClearRect(m_rect);
+	Draw_Wall();
+}
+
+void Draw_Wall(){
+	uint8_t i, j;
+	struct Wall m_wall;
+	
+	m_wall.color = WallColor;
+	
+	for (j = 0; j < NUM_ROWS_WALL; j++) {
+		for (i = 0; i < NUM_COLUMNS_WALL; i++) {
+			if(WallMatrixPosition[i][j]==0)
+				continue;
+			
+      m_wall.position.x = i;
+      m_wall.position.y = j;
+			m_wall.direction = WallMatrixPosition[i][j] == 1 ? Horizontal : Vertical; //if 1 horizontal else Vertical
+			Preview_Wall(m_wall);
+			
+    }
+  }
+}
+
 void Place_Wall(struct Wall m_wall){
 	game_state = TRANSITION;
 	if(!Can_Place_Wall(m_wall))
@@ -207,14 +235,12 @@ void Place_Wall(struct Wall m_wall){
 
 	m_wall.color = WallColor;
 	Preview_Wall(m_wall);
-	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = 1;
+	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = m_wall.direction == Horizontal ? 1 : 2; //if horizontal 1, else if vertical 2
 	End_Turn();
 }
 
 struct Wall Preview_Wall(struct Wall m_wall) {
 	struct Rect m_rect = Get_Position_Of(m_wall);
-  
-	Draw_Color_Buffer();
 	
   LCD_FillRect(m_rect.x0, m_rect.y0, m_rect.x1, m_rect.y1, m_wall.color);
   return m_wall;
@@ -227,8 +253,6 @@ struct Wall Create_Wall(struct Wall m_wall) {
   m_wall.direction = Horizontal;
   m_wall.color = PhantomWallColor;
 	m_wall.discount = WALL_DISCOUNT;
-
-	Create_Color_Buffer();
 	
   return Preview_Wall(m_wall);
 }
@@ -271,33 +295,36 @@ struct Wall Rotate_Wall(struct Wall m_wall){
 }
 
 void Remove_Wall(struct Wall m_wall) {
-  Draw_Color_Buffer();
+	struct Rect rect = Get_Position_Of(m_wall);
+	rect.x0-=1;
+	rect.x1+=1;
+	rect.y1+=1;
+  Update_Wall(rect);
 }
 
 uint8_t Can_Place_Wall(struct Wall m_wall){
-	return 1; //CHECK IF WALL CAN BE PLACED
+	//TODO IMPLEMENT LOGIC
+	return 1; 
 }
 
 struct Rect Get_Position_Of(struct Wall m_wall){
 	struct Rect m_rect;
 	
 	// Convert Matrix to Spatial position
-  if (m_wall.direction == Vertical) {
-    m_rect.x0 = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE;
-    m_rect.y0 = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH);
-  } else {  // if Horizontal
-    m_rect.x0 = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH);
-    m_rect.y0 = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE;
-  }
-
   switch (m_wall.direction) {
     case Horizontal:
-      m_rect.x1 = m_rect.x0 + WALL_LENGTH;
-      m_rect.y1 = m_rect.y0 + WALL_WIDTH;
+			m_rect.x0 = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH) + 1;
+			m_rect.y0 = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE + 1;
+		
+      m_rect.x1 = m_rect.x0 + WALL_LENGTH - 2;
+      m_rect.y1 = m_rect.y0 + WALL_WIDTH - 2;
       break;
     case Vertical:
-      m_rect.x1 = m_rect.x0 + WALL_WIDTH;
-      m_rect.y1 = m_rect.y0 + WALL_LENGTH;
+			m_rect.x0 = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE + 1;
+			m_rect.y0 = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + 1;
+      
+			m_rect.x1 = m_rect.x0 + WALL_WIDTH - 2;
+      m_rect.y1 = m_rect.y0 + WALL_LENGTH - 2;
       break;
     default:
       GUI_Text(0, 0, (uint8_t *)"ERROR WALL DIRECTION", Black, White);
@@ -336,20 +363,43 @@ struct Vector2D Get_Relative_Pos(DIRECTION dir) {
   return m_vec2d;
 }
 
-void Create_Color_Buffer(){
-	uint16_t i,j;
-	for(j=0; j<COLOR_BUFFER_HEIGHT; j++){
-		for(i=0; i<COLOR_BUFFER_LENGTH; i++){
-			color_buffer[i][j] = LCD_GetPoint(i,j);
+/**************Have some problem with setting point color being additive instead of substitutive*************************/
+/*
+void Create_Color_Buffer(uint16_t *p_buffer_vec, struct Vector2D m_start_pos, uint16_t m_buffer_lenght, uint16_t m_buffer_height){
+	uint16_t i, j, x, y;
+	for(j=0; j<=m_buffer_height; j++){
+		for(i=0; i<=m_buffer_lenght; i++){
+			x = i + m_start_pos.x;
+			y = j + m_start_pos.y;
+			p_buffer_vec[x * m_buffer_lenght + y] = LCD_GetPoint(x, y);
 		}
 	}
 }
 
-void Draw_Color_Buffer(){
-	uint16_t i,j;
-	for(j=0; j<COLOR_BUFFER_HEIGHT; j++){
-		for(i=0; i<COLOR_BUFFER_LENGTH; i++){
-			LCD_SetPoint(i, j, color_buffer[i][j]);
+void Draw_Color_Buffer(uint16_t *p_buffer_vec, struct Vector2D m_start_pos, uint16_t m_buffer_lenght, uint16_t m_buffer_height){
+	uint16_t i,j, x, y;
+	for(j=0; j<=m_buffer_height; j++){
+		for(i=0; i<=m_buffer_lenght; i++){
+			x = i + m_start_pos.x;
+			y = j + m_start_pos.y;
+			LCD_SetPoint(x, y, p_buffer_vec[x * m_buffer_lenght + y]);
 		}
 	}
 }
+
+void Create_Wall_Color_Buffer(struct Wall m_wall){
+	struct Vector2D m_start_pos;
+	m_start_pos.x = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH);
+	m_start_pos.y = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH);
+	
+	Create_Color_Buffer(&wall_color_buffer[0][0], m_start_pos, WALL_COLOR_BUFFER_LENGTH, WALL_COLOR_BUFFER_HEIGHT);
+}
+
+void Draw_Wall_Color_Buffer(struct Wall m_wall){
+	struct Vector2D m_start_pos;
+	m_start_pos.x = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH);
+	m_start_pos.y = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH);
+	
+	Draw_Color_Buffer(&wall_color_buffer[0][0], m_start_pos, WALL_COLOR_BUFFER_LENGTH, WALL_COLOR_BUFFER_HEIGHT);
+}
+*/
