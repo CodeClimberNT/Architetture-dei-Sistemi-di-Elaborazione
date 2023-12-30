@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(1010=22,109,397,655,0)(1007=36,258,213,523,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)(350=249,476,488,720,0)(250=-1,-1,-1,-1,0)(270=37,106,229,237,0)(313=0,75,864,600,0)(291=868,545,1171,720,0)(302=871,120,1123,559,0)(110=944,4,1280,322,0)(113=-1,-1,-1,-1,0)(320=1049,332,1280,650,0)(210=-1,-1,-1,-1,0)(330=-708,237,-327,864,0)(332=150,186,748,391,0)(333=-607,643,-9,848,1)(334=289,442,887,647,0)(335=-1,-1,-1,-1,0)(336=-1,-1,-1,-1,0)(345=-744,256,-146,461,0)(346=185,478,783,683,0)(381=-1,-1,-1,-1,0)(382=-1,-1,-1,-1,0)(383=-1,-1,-1,-1,0)(384=-1,-1,-1,-1,0)(197=-1,-1,-1,-1,0)(198=-1,-1,-1,-1,0)(191=-1,-1,-1,-1,0)(192=-1,-1,-1,-1,0)(199=-1,-1,-1,-1,0)(180=-1,-1,-1,-1,0)(261=-1,-1,-1,-1,0)(262=-1,-1,-1,-1,0)(231=-1,-1,-1,-1,0)(232=-1,-1,-1,-1,0)(233=-1,-1,-1,-1,0)(121=312,187,828,681,0)(122=-1,-1,-1,-1,0)(123=-1,-1,-1,-1,0)(124=-1,-1,-1,-1,0)(170=-852,644,-599,920,1)(142=-1,-1,-1,-1,0)(150=-1,-1,-1,-1,0)(400=-1,-1,-1,-1,0)(370=-1,-1,-1,-1,0)(160=-1,-1,-1,-1,0)(280=672,145,1114,720,0)(240=755,258,1122,455,0)(1000=-825,41,-22,653,0)</Name>
+          <Name>(1010=22,109,397,655,0)(1007=36,258,213,523,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)(350=249,476,488,720,0)(250=-1,-1,-1,-1,0)(270=37,106,229,237,0)(313=0,75,864,600,0)(291=868,545,1171,720,0)(302=871,120,1123,559,0)(110=944,4,1280,322,0)(113=-1,-1,-1,-1,0)(320=1049,332,1280,650,0)(210=-1,-1,-1,-1,0)(330=-708,237,-327,864,0)(332=150,186,748,391,0)(333=-607,643,-9,848,1)(334=289,442,887,647,0)(335=-1,-1,-1,-1,0)(336=-1,-1,-1,-1,0)(345=-744,256,-146,461,0)(346=185,478,783,683,0)(381=-1,-1,-1,-1,0)(382=-1,-1,-1,-1,0)(383=-1,-1,-1,-1,0)(384=-1,-1,-1,-1,0)(197=-1,-1,-1,-1,0)(198=-1,-1,-1,-1,0)(191=-1,-1,-1,-1,0)(192=-1,-1,-1,-1,0)(199=-1,-1,-1,-1,0)(180=-1,-1,-1,-1,0)(261=-1,-1,-1,-1,0)(262=-1,-1,-1,-1,0)(231=-1,-1,-1,-1,0)(232=-1,-1,-1,-1,0)(233=-1,-1,-1,-1,0)(121=312,187,828,681,0)(122=-1,-1,-1,-1,0)(123=-1,-1,-1,-1,0)(124=-1,-1,-1,-1,0)(170=-852,644,-599,920,1)(142=-1,-1,-1,-1,0)(150=-1,-1,-1,-1,0)(400=-1,-1,-1,-1,0)(370=240,283,757,758,0)(160=-1,-1,-1,-1,0)(280=672,145,1114,720,0)(240=755,258,1122,455,0)(1000=-825,41,-22,653,1)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -152,18 +152,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>233</LineNumber>
+          <LineNumber>227</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>4466</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\Game\util_game.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\sample\Game/util_game.c\227</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
@@ -177,7 +177,23 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\Game\util_game.c</Filename>
+          <Filename>.\startup_LPC17xx.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>233</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\startup_LPC17xx.s</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -201,42 +217,52 @@
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>wall</ItemText>
+          <ItemText>m_wall</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_vec2d</ItemText>
+          <ItemText>cooldown</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_wall</ItemText>
+          <ItemText>WallMatrixPosition[i][j]</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>NUM_ROWS_WALL</ItemText>
+          <ItemText>i</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>cooldown</ItemText>
+          <ItemText>j</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>x</ItemText>
+          <ItemText>m_rect</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>y</ItemText>
+          <ItemText>m_x0</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rect</ItemText>
+          <ItemText>m_x1</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>m_y0</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>m_y1</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

@@ -50,11 +50,16 @@ void Waiting_Player() {
 }
 
 void End_Turn() {
-    game_state = TRANSITION;
-		moving_entity = PLAYER; //make sure player is in control
-    currPlayer ^= 1;  // alternate between 0 and 1
-    timeLeft = MAX_TIME;
-    Update_Timer(timeLeft);
+  game_state = TRANSITION;
+	
+	//if turn timeout while moving wall
+	if(moving_entity == WALL){
+		Remove_Wall(wall);
+		moving_entity = PLAYER;
+	}
+  currPlayer ^= 1;  // alternate between 0 and 1
+  timeLeft = MAX_TIME;
+  Update_Timer(timeLeft);
 }
 
 void Switch_Player_Wall() {

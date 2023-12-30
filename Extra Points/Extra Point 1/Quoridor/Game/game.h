@@ -190,7 +190,6 @@ void LCD_DrawShadow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, SHADOW_D
 void LCD_ClearRect(struct Rect m_rect);
 void LCD_ClearSquare(struct Vector2D m_start_pos, uint16_t m_len);
 
-void Update_Update_Wall(struct Rect m_rect);
 void Draw_Checkers(void);
 
 void Move(DIRECTION dir);

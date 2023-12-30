@@ -202,26 +202,21 @@ void Remove_Player(struct Player m_player) {
   Position_Player(m_player);
 }
 
-
-void Update_Wall(struct Rect m_rect){
-	LCD_ClearRect(m_rect);
-	Draw_Wall();
-}
-
 void Draw_Wall(){
 	uint8_t i, j;
 	struct Wall m_wall;
 	
+	m_wall.discount = 0;
 	m_wall.color = WallColor;
 	
 	for (j = 0; j < NUM_ROWS_WALL; j++) {
 		for (i = 0; i < NUM_COLUMNS_WALL; i++) {
-			if(WallMatrixPosition[i][j]==0)
+			if(WallMatrixPosition[i][j]==0) //If 0 no wall to place
 				continue;
 			
       m_wall.position.x = i;
       m_wall.position.y = j;
-			m_wall.direction = WallMatrixPosition[i][j] == 1 ? Horizontal : Vertical; //if 1 horizontal else Vertical
+			m_wall.direction = (WallMatrixPosition[i][j] == 1) ? Horizontal : Vertical; //if 1 horizontal else Vertical
 			Preview_Wall(m_wall);
 			
     }
@@ -234,6 +229,7 @@ void Place_Wall(struct Wall m_wall){
 	 return; //If wall can't be place do nothing
 
 	m_wall.color = WallColor;
+	m_wall.discount = 0;
 	Preview_Wall(m_wall);
 	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = m_wall.direction == Horizontal ? 1 : 2; //if horizontal 1, else if vertical 2
 	End_Turn();
@@ -253,7 +249,7 @@ struct Wall Create_Wall(struct Wall m_wall) {
   m_wall.direction = Horizontal;
   m_wall.color = PhantomWallColor;
 	m_wall.discount = WALL_DISCOUNT;
-	
+	//m_wall.discount = 0;
   return Preview_Wall(m_wall);
 }
 
@@ -265,7 +261,8 @@ struct Wall Move_Wall(struct Wall m_wall, DIRECTION direction) {
   // update new position
   m_wall.position.x = (m_wall.position.x + m_vec2d.x);
   m_wall.position.y = (m_wall.position.y + m_vec2d.y);
-
+	
+	//Wrapping board to make positioning of wall more efficient
   if (m_wall.position.x < 0)
     m_wall.position.x = NUM_COLUMNS_WALL - 1;
   if (m_wall.position.y < 0)
@@ -282,24 +279,18 @@ struct Wall Move_Wall(struct Wall m_wall, DIRECTION direction) {
 
 struct Wall Rotate_Wall(struct Wall m_wall){
 
-  // remove previous preview
   Remove_Wall(m_wall);
-
-  // update new direction
   m_wall.direction ^= 1; //flip direction
-
-  // draw new preview
+	
   Preview_Wall(m_wall);
 
   return m_wall;
 }
 
 void Remove_Wall(struct Wall m_wall) {
-	struct Rect rect = Get_Position_Of(m_wall);
-	rect.x0-=1;
-	rect.x1+=1;
-	rect.y1+=1;
-  Update_Wall(rect);
+	//Remove this wall and redraw all walls
+	LCD_ClearRect(Get_Position_Of(m_wall));
+	Draw_Wall();
 }
 
 uint8_t Can_Place_Wall(struct Wall m_wall){
@@ -319,6 +310,7 @@ struct Rect Get_Position_Of(struct Wall m_wall){
       m_rect.x1 = m_rect.x0 + WALL_LENGTH - 2;
       m_rect.y1 = m_rect.y0 + WALL_WIDTH - 2;
       break;
+		
     case Vertical:
 			m_rect.x0 = m_wall.position.x * (SQUARE_SIZE + WALL_WIDTH) + SQUARE_SIZE + 1;
 			m_rect.y0 = m_wall.position.y * (SQUARE_SIZE + WALL_WIDTH) + 1;
@@ -326,6 +318,7 @@ struct Rect Get_Position_Of(struct Wall m_wall){
 			m_rect.x1 = m_rect.x0 + WALL_WIDTH - 2;
       m_rect.y1 = m_rect.y0 + WALL_LENGTH - 2;
       break;
+		
     default:
       GUI_Text(0, 0, (uint8_t *)"ERROR WALL DIRECTION", Black, White);
   }
@@ -363,7 +356,7 @@ struct Vector2D Get_Relative_Pos(DIRECTION dir) {
   return m_vec2d;
 }
 
-/**************Have some problem with setting point color being additive instead of substitutive*************************/
+/**************Failed Implementation of Color Buffer*************************/
 /*
 void Create_Color_Buffer(uint16_t *p_buffer_vec, struct Vector2D m_start_pos, uint16_t m_buffer_lenght, uint16_t m_buffer_height){
 	uint16_t i, j, x, y;
