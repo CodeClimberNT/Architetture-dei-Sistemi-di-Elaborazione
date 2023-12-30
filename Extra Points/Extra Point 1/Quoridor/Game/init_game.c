@@ -22,12 +22,7 @@ void Start_Game() {
   return;
 }
 
-void Board_Init() {
-  Draw_Checkers();
 
-  Position_Player(player0);
-  Position_Player(player1);
-}
 
 void UI_Init() {
   sprintf(p1_wall_remaining, "%u", MAX_WALLS);
@@ -51,22 +46,7 @@ void UI_Init() {
   UI_Counter_Init();
 }
 
-void Player_Init() {
-  player0 = Create_Player(0, 3, 6, P0_Color);
-  player1 = Create_Player(1, 3, 0, P1_Color);
-}
 
-struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color) {
-  struct Player player;
-
-  player.id = id;
-  player.Position.x = x;
-  player.Position.y = y;
-  player.wallsRemaining = MAX_WALLS;
-  player.color = color;
-
-  return player;
-};
 
 void UI_Counter_Init() {
   Update_UI(player0_ui);

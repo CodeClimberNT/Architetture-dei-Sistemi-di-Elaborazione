@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "game.h": "c",
-        "glcd.h": "c"
+        "glcd.h": "c",
+        "stdint.h": "c",
+        "stdio.h": "c",
+        "includes.h": "c",
+        "figures.h": "c"
     }
 }

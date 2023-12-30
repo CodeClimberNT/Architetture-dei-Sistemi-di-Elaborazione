@@ -22,15 +22,84 @@ Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
 C:\Users\nickt\GitHub\PoliTo\Architetture-dei-Sistemi-di-Elaborazione\Extra Points\Extra Point 1\Quoridor\sample.uvprojx
-Project File Date:  12/26/2023
+Project File Date:  12/30/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCLANG5\Bin'
 Build target 'Target 1'
+compiling geometry.c...
+Geometry\../Game/../Wall/wall.h(11): error:  #70: incomplete type is not allowed
+    struct Vector2D position;
+Geometry\../Game/../Wall/wall.h(26): warning:  #231-D: declaration is not visible outside of function
+  void Update_Wall(struct Rect m_rect);
+Geometry\../Game/../Player/player.h(8): error:  #70: incomplete type is not allowed
+    struct Vector2D board_pos;
+Geometry\../Game/../Player/player.h(9): error:  #70: incomplete type is not allowed
+  	struct Vector2D screen_pos;
+Geometry\../Game/../UI/ui.h(9): error:  #70: incomplete type is not allowed
+    struct Vector2D ui_Position;
+Geometry\../Game/../UI/ui.h(10): error:  #70: incomplete type is not allowed
+    struct Vector2D title_position;
+Geometry\../Game/../UI/ui.h(12): error:  #70: incomplete type is not allowed
+    struct Vector2D value_position;
+Geometry\geometry.c: 1 warning, 6 errors
+compiling ui.c...
+UI\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+UI\ui.c(46): error:  #20: identifier "time_value" is undefined
+    sprintf(time_value, "%u", value);
+UI\ui.c(48): warning:  #1-D: last line of file ends without a newline
+  }
+UI\ui.c: 1 warning, 2 errors
+compiling draw.c...
+Draw\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Draw\draw.c: 0 warnings, 1 error
+compiling init_game.c...
+Game\../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Game\init_game.c: 0 warnings, 1 error
 compiling util_game.c...
-linking...
-Program Size: Code=23848 RO-data=1772 RW-data=28 ZI-data=764  
-".\output\sample.axf" - 0 Error(s), 0 Warning(s).
+Game\../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Game\util_game.c: 0 warnings, 1 error
+compiling peripheral.c...
+Peripheral\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Peripheral\peripheral.c: 0 warnings, 1 error
+compiling player.c...
+Player\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Player\player.c: 0 warnings, 1 error
+compiling sample.c...
+Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+sample.c: 0 warnings, 1 error
+compiling game.c...
+Game\../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Game\game.c: 0 warnings, 1 error
+compiling IRQ_button.c...
+button_EXINT\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+button_EXINT\IRQ_button.c: 0 warnings, 1 error
+compiling IRQ_timer.c...
+timer\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+timer\IRQ_timer.c: 0 warnings, 1 error
+compiling wall.c...
+Wall\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Wall\wall.c: 0 warnings, 1 error
+compiling board.c...
+Board\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+Board\board.c: 0 warnings, 1 error
+compiling IRQ_RIT.c...
+RIT\../Game/../Geometry/figure.h(21): error:  #20: identifier "DIRECTION" is undefined
+  struct Vector2D Get_Relative_Pos(DIRECTION dir);
+RIT\IRQ_RIT.c: 0 warnings, 1 error
+".\output\sample.axf" - 20 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -53,7 +122,8 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE@5.6.0
-Build Time Elapsed:  00:00:00
+Target not created.
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
