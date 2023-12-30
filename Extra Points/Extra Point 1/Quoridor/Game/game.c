@@ -8,15 +8,15 @@ volatile struct UI player1_ui;
 
 volatile struct Wall wall;
 
-volatile uint8_t currPlayer = 0;
+volatile uint8_t current_player = 0;
 volatile uint8_t timeLeft = MAX_TIME;
 
+volatile char p0_wall_remaining[2];
 volatile char p1_wall_remaining[2];
-volatile char p2_wall_remaining[2];
 volatile char time_value[2];
 volatile uint8_t cooldown;
 
-volatile uint8_t WallMatrixPosition[NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {0};
+volatile WALL_DIRECTION WallMatrixPosition[NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {NA};
 // consider wall position in the junction between the player position (assume you cannot position a wall outside the board to have a 1 block lenght wall)
 // e.g.  [] [] []
 //  	     X  X
@@ -57,9 +57,10 @@ void End_Turn() {
 		Remove_Wall(wall);
 		moving_entity = PLAYER;
 	}
-  currPlayer ^= 1;  // alternate between 0 and 1
+  current_player ^= 1;  // alternate between 0 and 1
+	Create_Hint_Move(current_player == 0 ? player0 : player1);
   timeLeft = MAX_TIME;
-  Update_Timer(timeLeft);
+  Update_Timer_UI(timeLeft);
 }
 
 void Switch_Player_Wall() {
@@ -79,10 +80,10 @@ void Move(DIRECTION dir) {
 
     switch (moving_entity) {
         case PLAYER:
-            if (currPlayer == 0) {
-                player0 = Move_Player(player0, dir);
+            if (current_player == 0) {
+                player0 = Move_Player(player0, dir, 0);
             } else {
-                player1 = Move_Player(player1, dir);
+                player1 = Move_Player(player1, dir, 0);
             }
             break;
 

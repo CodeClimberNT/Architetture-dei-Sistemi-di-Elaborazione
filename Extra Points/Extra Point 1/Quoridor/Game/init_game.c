@@ -10,8 +10,8 @@ extern struct UI player0_ui;
 extern struct UI player1_ui;
 
 extern uint8_t timeLeft;
+extern char p0_wall_remaining[2];
 extern char p1_wall_remaining[2];
-extern char p2_wall_remaining[2];
 extern char time_value[2];
 
 void Start_Game() {
@@ -19,6 +19,7 @@ void Start_Game() {
   Player_Init();
   Board_Init();
   UI_Init();
+	Create_Hint_Move(player0); //start player 0
   return;
 }
 
@@ -30,11 +31,11 @@ void Board_Init() {
 }
 
 void UI_Init() {
-  sprintf(p1_wall_remaining, "%u", MAX_WALLS);
-  player0_ui = Create_UI(0, P0_UI_XPOS, P0_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P0_UI_XPOS + 5, P0_UI_YPOS + 5, "P1 WALL", P0_UI_XPOS + P_UI_WIDTH / 2 - 5, P0_UI_YPOS + UI_HEIGHT - 20, p1_wall_remaining);
+  sprintf(p0_wall_remaining, "%u", MAX_WALLS);
+  player0_ui = Create_UI(0, P0_UI_XPOS, P0_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P0_UI_XPOS + 5, P0_UI_YPOS + 5, "P1 WALL", P0_UI_XPOS + P_UI_WIDTH / 2 - 5, P0_UI_YPOS + UI_HEIGHT - 20, p0_wall_remaining);
 
-  sprintf(p2_wall_remaining, "%u", MAX_WALLS);
-  player1_ui = Create_UI(1, P1_UI_XPOS, P1_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P1_UI_XPOS + 5, P1_UI_YPOS + 5, "P2 WALL", P1_UI_XPOS + P_UI_WIDTH / 2 - 5, P1_UI_YPOS + UI_HEIGHT - 20, p2_wall_remaining);
+  sprintf(p1_wall_remaining, "%u", MAX_WALLS);
+  player1_ui = Create_UI(1, P1_UI_XPOS, P1_UI_YPOS, UI_HEIGHT, P_UI_WIDTH, P1_UI_XPOS + 5, P1_UI_YPOS + 5, "P2 WALL", P1_UI_XPOS + P_UI_WIDTH / 2 - 5, P1_UI_YPOS + UI_HEIGHT - 20, p1_wall_remaining);
 
   sprintf(time_value, "%u", timeLeft);
   timer_ui = Create_UI(2, T_UI_XPOS, T_UI_YPOS, UI_HEIGHT, T_UI_WIDTH, T_UI_XPOS + 5, T_UI_YPOS + 5, "TIME LEFT", T_UI_XPOS + T_UI_WIDTH / 2 - 5, T_UI_YPOS + UI_HEIGHT - 20, time_value);
@@ -60,8 +61,8 @@ struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color) 
   struct Player player;
 
   player.id = id;
-  player.Position.x = x;
-  player.Position.y = y;
+  player.pos.x = x;
+  player.pos.y = y;
   player.wallsRemaining = MAX_WALLS;
   player.color = color;
 

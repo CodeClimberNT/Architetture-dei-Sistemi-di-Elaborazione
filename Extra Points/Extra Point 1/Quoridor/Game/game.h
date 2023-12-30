@@ -30,8 +30,9 @@
 
 #define P0_Color Blue2
 #define P1_Color Red
+#define PhantomPlayerColor DarkGray
 
-#define WallColor 0xF731
+#define WallColor ChristmasGreen
 #define PhantomWallColor DarkGray
 #define WALL_DISCOUNT 1
 
@@ -90,8 +91,7 @@ typedef enum { TRANSITION,
                IDLE } GAME_STATE;
 typedef enum { PLAYER,
                WALL } MOVING_ENTITY;
-typedef enum { Vertical,
-               Horizontal } WALL_DIRECTION;
+typedef enum { NA = 0, Horizontal = 1 , Vertical = 2 } WALL_DIRECTION;
 typedef enum { UP,
                RIGHT,
                DOWN,
@@ -121,9 +121,11 @@ struct Rect {
 
 struct Player {
   uint8_t id;
-  struct Vector2D Position;
+  struct Vector2D pos;
   uint8_t wallsRemaining;
   uint16_t color;
+	uint8_t moved;
+	uint8_t ghost;
 };
 
 struct Wall {
@@ -176,7 +178,7 @@ struct UI Create_UI(uint8_t id, uint16_t ui_x, uint16_t ui_y, uint16_t height, u
 
 void Update_UI(struct UI ui);
 
-void Update_Timer(uint8_t time_value);
+void Update_Timer_UI(uint8_t time_value);
 
 void Decrease_Timer(void);
 
@@ -195,8 +197,11 @@ void Draw_Checkers(void);
 void Move(DIRECTION dir);
 
 void Position_Player(struct Player player);
-struct Player Move_Player(struct Player player, DIRECTION dir);
+struct Player Move_Player(struct Player player, DIRECTION dir, uint8_t is_double);
 void Remove_Player(struct Player player);
+
+void Create_Hint_Move(struct Player m_player);
+void Remove_Hint_Move(struct Player m_player);
 
 void Draw_Wall(void);
 struct Wall Create_Wall(struct Wall wall);
@@ -209,8 +214,8 @@ uint8_t Can_Place_Wall(struct Wall m_wall);
 
 struct Rect Get_Position_Of(struct Wall m_wall);
 
-struct Vector2D Get_Relative_Pos(DIRECTION dir);
-struct Vector2D Find_Free_Spot(struct Vector2D vec2d);
+struct Vector2D Get_Vec_From_Dir(DIRECTION dir);
+DIRECTION Get_Dir_From_Vec(struct Vector2D vec2d);
 
 void wait_delay(int count);
 /*

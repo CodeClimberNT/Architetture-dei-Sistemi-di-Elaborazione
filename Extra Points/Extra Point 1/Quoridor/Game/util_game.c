@@ -2,16 +2,24 @@
 
 extern GAME_STATE game_state;
 extern MOVING_ENTITY moving_entity;
-extern uint8_t WallMatrixPosition[NUM_ROWS - 1][NUM_COLUMNS - 1];
+extern WALL_DIRECTION WallMatrixPosition[NUM_ROWS - 1][NUM_COLUMNS - 1];
 
 extern struct UI timer_ui;
 extern char time_value[2];
 extern uint8_t timeLeft;
 
+extern struct UI player0_ui;
+extern char p0_wall_remaining[2];
+
+extern struct UI player1_ui;
+extern char p1_wall_remaining[2];
+
 extern struct Player player0;
 extern struct Player player1;
 
-uint16_t wall_color_buffer[WALL_COLOR_BUFFER_LENGTH][WALL_COLOR_BUFFER_HEIGHT];
+extern uint8_t current_player;
+
+//uint16_t wall_color_buffer[WALL_COLOR_BUFFER_LENGTH][WALL_COLOR_BUFFER_HEIGHT];
 
 void Peripheral_Init() {
   LCD_Initialization();
@@ -142,11 +150,28 @@ void Update_UI(struct UI m_ui) {
   GUI_Text(m_ui.value_position.x, m_ui.value_position.y, (uint8_t *)m_ui.value_text, Black, White);
 }
 
-void Update_Timer(uint8_t value) {
+void Update_Timer_UI(uint8_t value) {
   sprintf(time_value, "%u", value);
   Update_UI(timer_ui);
 }
 
+void Update_Wall_UI(struct UI m_player_ui, uint8_t wall_value){
+	switch(m_player_ui.id){
+		case 0:
+			sprintf(p0_wall_remaining, "%u", wall_value);
+			Update_UI(player0_ui);
+			break;
+		
+		case 1:
+			sprintf(p1_wall_remaining, "%u", wall_value);
+			Update_UI(player1_ui);
+			break;
+		
+		default:
+			GUI_Text(0,0, (uint8_t *)"WRONG PLAYER ID", Black, White);
+	
+	}
+}
 
 void Draw_Checkers() {
   uint8_t i, j;
@@ -157,43 +182,90 @@ void Draw_Checkers() {
       uint16_t y = j * (SQUARE_SIZE + WALL_WIDTH);
       LCD_DrawSquare(x, y, SQUARE_SIZE, Black);
 			
-			if(player0.Position.x == i && player0.Position.y == j)
+			if(player0.pos.x == i && player0.pos.y == j)
 				Position_Player(player0);
 			
-			if(player1.Position.x == i && player1.Position.y == j)
+			if(player1.pos.x == i && player1.pos.y == j)
 				Position_Player(player1);
     }
   }
 }
 
+
+
 void Position_Player(struct Player m_player) {
   uint16_t m_x0, m_y0;
 
   // board position to spatial position
-  m_x0 = m_player.Position.x * (SQUARE_SIZE + WALL_WIDTH) + 1;
-  m_y0 = m_player.Position.y * (SQUARE_SIZE + WALL_WIDTH) + 1;
+  m_x0 = m_player.pos.x * (SQUARE_SIZE + WALL_WIDTH) + 1;
+  m_y0 = m_player.pos.y * (SQUARE_SIZE + WALL_WIDTH) + 1;
 
   LCD_FillSquare(m_x0, m_y0, PLAYER_SIZE, m_player.color);
 }
 
-struct Player Move_Player(struct Player m_player, DIRECTION dir) {
-  struct Vector2D m_vec2d = Get_Relative_Pos(dir);
+struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_double) {
+  struct Vector2D m_vec2d = Get_Vec_From_Dir(dir);
+	uint8_t check_barrier;
+	if(is_double){
+		m_vec2d.x = m_vec2d.x * 2;
+		m_vec2d.y = m_vec2d.y * 2;
+	}
 
-  // check movement overflow
-  if ((dir == RIGHT && m_player.Position.x != (NUM_COLUMNS - 1)) ||   // RIGHT border
-      (dir == LEFT  && m_player.Position.x != (0))               ||   // LEFT border
-      (dir == UP    && m_player.Position.y != (0))               ||   // TOP border
-      (dir == DOWN  && m_player.Position.y != (NUM_ROWS - 1)))        // BOTTOM border
-  {
-    Remove_Player(m_player);
+	switch(dir){
+		case RIGHT:
+			check_barrier = ((m_player.pos.x < (NUM_COLUMNS-1)) && (m_player.pos.y == 0) && 
+															(WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Vertical))  || 
+										((m_player.pos.x < (NUM_COLUMNS-1)) && (m_player.pos.y > 0) && 
+										 ((WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Vertical) && (WallMatrixPosition[m_player.pos.x][m_player.pos.y-1] != Vertical)));
+			break;
+		
+		case LEFT:
+			check_barrier = ((m_player.pos.x > 0) && (m_player.pos.y == 0) && 
+															(WallMatrixPosition[m_player.pos.x-1][m_player.pos.y] != Vertical))  || 
+										((m_player.pos.x > 0) && (m_player.pos.y > 0) && 
+										 ((WallMatrixPosition[m_player.pos.x-1][m_player.pos.y] != Vertical) && (WallMatrixPosition[m_player.pos.x-1][m_player.pos.y-1] != Vertical)));
+			break;
+		
+		case UP:
+			check_barrier = ((m_player.pos.x == 0) && (m_player.pos.y > 0) && 
+															(WallMatrixPosition[m_player.pos.x][m_player.pos.y-1] != Horizontal))  || 
+										((m_player.pos.x > 0) && (m_player.pos.y > 0) && 
+										 ((WallMatrixPosition[m_player.pos.x][m_player.pos.y-1] != Horizontal) && (WallMatrixPosition[m_player.pos.x-1][m_player.pos.y-1] != Horizontal)));
+			break;
+		
+		case DOWN:
+			check_barrier = ((m_player.pos.x == 0) && (m_player.pos.y < (NUM_ROWS-1)) && 
+															(WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Horizontal))  || 
+										((m_player.pos.x > 0) && (m_player.pos.y < (NUM_ROWS-1)) && 
+										 ((WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Horizontal) && (WallMatrixPosition[m_player.pos.x-1][m_player.pos.y] != Horizontal)));
+			break;
+	}
+	
+  
+  if (check_barrier){     
+		//check if position overlap player, then try two move forward
+		if(((m_player.pos.x + m_vec2d.x == player0.pos.x) && (m_player.pos.y + m_vec2d.y == player0.pos.y)) || 
+				((m_player.pos.x + m_vec2d.x == player1.pos.x) && (m_player.pos.y + m_vec2d.y == player1.pos.y))){
+			return Move_Player(m_player, dir, 1);
+		 }		
+				
+		if(!m_player.ghost){
+			Remove_Hint_Move(m_player);
+			Remove_Player(m_player);
+		}
+			
 
-    m_player.Position.x += m_vec2d.x;
-    m_player.Position.y += m_vec2d.y;
-    // draw m_player new position
+    m_player.pos.x += m_vec2d.x;
+    m_player.pos.y += m_vec2d.y;
+		m_player.moved = 1;
+    // draw player new position
     Position_Player(m_player);
-    End_Turn();  // don't end turn unless m_player move
-  }
-
+		if(!m_player.ghost)
+			End_Turn();  
+  } else {
+		m_player.moved = 0;
+	}
+		
   return m_player;
 }
 
@@ -201,6 +273,25 @@ void Remove_Player(struct Player m_player) {
   m_player.color = White;
   Position_Player(m_player);
 }
+
+void Create_Hint_Move(struct Player m_player){
+	m_player.color = PhantomPlayerColor;
+	m_player.ghost = 1;
+	Move_Player(m_player, UP,0);
+	Move_Player(m_player, RIGHT,0);
+	Move_Player(m_player, DOWN,0);
+	Move_Player(m_player, LEFT,0);
+}
+
+void Remove_Hint_Move(struct Player m_player){
+	m_player.color = GameBG;
+	m_player.ghost = 1;
+	Move_Player(m_player, UP,0);
+	Move_Player(m_player, RIGHT,0);
+	Move_Player(m_player, DOWN,0);
+	Move_Player(m_player, LEFT,0);
+}
+
 
 void Draw_Wall(){
 	uint8_t i, j;
@@ -211,12 +302,12 @@ void Draw_Wall(){
 	
 	for (j = 0; j < NUM_ROWS_WALL; j++) {
 		for (i = 0; i < NUM_COLUMNS_WALL; i++) {
-			if(WallMatrixPosition[i][j]==0) //If 0 no wall to place
+			if(WallMatrixPosition[i][j] == 0) //If 0 no wall to place
 				continue;
 			
       m_wall.position.x = i;
       m_wall.position.y = j;
-			m_wall.direction = (WallMatrixPosition[i][j] == 1) ? Horizontal : Vertical; //if 1 horizontal else Vertical
+			m_wall.direction = WallMatrixPosition[i][j];
 			Preview_Wall(m_wall);
 			
     }
@@ -225,13 +316,21 @@ void Draw_Wall(){
 
 void Place_Wall(struct Wall m_wall){
 	game_state = TRANSITION;
-	if(!Can_Place_Wall(m_wall))
-	 return; //If wall can't be place do nothing
-
+	if(!Can_Place_Wall(m_wall)){
+		return; //If wall can't be place do nothing
+	}
+	
 	m_wall.color = WallColor;
 	m_wall.discount = 0;
 	Preview_Wall(m_wall);
-	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = m_wall.direction == Horizontal ? 1 : 2; //if horizontal 1, else if vertical 2
+	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = m_wall.direction; //store wall direction to the matrix
+	moving_entity = PLAYER;
+	if(current_player == 0){
+		Update_Wall_UI(player0_ui, --player0.wallsRemaining);
+	} else {
+		Update_Wall_UI(player1_ui, --player1.wallsRemaining);
+	}
+	Remove_Hint_Move(current_player == 0 ? player0 : player1);
 	End_Turn();
 }
 
@@ -249,12 +348,12 @@ struct Wall Create_Wall(struct Wall m_wall) {
   m_wall.direction = Horizontal;
   m_wall.color = PhantomWallColor;
 	m_wall.discount = WALL_DISCOUNT;
-	//m_wall.discount = 0;
+
   return Preview_Wall(m_wall);
 }
 
 struct Wall Move_Wall(struct Wall m_wall, DIRECTION direction) {
-  struct Vector2D m_vec2d = Get_Relative_Pos(direction);
+  struct Vector2D m_vec2d = Get_Vec_From_Dir(direction);
 
   Remove_Wall(m_wall);
 
@@ -280,7 +379,8 @@ struct Wall Move_Wall(struct Wall m_wall, DIRECTION direction) {
 struct Wall Rotate_Wall(struct Wall m_wall){
 
   Remove_Wall(m_wall);
-  m_wall.direction ^= 1; //flip direction
+	
+  m_wall.direction = m_wall.direction == Horizontal ? Vertical : Horizontal; //flip direction
 	
   Preview_Wall(m_wall);
 
@@ -332,7 +432,7 @@ struct Rect Get_Position_Of(struct Wall m_wall){
 }
 
 
-struct Vector2D Get_Relative_Pos(DIRECTION dir) {
+struct Vector2D Get_Vec_From_Dir(DIRECTION dir) {
   struct Vector2D m_vec2d;
 
   switch (dir) {
@@ -356,6 +456,18 @@ struct Vector2D Get_Relative_Pos(DIRECTION dir) {
   return m_vec2d;
 }
 
+DIRECTION Get_Dir_From_Vec(struct Vector2D vec2d) {
+	//cannot move diagonally
+	if(vec2d.x > 0)
+		return RIGHT;
+	if(vec2d.x < 0)
+		return LEFT;
+	if(vec2d.y > 0)
+		return UP;
+
+	return DOWN;
+}
+	
 /**************Failed Implementation of Color Buffer*************************/
 /*
 void Create_Color_Buffer(uint16_t *p_buffer_vec, struct Vector2D m_start_pos, uint16_t m_buffer_lenght, uint16_t m_buffer_height){
