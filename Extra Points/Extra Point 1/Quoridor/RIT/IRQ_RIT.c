@@ -25,8 +25,6 @@
 extern GAME_STATE game_state;
 extern MOVING_ENTITY moving_entity;
 
-extern struct Wall wall;
-
 extern uint8_t cooldown;
 
 void RIT_IRQHandler(void) {
@@ -34,15 +32,15 @@ void RIT_IRQHandler(void) {
     --cooldown;
 
   // If game is processing exit and do nothing
-  if (game_state == TRANSITION || cooldown > 0) {
+  if (game_state != IDLE || cooldown > 0) {
     LPC_RIT->RICTRL |= 0x1;
     return;
   }
 
   /* Joytick J_Select pressed p1.25*/
   if ((LPC_GPIO1->FIOPIN & (1 << 25)) == 0) {
-		if(moving_entity == WALL)
-			Place_Wall(wall);
+		if(moving_entity == WALL) //if select with joystick and is moving wall place it
+			game_state = PLACE_WALL;
   }
 
   /* Joytick UP p1.29*/

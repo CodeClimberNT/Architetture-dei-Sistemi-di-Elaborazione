@@ -10,8 +10,8 @@ extern struct UI player0_ui;
 extern struct UI player1_ui;
 
 extern uint8_t timeLeft;
-extern char p0_wall_remaining[2];
-extern char p1_wall_remaining[2];
+extern char p0_wall_remaining[1];
+extern char p1_wall_remaining[1];
 extern char time_value[2];
 
 void Start_Game() {
@@ -19,7 +19,6 @@ void Start_Game() {
   Player_Init();
   Board_Init();
   UI_Init();
-	Create_Hint_Move(player0); //start player 0
   return;
 }
 

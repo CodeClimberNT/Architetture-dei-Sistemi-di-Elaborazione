@@ -5,7 +5,7 @@ volatile struct Player player1;
 volatile struct UI timer_ui;
 volatile struct UI player0_ui;
 volatile struct UI player1_ui;
-
+volatile DIRECTION direction;
 volatile struct Wall wall;
 
 volatile uint8_t current_player = 0;
@@ -23,60 +23,51 @@ volatile WALL_DIRECTION WallMatrixPosition[NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {N
 //			 [] [] []
 // wall position will be in the X (where the [] rappresent the player position) and based on his propreties (Horizontal/Vertical) will block the respective Player Position
 
-volatile GAME_STATE game_state = TRANSITION;
+volatile GAME_STATE game_state = TITLE_SCREEN;
 volatile MOVING_ENTITY moving_entity = PLAYER;
 
 volatile uint32_t lastMove;
-// volatile uint8_t started = 0;
-volatile uint8_t started = 1; /********************REMOVE THIS WHEN FINISH DEBUGGING***************/
+volatile uint8_t game_over = 1;
 
-void Setup() {
-    Peripheral_Init();
-    if (!started) {
-        Waiting_Player();
-    } else {
-        Start_Game();
-        Peripheral_Enable();
-    }
-}
 
-void Waiting_Player() {
-    GUI_Text(40, 20, (uint8_t *)"\"CHRISTMAS\" QUORIDOR", QuoridorRed, White);
-    LCD_DrawRectWithShadow(READY_UI_XPOS, READY_UI_YPOS, READY_UI_XPOS + READY_UI_WIDTH, READY_UI_YPOS + READY_UI_HEIGHT, Blue2, NORTH_OVEST, DarkGray);
-    GUI_Text(READY_UI_XPOS + 20, READY_UI_YPOS + (READY_UI_HEIGHT / 2) - 5, (uint8_t *)"PRESS INT0 TO START", Black, White);
+void Title_Screen() {
+	LCD_Clear(White);
+	GUI_Text(40, 20, (uint8_t *)"\"CHRISTMAS\" QUORIDOR", QuoridorRed, White);
+	LCD_DrawRectWithShadow(READY_UI_XPOS, READY_UI_YPOS, READY_UI_WIDTH, READY_UI_HEIGHT, Blue2, SUD_OVEST, DarkGray);
+	GUI_Text(READY_UI_XPOS + 20, READY_UI_YPOS + (READY_UI_HEIGHT / 2) - 5, (uint8_t *)"PRESS INT0 TO START", Black, White);
 
-    GUI_Text(70, MAX_Y - 20, (uint8_t *)"FELIZ", ChristmasRed, White);
-    GUI_Text(115, MAX_Y - 20, (uint8_t *)"NAVIDAD", ChristmasGreen, White);
+	GUI_Text(70, MAX_Y - 20, (uint8_t *)"FELIZ", ChristmasRed, White);
+	GUI_Text(115, MAX_Y - 20, (uint8_t *)"NAVIDAD", ChristmasGreen, White);
 }
 
 void End_Turn() {
-  game_state = TRANSITION;
-	
-	//if turn timeout while moving wall
-	if(moving_entity == WALL){
-		Remove_Wall(wall);
-		moving_entity = PLAYER;
-	}
   current_player ^= 1;  // alternate between 0 and 1
-	Create_Hint_Move(current_player == 0 ? player0 : player1);
   timeLeft = MAX_TIME;
   Update_Timer_UI(timeLeft);
 }
 
-void Switch_Player_Wall() {
-    game_state = TRANSITION;
-    if (moving_entity == PLAYER) {
-        moving_entity = WALL;
-        wall = Create_Wall(wall);
-    } else {
-        Remove_Wall(wall);
-        moving_entity = PLAYER;
-    }
+uint8_t Win_Condition(){
+	return (player0.pos.y==0) || (player1.pos.y == NUM_ROWS-1);
+}
+
+void Game_Over(){
+	struct Player winner = player0.pos.y == 0 ? player0 : player1;
+	
+	LCD_FillRect(READY_UI_XPOS,READY_UI_YPOS, READY_UI_XPOS + READY_UI_WIDTH, READY_UI_YPOS + READY_UI_HEIGHT, White);
+	LCD_DrawRectWithShadow(READY_UI_XPOS, READY_UI_YPOS, READY_UI_WIDTH, READY_UI_HEIGHT, Blue2, SUD_OVEST, DarkGray);
+	
+	if(winner.id == 0){
+		GUI_Text(READY_UI_XPOS + 40, READY_UI_YPOS + (READY_UI_HEIGHT / 2) - 5, (uint8_t *)"PLAYER 1 WINS!", Black, White);
+	} else{
+		GUI_Text(READY_UI_XPOS + 40, READY_UI_YPOS + (READY_UI_HEIGHT / 2) - 5, (uint8_t *)"PLAYER 2 WINS!", Black, White);
+	}
+	wait_delay(5000000);
+	game_over = 1;
 }
 
 void Move(DIRECTION dir) {
-    game_state = TRANSITION;
-		cooldown = COOLDOWN;
+	direction = dir;
+	cooldown = COOLDOWN;
 
     switch (moving_entity) {
         case PLAYER:
@@ -85,9 +76,11 @@ void Move(DIRECTION dir) {
             } else {
                 player1 = Move_Player(player1, dir, 0);
             }
+						game_state = MOVE_PLAYER;
             break;
 
         case WALL:
+					game_state = MOVE_WALL;
             wall = Move_Wall(wall, dir);
             break;
         default:

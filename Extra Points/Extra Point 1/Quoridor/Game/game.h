@@ -87,8 +87,7 @@
 #define WALL_COLOR_BUFFER_HEIGHT 	(SQUARE_SIZE*2) + WALL_WIDTH
 
 /*******************ENUM DEFINITION**********************/
-typedef enum { TRANSITION,
-               IDLE } GAME_STATE;
+typedef enum { IDLE, TITLE_SCREEN, START_GAME, CHANGE_MOVING_ENTITY, MOVING_PLAYER, MOVING_WALL, MOVE_PLAYER, MOVE_WALL, ROTATE_WALL, CHECK_WIN_CONDITION, PLACE_WALL, TIMER_END_TURN, END_TURN, GAME_OVER } GAME_STATE;
 typedef enum { PLAYER,
                WALL } MOVING_ENTITY;
 typedef enum { NA = 0, Horizontal = 1 , Vertical = 2 } WALL_DIRECTION;
@@ -124,7 +123,6 @@ struct Player {
   struct Vector2D pos;
   uint8_t wallsRemaining;
   uint16_t color;
-	uint8_t moved;
 	uint8_t ghost;
 };
 
@@ -157,6 +155,7 @@ void Setup(void);
 // INIT FUNCTION
 void Peripheral_Init(void);
 void Peripheral_Enable(void);
+void Peripheral_Disable(void);
 void Start_Game(void);
 void Board_Init(void);
 void UI_Init(void);
@@ -164,8 +163,12 @@ void UI_Init(void);
 void UI_Counter_Init(void);
 
 // GAME MODE FUNCTION
-void Waiting_Player(void);
+void Title_Screen(void);
 void End_Turn(void);
+void End_Time(void);
+
+uint8_t Win_Condition(void);
+void Game_Over(void);
 
 void Switch_Player_Wall(void);
 
@@ -196,6 +199,7 @@ void Draw_Checkers(void);
 
 void Move(DIRECTION dir);
 
+uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir);
 void Position_Player(struct Player player);
 struct Player Move_Player(struct Player player, DIRECTION dir, uint8_t is_double);
 void Remove_Player(struct Player player);
@@ -204,13 +208,18 @@ void Create_Hint_Move(struct Player m_player);
 void Remove_Hint_Move(struct Player m_player);
 
 void Draw_Wall(void);
-struct Wall Create_Wall(struct Wall wall);
+struct Wall Create_Wall(void);
 void Place_Wall(struct Wall wall);
 struct Wall Preview_Wall(struct Wall wall);
 struct Wall Move_Wall(struct Wall wall, DIRECTION dir);
 struct Wall Rotate_Wall(struct Wall m_wall);
 void Remove_Wall(struct Wall wall);
 uint8_t Can_Place_Wall(struct Wall m_wall);
+
+uint8_t Wall_Partition_Board(struct Wall m_wall);
+uint8_t isReachableHelper(struct Vector2D start, struct Vector2D target, uint8_t visited[NUM_COLUMNS][NUM_ROWS]);
+uint8_t isReachable(struct Vector2D start, struct Vector2D target);
+
 
 struct Rect Get_Position_Of(struct Wall m_wall);
 

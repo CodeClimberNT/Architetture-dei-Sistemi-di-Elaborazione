@@ -494,7 +494,7 @@ uint16_t LCD_GetPoint(uint16_t Xpos,uint16_t Ypos)
 *******************************************************************************/
 void LCD_SetPoint(uint16_t Xpos,uint16_t Ypos,uint16_t point)
 {
-	if( Xpos >= MAX_X || Ypos >= MAX_Y )
+	if( Xpos >= MAX_X || Ypos >= MAX_Y ) 
 	{
 		return;
 	}
