@@ -124,7 +124,6 @@ struct Player {
   struct Vector2D pos;
   uint8_t wallsRemaining;
   uint16_t color;
-	uint8_t moved;
 	uint8_t ghost;
 };
 
@@ -163,9 +162,15 @@ void UI_Init(void);
 
 void UI_Counter_Init(void);
 
+void Draw_Board(void);
+
 // GAME MODE FUNCTION
-void Waiting_Player(void);
+void Title_Screen(void);
 void End_Turn(void);
+void Timer_End_Turn(void);
+
+uint8_t Win_Condition(void);
+void Game_Over(void);
 
 void Switch_Player_Wall(void);
 
@@ -211,6 +216,12 @@ struct Wall Move_Wall(struct Wall wall, DIRECTION dir);
 struct Wall Rotate_Wall(struct Wall m_wall);
 void Remove_Wall(struct Wall wall);
 uint8_t Can_Place_Wall(struct Wall m_wall);
+
+/*
+uint8_t Wall_Partition_Board(struct Wall m_wall);
+uint8_t isReachableHelper(struct Vector2D start, struct Vector2D target, uint8_t visited[NUM_COLUMNS][NUM_ROWS]);
+uint8_t isReachable(struct Vector2D start, struct Vector2D target);
+*/
 
 struct Rect Get_Position_Of(struct Wall m_wall);
 

@@ -65,6 +65,7 @@ struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color) 
   player.pos.y = y;
   player.wallsRemaining = MAX_WALLS;
   player.color = color;
+	player.ghost = 0;
 
   return player;
 };

@@ -19,6 +19,8 @@ extern struct Player player1;
 
 extern uint8_t current_player;
 
+
+
 //uint16_t wall_color_buffer[WALL_COLOR_BUFFER_LENGTH][WALL_COLOR_BUFFER_HEIGHT];
 
 void Peripheral_Init() {
@@ -30,6 +32,7 @@ void Peripheral_Init() {
   // init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
 
   init_RIT(0x7A120); /* 50ms  * 100MHz = 5*10^6 = 0x4C4B40  */
+	disable_timer(0);
   BUTTON_init();
   disable_button(1);
   disable_button(2);
@@ -203,46 +206,46 @@ void Position_Player(struct Player m_player) {
   LCD_FillSquare(m_x0, m_y0, PLAYER_SIZE, m_player.color);
 }
 
+uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir) {
+  switch (dir) {
+    case RIGHT:
+      return !(((p_pos.x < (NUM_COLUMNS - 1)) && (p_pos.y == 0) &&
+                (WallMatrixPosition[p_pos.x][p_pos.y] != Vertical)) ||
+               ((p_pos.x < (NUM_COLUMNS - 1)) && (p_pos.y > 0) &&
+                ((WallMatrixPosition[p_pos.x][p_pos.y] != Vertical) && (WallMatrixPosition[p_pos.x][p_pos.y - 1] != Vertical))));
+
+    case LEFT:
+      return !(((p_pos.x > 0) && (p_pos.y == 0) &&
+                (WallMatrixPosition[p_pos.x - 1][p_pos.y] != Vertical)) ||
+               ((p_pos.x > 0) && (p_pos.y > 0) &&
+                ((WallMatrixPosition[p_pos.x - 1][p_pos.y] != Vertical) && (WallMatrixPosition[p_pos.x - 1][p_pos.y - 1] != Vertical))));
+
+    case UP:
+      return !(((p_pos.x == 0) && (p_pos.y > 0) &&
+                (WallMatrixPosition[p_pos.x][p_pos.y - 1] != Horizontal)) ||
+               ((p_pos.x > 0) && (p_pos.y > 0) &&
+                ((WallMatrixPosition[p_pos.x][p_pos.y - 1] != Horizontal) && (WallMatrixPosition[p_pos.x - 1][p_pos.y - 1] != Horizontal))));
+
+    case DOWN:
+      return !(((p_pos.x == 0) && (p_pos.y < (NUM_ROWS - 1)) &&
+                (WallMatrixPosition[p_pos.x][p_pos.y] != Horizontal)) ||
+               ((p_pos.x > 0) && (p_pos.y < (NUM_ROWS - 1)) &&
+                ((WallMatrixPosition[p_pos.x][p_pos.y] != Horizontal) && (WallMatrixPosition[p_pos.x - 1][p_pos.y] != Horizontal))));
+    default:
+      GUI_Text(0, 0, (uint8_t *)"Check_Move_Player ERROR DIR", Black, White);
+      return 0;
+  }
+}
+
 struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_double) {
   struct Vector2D m_vec2d = Get_Vec_From_Dir(dir);
-	uint8_t check_barrier;
+	
 	if(is_double){
 		m_vec2d.x = m_vec2d.x * 2;
 		m_vec2d.y = m_vec2d.y * 2;
 	}
 
-	switch(dir){
-		case RIGHT:
-			check_barrier = ((m_player.pos.x < (NUM_COLUMNS-1)) && (m_player.pos.y == 0) && 
-															(WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Vertical))  || 
-										((m_player.pos.x < (NUM_COLUMNS-1)) && (m_player.pos.y > 0) && 
-										 ((WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Vertical) && (WallMatrixPosition[m_player.pos.x][m_player.pos.y-1] != Vertical)));
-			break;
-		
-		case LEFT:
-			check_barrier = ((m_player.pos.x > 0) && (m_player.pos.y == 0) && 
-															(WallMatrixPosition[m_player.pos.x-1][m_player.pos.y] != Vertical))  || 
-										((m_player.pos.x > 0) && (m_player.pos.y > 0) && 
-										 ((WallMatrixPosition[m_player.pos.x-1][m_player.pos.y] != Vertical) && (WallMatrixPosition[m_player.pos.x-1][m_player.pos.y-1] != Vertical)));
-			break;
-		
-		case UP:
-			check_barrier = ((m_player.pos.x == 0) && (m_player.pos.y > 0) && 
-															(WallMatrixPosition[m_player.pos.x][m_player.pos.y-1] != Horizontal))  || 
-										((m_player.pos.x > 0) && (m_player.pos.y > 0) && 
-										 ((WallMatrixPosition[m_player.pos.x][m_player.pos.y-1] != Horizontal) && (WallMatrixPosition[m_player.pos.x-1][m_player.pos.y-1] != Horizontal)));
-			break;
-		
-		case DOWN:
-			check_barrier = ((m_player.pos.x == 0) && (m_player.pos.y < (NUM_ROWS-1)) && 
-															(WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Horizontal))  || 
-										((m_player.pos.x > 0) && (m_player.pos.y < (NUM_ROWS-1)) && 
-										 ((WallMatrixPosition[m_player.pos.x][m_player.pos.y] != Horizontal) && (WallMatrixPosition[m_player.pos.x-1][m_player.pos.y] != Horizontal)));
-			break;
-	}
-	
-  
-  if (check_barrier){     
+	if (!Player_Collide_Wall(m_player.pos, dir)) {     
 		//check if position overlap player, then try two move forward
 		if(((m_player.pos.x + m_vec2d.x == player0.pos.x) && (m_player.pos.y + m_vec2d.y == player0.pos.y)) || 
 				((m_player.pos.x + m_vec2d.x == player1.pos.x) && (m_player.pos.y + m_vec2d.y == player1.pos.y))){
@@ -257,15 +260,20 @@ struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_doub
 
     m_player.pos.x += m_vec2d.x;
     m_player.pos.y += m_vec2d.y;
-		m_player.moved = 1;
     // draw player new position
     Position_Player(m_player);
-		if(!m_player.ghost)
-			End_Turn();  
-  } else {
-		m_player.moved = 0;
-	}
 		
+		if(!m_player.ghost){
+			if (current_player == 0){
+				player0 = m_player;
+			} else {
+				player1 = m_player;
+			}
+			
+			End_Turn();  
+		}
+  } 
+	
   return m_player;
 }
 
@@ -292,6 +300,14 @@ void Remove_Hint_Move(struct Player m_player){
 	Move_Player(m_player, LEFT,0);
 }
 
+void Draw_Board() {
+  Draw_Checkers();
+
+  Position_Player(player0);
+  Position_Player(player1);
+	Create_Hint_Move(current_player == 0 ? player0 : player1);
+  Draw_Wall();
+}
 
 void Draw_Wall(){
 	uint8_t i, j;
@@ -316,6 +332,7 @@ void Draw_Wall(){
 
 void Place_Wall(struct Wall m_wall){
 	game_state = TRANSITION;
+	
 	if(!Can_Place_Wall(m_wall)){
 		return; //If wall can't be place do nothing
 	}
@@ -377,7 +394,7 @@ struct Wall Move_Wall(struct Wall m_wall, DIRECTION direction) {
 }
 
 struct Wall Rotate_Wall(struct Wall m_wall){
-
+	
   Remove_Wall(m_wall);
 	
   m_wall.direction = m_wall.direction == Horizontal ? Vertical : Horizontal; //flip direction
@@ -393,10 +410,111 @@ void Remove_Wall(struct Wall m_wall) {
 	Draw_Wall();
 }
 
-uint8_t Can_Place_Wall(struct Wall m_wall){
-	//TODO IMPLEMENT LOGIC
-	return 1; 
+
+uint8_t Can_Place_Wall(struct Wall m_wall) {
+  uint8_t x = m_wall.position.x, y = m_wall.position.y;
+  // default all side are true need to check if something block the wall from being positioned
+  uint8_t up_side = 1, right_side = 1, down_side = 1, left_side = 1;
+
+  if (WallMatrixPosition[x][y] != NA)
+    return 0;
+
+  switch (m_wall.direction) {
+    case Horizontal:
+      if (x > 0)
+        left_side = WallMatrixPosition[x - 1][y] != Horizontal;
+
+      if (x < (NUM_COLUMNS_WALL - 1))
+        right_side = WallMatrixPosition[x + 1][y] != Horizontal;
+
+      break;
+
+    case Vertical:
+      if (y > 0)
+        up_side = WallMatrixPosition[x][y - 1] != Vertical;
+
+      if (y < (NUM_ROWS_WALL - 1))
+        down_side = WallMatrixPosition[x][y + 1] != Vertical;
+
+      break;
+    default:
+      GUI_Text(0, 0, (uint8_t *)"ERROR WALL POSITION LOGIC: Can_Place_Wall", Black, White);
+      return 0;
+  }
+
+  return up_side && right_side && down_side && left_side;
 }
+
+/*
+uint8_t Wall_Partition_Board(struct Wall m_wall){
+	uint8_t i, isPartitioned = 0;
+	struct Vector2D target, w_pos = m_wall.position;
+	WallMatrixPosition[w_pos.x][w_pos.y] = m_wall.direction;
+	
+	target.y = 0;
+	//check if P0 can reach other side
+	for(i=0; i<NUM_COLUMNS; i++){
+		target.x = i;
+		isPartitioned = isPartitioned || !isReachable(player0.pos, target);
+	}
+	target.y = 6;
+	//check if P1 can reach other side
+	for(i=0; i<NUM_COLUMNS; i++){
+		target.x = i;
+		isPartitioned = isPartitioned || !isReachable(player1.pos, target);
+	}
+	
+	WallMatrixPosition[w_pos.x][w_pos.y] = NA;
+	return isPartitioned;
+}
+
+uint8_t isReachableHelper(struct Vector2D start, struct Vector2D target, uint8_t visited[NUM_COLUMNS][NUM_ROWS]) {
+  struct Vector2D next;
+	// Define possible moves (up, down, left, right)
+  DIRECTION moves[4] = {UP, DOWN, LEFT, RIGHT};
+	
+	uint8_t i;
+  // Check if the target is reached
+  if ((start.x == target.x) && (start.y == target.y) == 1) {
+    return 1;
+  }
+
+  // Mark the current position as visited
+  visited[start.x][start.y] = 1;
+
+  
+
+  // Explore adjacent positions
+  for (i = 0; i < 4; ++i) {
+    next.x = start.x + Get_Vec_From_Dir(moves[i]).x;
+    next.y = start.y + Get_Vec_From_Dir(moves[i]).y;
+
+    // Check if the next position is within bounds and not visited
+    if (next.x >= 0 && next.x < NUM_COLUMNS && next.y >= 0 && next.y < NUM_ROWS)
+				if(!visited[next.x][next.y] && !Player_Collide_Wall(start, moves[i])){
+      // Recursively check the next position
+      if (isReachableHelper(next, target, visited)) {
+        return 1;
+      }
+    }
+  }
+
+  return 0;
+}
+
+uint8_t isReachable(struct Vector2D start, struct Vector2D target) {
+	uint8_t i,j;
+	uint8_t visited[NUM_COLUMNS][NUM_ROWS];
+  for (i = 0; i < NUM_COLUMNS; ++i) {
+    for (j = 0; j < NUM_ROWS; ++j) {
+      visited[i][j] = 0;
+    }
+  }
+
+  // Call the helper function
+  return isReachableHelper(start, target, visited);
+}
+*/
 
 struct Rect Get_Position_Of(struct Wall m_wall){
 	struct Rect m_rect;

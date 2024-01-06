@@ -16,6 +16,7 @@
 extern struct UI timer_ui;
 extern char time_value[2];
 extern uint8_t timeLeft;
+extern uint8_t started;
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
 **
@@ -27,10 +28,14 @@ extern uint8_t timeLeft;
 ******************************************************************************/
 
 void TIMER0_IRQHandler(void) {
-  if (timeLeft > 0) {
+	if(!started){
+		LPC_TIM0->IR = 1; /* clear interrupt flag */
+		return;
+	}
+  if (timeLeft > 0 ) {
     Update_Timer_UI(--timeLeft);
   } else
-    End_Turn();
+    Timer_End_Turn();
 
   LPC_TIM0->IR = 1; /* clear interrupt flag */
   return;
