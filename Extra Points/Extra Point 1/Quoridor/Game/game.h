@@ -32,7 +32,7 @@
 #define P1_Color Red
 #define PhantomPlayerColor DarkGray
 
-#define WallColor ChristmasGreen
+#define WallColor 0xA9F0
 #define PhantomWallColor DarkGray
 #define WALL_DISCOUNT 1
 
@@ -166,7 +166,7 @@ void Draw_Board(void);
 
 // GAME MODE FUNCTION
 void Title_Screen(void);
-void End_Turn(void);
+void End_Turn(uint8_t timeout);
 void Timer_End_Turn(void);
 
 uint8_t Win_Condition(void);

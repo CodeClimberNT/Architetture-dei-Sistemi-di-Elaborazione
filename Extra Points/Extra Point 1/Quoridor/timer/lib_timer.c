@@ -209,7 +209,7 @@ uint32_t init_timer(uint8_t timer_num, uint32_t TimerInterval) {
       //	 <i> 1 Stop on MR3: the TC and PC will be stopped and TCR[3] will be set to 0 if MR3 matches the TC
       //	 <i> 0 Feature disabled.
       //   </e>
-      LPC_TIM1->MCR = 3;
+      LPC_TIM1->MCR = 0;
       // </h>
 
       NVIC_EnableIRQ(TIMER1_IRQn);
@@ -266,7 +266,7 @@ uint32_t init_timer(uint8_t timer_num, uint32_t TimerInterval) {
       //	 <i> 1 Stop on MR3: the TC and PC will be stopped and TCR[3] will be set to 0 if MR3 matches the TC
       //	 <i> 0 Feature disabled.
       //   </e>
-      LPC_TIM2->MCR = 3;
+      LPC_TIM2->MCR = 0;
       // </h>
 
       NVIC_EnableIRQ(TIMER2_IRQn);
@@ -324,7 +324,7 @@ uint32_t init_timer(uint8_t timer_num, uint32_t TimerInterval) {
       //	 <i> 1 Stop on MR3: the TC and PC will be stopped and TCR[3] will be set to 0 if MR3 matches the TC
       //	 <i> 0 Feature disabled.
       //   </e>
-      LPC_TIM3->MCR = 3;
+      LPC_TIM3->MCR = 0;
       // </h>
       //*** <<< end of configuration section >>>    ***
 

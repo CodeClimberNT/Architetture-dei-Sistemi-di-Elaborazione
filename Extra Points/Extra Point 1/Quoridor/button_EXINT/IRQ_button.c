@@ -1,43 +1,36 @@
-#include "../Game/game.h"
 #include "button.h"
 #include "lpc17xx.h"
+#include "../RIT/RIT.h"
 
-extern uint8_t started;
-extern struct Wall wall;
-extern GAME_STATE game_state;
-extern MOVING_ENTITY moving_entity;
-extern uint8_t cooldown;
-
+/*debouncing variable*/
+extern uint8_t down_0;
+extern uint8_t down_1;
+extern uint8_t down_2;
 
 void EINT0_IRQHandler(void) /* INT0														 */
 {
-  if (!started) {
-    started = 1;
-    Setup();
-  }
+	down_0 = 1;
+	NVIC_DisableIRQ(EINT0_IRQn);							/* disable Button interrupts */
+	LPC_PINCON->PINSEL4    &= ~(1 << 20);     /* GPIO pin selection */
+  
   LPC_SC->EXTINT &= (1 << 0); /* clear pending interrupt         */
 }
 
 void EINT1_IRQHandler(void) /* KEY1														 */
 {
-	if (game_state == TRANSITION || cooldown > 0) {
-    LPC_SC->EXTINT &= (1 << 1);
-    return;
-  }
-	cooldown = COOLDOWN;
-  Switch_Player_Wall();
+	down_1 = 1;
+	NVIC_DisableIRQ(EINT1_IRQn);							/* disable Button interrupts */
+	LPC_PINCON->PINSEL4    &= ~(1 << 22);     /* GPIO pin selection */
 	
   LPC_SC->EXTINT &= (1 << 1); /* clear pending interrupt         */
 }
 
 void EINT2_IRQHandler(void) /* KEY2														 */
 {
-	if (game_state == TRANSITION || moving_entity == PLAYER || cooldown > 0) {
-    LPC_SC->EXTINT &= (1 << 2);
-    return;
-  }
-	cooldown = COOLDOWN;
-	wall = Rotate_Wall(wall);
+
+	down_2 = 1;
+	NVIC_DisableIRQ(EINT2_IRQn);							/* disable Button interrupts */
+	LPC_PINCON->PINSEL4    &= ~(1 << 24);     /* GPIO pin selection */
 	
   LPC_SC->EXTINT &= (1 << 2); /* clear pending interrupt         */
 }

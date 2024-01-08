@@ -26,24 +26,16 @@ extern uint8_t current_player;
 void Peripheral_Init() {
   LCD_Initialization();
   // 0x17D7840
-  init_timer(0, 0x26259F); /* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
+  init_timer(0, 0x26259F); 								/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
   // init_timer(0, 0x1312D0 ); 						/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
   // init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
-  // init_timer(0, 0x4E2 ); 						    /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
+  // init_timer(0, 0x4E2 ); 						  /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
 
   init_RIT(0x7A120); /* 50ms  * 100MHz = 5*10^6 = 0x4C4B40  */
+	enable_RIT();
 	disable_timer(0);
   BUTTON_init();
-  disable_button(1);
-  disable_button(2);
   joystick_init();
-}
-
-void Peripheral_Enable() {
-  enable_timer(0);
-  enable_RIT();
-  enable_button(1);
-  enable_button(2);
 }
 
 void wait_delay(int count) {
@@ -270,7 +262,7 @@ struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_doub
 				player1 = m_player;
 			}
 			
-			End_Turn();  
+			End_Turn(0);  
 		}
   } 
 	
@@ -341,14 +333,13 @@ struct Wall Place_Wall(struct Wall m_wall){
 	m_wall.discount = 0;
 	Preview_Wall(m_wall);
 	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = m_wall.direction; //store wall direction to the matrix
-	moving_entity = PLAYER;
 	if(current_player == 0){
 		Update_Wall_UI(player0_ui, --player0.wallsRemaining);
 	} else {
 		Update_Wall_UI(player1_ui, --player1.wallsRemaining);
 	}
 	Remove_Hint_Move(current_player == 0 ? player0 : player1);
-	End_Turn();
+	End_Turn(0);
 	return m_wall;
 }
 

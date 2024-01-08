@@ -27,7 +27,7 @@ volatile WALL_DIRECTION WallMatrixPosition[NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {N
 volatile GAME_STATE game_state = TRANSITION;
 volatile MOVING_ENTITY moving_entity = PLAYER;
 
-volatile uint32_t lastMove;
+uint32_t lastMove;
 volatile uint8_t started = 0;
 
 void Setup() {
@@ -36,7 +36,7 @@ void Setup() {
 		Title_Screen();
 	} else {
 		Start_Game();
-		Peripheral_Enable();
+		enable_timer(0);
 	}
 }
 
@@ -50,9 +50,27 @@ void Title_Screen() {
 	GUI_Text(115, MAX_Y - 20, (uint8_t *)"NAVIDAD", ChristmasGreen, White);
 }
 
-void End_Turn() {
+void End_Turn(uint8_t timeout) {
   game_state = TRANSITION;
+	
+	lastMove = (current_player << 24) ;
 
+	if(moving_entity == PLAYER){
+		//all 0 for moving the player and bc don't have direction in position
+		lastMove |= (0 << 16 ); 
+		
+		lastMove |= (timeout == 1) ? 1 : 0 << 12;
+		lastMove |= (current_player == 0 ? player0.pos.y : player1.pos.y) << 8;
+		lastMove |=  current_player == 0 ? player0.pos.x : player1.pos.x;
+	} 
+	if (moving_entity == WALL) {
+		lastMove |= 1 << 16;
+		lastMove |= (wall.direction == Vertical ? 0 : 1) << 12;
+		lastMove |= wall.position.y << 8;
+		lastMove |= wall.position.x;
+	}
+	
+	
 	if(Win_Condition()){
 		Game_Over();
 		return;
@@ -75,7 +93,7 @@ void Timer_End_Turn(){
 	} else {
 		Remove_Wall(wall);
 	}
-	End_Turn();
+	End_Turn(1);
 }
 
 uint8_t Win_Condition(){

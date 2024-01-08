@@ -11,7 +11,7 @@ I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cms
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
-I (Game/game.h)(0x659BC963)
+I (Game/game.h)(0x659BDDDC)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game/../RIT/RIT.h)(0x658D91E3)
 I (Game/../button_EXINT/button.h)(0x6588490A)
@@ -28,15 +28,15 @@ I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cms
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
-I (Game\game.h)(0x659BC963)
+I (Game\game.h)(0x659BDDDC)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game\../GLCD/GLCD.h)(0x659003FA)
 I (Game\../RIT/RIT.h)(0x658D91E3)
 I (Game\../button_EXINT/button.h)(0x6588490A)
 I (Game\../joystick/joystick.h)(0x61B5E082)
 I (Game\../timer/timer.h)(0x658D6EC6)
-F (.\Game\game.c)(0x659BBEEB)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\game.o --omf_browse .\output\game.crf --depend .\output\game.d)
-I (Game\game.h)(0x659BC963)
+F (.\Game\game.c)(0x659BE9FE)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\game.o --omf_browse .\output\game.crf --depend .\output\game.d)
+I (Game\game.h)(0x659BDDDC)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game\../GLCD/GLCD.h)(0x659003FA)
@@ -51,8 +51,8 @@ I (Game\../RIT/RIT.h)(0x658D91E3)
 I (Game\../button_EXINT/button.h)(0x6588490A)
 I (Game\../joystick/joystick.h)(0x61B5E082)
 I (Game\../timer/timer.h)(0x658D6EC6)
-F (.\Game\util_game.c)(0x659BD206)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\util_game.o --omf_browse .\output\util_game.crf --depend .\output\util_game.d)
-I (Game\game.h)(0x659BC963)
+F (.\Game\util_game.c)(0x659BEA63)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\util_game.o --omf_browse .\output\util_game.crf --depend .\output\util_game.d)
+I (Game\game.h)(0x659BDDDC)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (Game\../GLCD/GLCD.h)(0x659003FA)
@@ -67,7 +67,7 @@ I (Game\../RIT/RIT.h)(0x658D91E3)
 I (Game\../button_EXINT/button.h)(0x6588490A)
 I (Game\../joystick/joystick.h)(0x61B5E082)
 I (Game\../timer/timer.h)(0x658D6EC6)
-F (.\Game\game.h)(0x659BC963)()
+F (.\Game\game.h)(0x659BDDDC)()
 F (.\core_cm3.c)(0x65810AF1)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\core_cm3.o --omf_browse .\output\core_cm3.crf --depend .\output\core_cm3.d)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
 F (.\system_LPC17xx.c)(0x65810AF4)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\system_lpc17xx.o --omf_browse .\output\system_lpc17xx.crf --depend .\output\system_lpc17xx.d)
@@ -79,23 +79,17 @@ I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cms
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
-F (.\button_EXINT\IRQ_button.c)(0x65981ED0)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\irq_button.o --omf_browse .\output\irq_button.crf --depend .\output\irq_button.d)
-I (button_EXINT\../Game/game.h)(0x659BC963)
+F (.\button_EXINT\IRQ_button.c)(0x659BE718)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\irq_button.o --omf_browse .\output\irq_button.crf --depend .\output\irq_button.d)
+I (button_EXINT\button.h)(0x6588490A)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
-I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
-I (button_EXINT\../Game/../GLCD/GLCD.h)(0x659003FA)
-I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\LPC17xx.h)(0x5E1DC4B4)
+I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\lpc17xx.h)(0x5E1DC4B4)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
-I (button_EXINT\../Game/../RIT/RIT.h)(0x658D91E3)
-I (button_EXINT\../Game/../button_EXINT/button.h)(0x6588490A)
-I (button_EXINT\../Game/../joystick/joystick.h)(0x61B5E082)
-I (button_EXINT\../Game/../timer/timer.h)(0x658D6EC6)
-I (button_EXINT\button.h)(0x6588490A)
+I (button_EXINT\../RIT/RIT.h)(0x658D91E3)
 F (.\button_EXINT\lib_button.c)(0x658D6EB6)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\lib_button.o --omf_browse .\output\lib_button.crf --depend .\output\lib_button.d)
 I (button_EXINT\button.h)(0x6588490A)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
@@ -107,7 +101,7 @@ I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cms
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626FAD4E)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
 F (.\button_EXINT\button.h)(0x6588490A)()
-F (.\joystick\lib_joystick.c)(0x6582C9D9)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\lib_joystick.o --omf_browse .\output\lib_joystick.crf --depend .\output\lib_joystick.d)
+F (.\joystick\lib_joystick.c)(0x659BD41D)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\lib_joystick.o --omf_browse .\output\lib_joystick.crf --depend .\output\lib_joystick.d)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\lpc17xx.h)(0x5E1DC4B4)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x626FAD4E)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
@@ -118,8 +112,8 @@ I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h)(0x58493F92)
 I (joystick\joystick.h)(0x61B5E082)
 F (.\joystick\joystick.h)(0x61B5E082)()
-F (.\RIT\IRQ_RIT.c)(0x659BA970)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\irq_rit.o --omf_browse .\output\irq_rit.crf --depend .\output\irq_rit.d)
-I (RIT\../Game/game.h)(0x659BC963)
+F (.\RIT\IRQ_RIT.c)(0x659BDC59)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\irq_rit.o --omf_browse .\output\irq_rit.crf --depend .\output\irq_rit.d)
+I (RIT\../Game/game.h)(0x659BDDDC)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (RIT\../Game/../GLCD/GLCD.h)(0x659003FA)
@@ -147,7 +141,7 @@ I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\
 F (.\RIT\RIT.h)(0x658D91E3)()
 F (.\timer\IRQ_timer.c)(0x659975CD)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\irq_timer.o --omf_browse .\output\irq_timer.crf --depend .\output\irq_timer.d)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\string.h)(0x5E8E9F32)
-I (timer\../Game/game.h)(0x659BC963)
+I (timer\../Game/game.h)(0x659BDDDC)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdio.h)(0x5E8E9F32)
 I (timer\../Game/../GLCD/GLCD.h)(0x659003FA)
@@ -162,7 +156,7 @@ I (timer\../Game/../RIT/RIT.h)(0x658D91E3)
 I (timer\../Game/../button_EXINT/button.h)(0x6588490A)
 I (timer\../Game/../joystick/joystick.h)(0x61B5E082)
 I (timer\../Game/../timer/timer.h)(0x658D6EC6)
-F (.\timer\lib_timer.c)(0x658D6EC3)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\lib_timer.o --omf_browse .\output\lib_timer.crf --depend .\output\lib_timer.d)
+F (.\timer\lib_timer.c)(0x659BE718)(-c --cpu Cortex-M3 -g -O2 --apcs=interwork --enum_is_int-I.\RTE\_Target_1-IC:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include-D__UVISION_VERSION="539" -D_RTE_ -DLPC175x_6x -D_RTE_-o .\output\lib_timer.o --omf_browse .\output\lib_timer.crf --depend .\output\lib_timer.d)
 I (C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\lpc17xx.h)(0x5E1DC4B4)
 I (C:\Users\nickt\AppData\Local\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x626FAD4E)
 I (C:\Keil_v5\ARM\ARMCLANG5\include\stdint.h)(0x5E8E9F32)
