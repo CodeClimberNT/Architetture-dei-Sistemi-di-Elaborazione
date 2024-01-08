@@ -330,11 +330,11 @@ void Draw_Wall(){
   }
 }
 
-void Place_Wall(struct Wall m_wall){
+struct Wall Place_Wall(struct Wall m_wall){
 	game_state = TRANSITION;
 	
 	if(!Can_Place_Wall(m_wall)){
-		return; //If wall can't be place do nothing
+		return m_wall; //If wall can't be place do nothing
 	}
 	
 	m_wall.color = WallColor;
@@ -349,7 +349,9 @@ void Place_Wall(struct Wall m_wall){
 	}
 	Remove_Hint_Move(current_player == 0 ? player0 : player1);
 	End_Turn();
+	return m_wall;
 }
+
 
 struct Wall Preview_Wall(struct Wall m_wall) {
 	struct Rect m_rect = Get_Position_Of(m_wall);
@@ -441,80 +443,103 @@ uint8_t Can_Place_Wall(struct Wall m_wall) {
       GUI_Text(0, 0, (uint8_t *)"ERROR WALL POSITION LOGIC: Can_Place_Wall", Black, White);
       return 0;
   }
-
-  return up_side && right_side && down_side && left_side;
+	//if overlap return 0, don't need to check if board is partitioned
+  return ((up_side && right_side && down_side && left_side) == 0) ? 0 : !Wall_Partition_Board(m_wall);
 }
 
-/*
+
 uint8_t Wall_Partition_Board(struct Wall m_wall){
-	uint8_t i, isPartitioned = 0;
-	struct Vector2D target, w_pos = m_wall.position;
-	WallMatrixPosition[w_pos.x][w_pos.y] = m_wall.direction;
+	uint8_t i, j, m, n;
+	uint8_t isPartitioned = 0;
+	uint8_t tempBoard[NUM_COLUMNS + NUM_COLUMNS_WALL][NUM_ROWS + NUM_ROWS_WALL] = {0};
 	
-	target.y = 0;
+	//temp add wall to matrix to check partition
+	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = m_wall.direction;
+	
+	
+	//setup temp board to have wall in position
+	for(j=1,n=0; n<NUM_ROWS_WALL; n++, j+=2){
+		for(i=1,m=0; m<NUM_COLUMNS_WALL; m++, i+=2){
+			if(tempBoard[i][j]!=0 || WallMatrixPosition[m][n] == NA)
+				continue;
+			
+			if(WallMatrixPosition[m][n] == Horizontal){
+				tempBoard[i-1][j] = 1;
+				tempBoard[i][j] = 1;
+				tempBoard[i+1][j] = 1;
+			} else { //Vertical
+				tempBoard[i][j-1] = 1;
+				tempBoard[i][j] = 1;
+				tempBoard[i][j+1] = 1;
+			}
+		}
+	}
+	
+
 	//check if P0 can reach other side
-	for(i=0; i<NUM_COLUMNS; i++){
-		target.x = i;
-		isPartitioned = isPartitioned || !isReachable(player0.pos, target);
-	}
-	target.y = 6;
+	isPartitioned = !isReachable(player0.pos, 0, tempBoard);
+
 	//check if P1 can reach other side
-	for(i=0; i<NUM_COLUMNS; i++){
-		target.x = i;
-		isPartitioned = isPartitioned || !isReachable(player1.pos, target);
-	}
+	isPartitioned = isPartitioned || !isReachable(player1.pos, 6, tempBoard);
 	
-	WallMatrixPosition[w_pos.x][w_pos.y] = NA;
+	
+	//remove temp wall added
+	WallMatrixPosition[m_wall.position.x][m_wall.position.y] = NA;
 	return isPartitioned;
 }
 
-uint8_t isReachableHelper(struct Vector2D start, struct Vector2D target, uint8_t visited[NUM_COLUMNS][NUM_ROWS]) {
-  struct Vector2D next;
-	// Define possible moves (up, down, left, right)
-  DIRECTION moves[4] = {UP, DOWN, LEFT, RIGHT};
+uint8_t isReachable(struct Vector2D start, uint8_t row_target, uint8_t tempBoard[NUM_COLUMNS + NUM_COLUMNS_WALL][NUM_ROWS + NUM_ROWS_WALL]){
+	uint8_t i,j,k=0;
 	
-	uint8_t i;
-  // Check if the target is reached
-  if ((start.x == target.x) && (start.y == target.y) == 1) {
-    return 1;
-  }
+	//reset tempBoard player flooding value to 0
+	for(j=0; j<NUM_ROWS; j+=2){
+		for(i=0; i<NUM_COLUMNS; i+=2){
+			tempBoard[i][j]=0; 
+		}
+	}
+	tempBoard[start.x*2][start.y*2] = 2;
+	
+	row_target*=2;
 
-  // Mark the current position as visited
-  visited[start.x][start.y] = 1;
-
-  
-
-  // Explore adjacent positions
-  for (i = 0; i < 4; ++i) {
-    next.x = start.x + Get_Vec_From_Dir(moves[i]).x;
-    next.y = start.y + Get_Vec_From_Dir(moves[i]).y;
-
-    // Check if the next position is within bounds and not visited
-    if (next.x >= 0 && next.x < NUM_COLUMNS && next.y >= 0 && next.y < NUM_ROWS)
-				if(!visited[next.x][next.y] && !Player_Collide_Wall(start, moves[i])){
-      // Recursively check the next position
-      if (isReachableHelper(next, target, visited)) {
-        return 1;
-      }
+	// worst case scenario need to flood the board n^2 times for the player possible moves 
+	// (actually don't have all those wall to make the traversal of the board so long, 
+	// so can be reduce but the board size is so small that it doesn't change much)
+	while(++k <= (NUM_COLUMNS*NUM_ROWS)){
+		
+		for(j=0; j<NUM_ROWS+NUM_ROWS_WALL; j+=2){
+			for(i=0; i<NUM_COLUMNS+NUM_COLUMNS_WALL; i+=2){
+				if(tempBoard[i][j]==0)
+					continue;
+				
+				//currect cell have value to flood
+				if(tempBoard[i][j] == 2){
+					//if flooding algorithm reach target row exit with true value
+					if(j == row_target){
+						return 1;
+					}
+					//not left border and don't have wall on left
+					if(i>1 && tempBoard[i-1][j]!=1)
+						tempBoard[i-2][j] = 2;
+					
+					//not right border and don't have wall on right
+					if(i<(NUM_COLUMNS+NUM_COLUMNS_WALL-1) && tempBoard[i+1][j]!=1)
+						tempBoard[i+2][j] = 2;
+					
+					//not up border and don't have wall on up
+					if(j>1 && (tempBoard[i][j-1]!=1))
+						tempBoard[i][j-2] = 2;
+					
+					//not bottom border and don't have wall on bottom
+					if(j<(NUM_ROWS+NUM_ROWS_WALL-1) && (tempBoard[i][j+1]!=1))
+						tempBoard[i][j+2] = 2;
+				}
+			}
     }
-  }
-
-  return 0;
+		
+	}
+	
+	return 0;
 }
-
-uint8_t isReachable(struct Vector2D start, struct Vector2D target) {
-	uint8_t i,j;
-	uint8_t visited[NUM_COLUMNS][NUM_ROWS];
-  for (i = 0; i < NUM_COLUMNS; ++i) {
-    for (j = 0; j < NUM_ROWS; ++j) {
-      visited[i][j] = 0;
-    }
-  }
-
-  // Call the helper function
-  return isReachableHelper(start, target, visited);
-}
-*/
 
 struct Rect Get_Position_Of(struct Wall m_wall){
 	struct Rect m_rect;

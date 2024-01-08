@@ -6,8 +6,6 @@
 ".\output\util_game.o"
 ".\output\core_cm3.o"
 ".\output\system_lpc17xx.o"
-".\output\funct_led.o"
-".\output\lib_led.o"
 ".\output\irq_button.o"
 ".\output\lib_button.o"
 ".\output\lib_joystick.o"

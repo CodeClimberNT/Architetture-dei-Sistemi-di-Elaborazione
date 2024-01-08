@@ -41,26 +41,26 @@ ARM Macro Assembler    Page 1
    24 00000000         ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
    25 00000000         ; </h>
    26 00000000         
-   27 00000000 00000200 
+   27 00000000 00000400 
                        Stack_Size
-                               EQU              0x00000200
+                               EQU              0x00000400
    28 00000000         
    29 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
 =3
    30 00000000         Stack_Mem
                                SPACE            Stack_Size
-   31 00000200         __initial_sp
-   32 00000200         
-   33 00000200         
-   34 00000200         ; <h> Heap Configuration
-   35 00000200         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-   36 00000200         ; </h>
-   37 00000200         
-   38 00000200 00000000 
+   31 00000400         __initial_sp
+   32 00000400         
+   33 00000400         
+   34 00000400         ; <h> Heap Configuration
+   35 00000400         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   36 00000400         ; </h>
+   37 00000400         
+   38 00000400 00000000 
                        Heap_Size
                                EQU              0x00000000
-   39 00000200         
-   40 00000200                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+   39 00000400         
+   40 00000400                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
 3
    41 00000000         __heap_base
 
@@ -419,7 +419,7 @@ ARM Macro Assembler    Page 7
   280 00000024                 END
               00000000 
               00000000 
-              00000200 
+              00000400 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\output\startup_lpc17xx.d -o.\output\startup_lpc17xx.o -I.\RTE\_T
@@ -451,7 +451,7 @@ Symbol: Stack_Mem
       At line 270 in file startup_LPC17xx.s
       At line 272 in file startup_LPC17xx.s
 
-__initial_sp 00000200
+__initial_sp 00000400
 
 Symbol: __initial_sp
    Definitions
@@ -1039,7 +1039,7 @@ Symbol: Heap_Size
       At line 42 in file startup_LPC17xx.s
       At line 271 in file startup_LPC17xx.s
 
-Stack_Size 00000200
+Stack_Size 00000400
 
 Symbol: Stack_Size
    Definitions

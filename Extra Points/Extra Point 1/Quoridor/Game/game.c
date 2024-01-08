@@ -23,6 +23,7 @@ volatile WALL_DIRECTION WallMatrixPosition[NUM_COLUMNS_WALL][NUM_ROWS_WALL] = {N
 //			 [] [] []
 // wall position will be in the X (where the [] rappresent the player position) and based on his propreties (Horizontal/Vertical) will block the respective Player Position
 
+
 volatile GAME_STATE game_state = TRANSITION;
 volatile MOVING_ENTITY moving_entity = PLAYER;
 

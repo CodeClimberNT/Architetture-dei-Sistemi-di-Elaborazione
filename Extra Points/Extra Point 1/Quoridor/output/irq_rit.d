@@ -14,4 +14,3 @@
 .\output\irq_rit.o: RIT\../Game/../button_EXINT/button.h
 .\output\irq_rit.o: RIT\../Game/../joystick/joystick.h
 .\output\irq_rit.o: RIT\../Game/../timer/timer.h
-.\output\irq_rit.o: RIT\../led/led.h

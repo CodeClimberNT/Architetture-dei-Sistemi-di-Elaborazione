@@ -8,7 +8,6 @@
 **--------------------------------------------------------------------------------------------------------
 *********************************************************************************************************/
 #include "../Game/game.h"
-#include "../led/led.h"
 #include "RIT.h"
 #include "lpc17xx.h"
 
@@ -41,8 +40,11 @@ void RIT_IRQHandler(void) {
 
   /* Joytick J_Select pressed p1.25*/
   if ((LPC_GPIO1->FIOPIN & (1 << 25)) == 0) {
-		if(moving_entity == WALL)
-			Place_Wall(wall);
+		if(moving_entity == WALL){
+			wall = Place_Wall(wall);
+		} else {
+			Remove_Last_Wall(wall);
+		}
   }
 
   /* Joytick UP p1.29*/
