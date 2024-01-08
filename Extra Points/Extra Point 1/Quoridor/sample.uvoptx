@@ -152,9 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>326</LineNumber>
+          <LineNumber>360</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>5440</Address>
+          <Address>5508</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,39 +163,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\Game\util_game.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\sample\Game/util_game.c\326</Expression>
+          <Expression>\\sample\Game/util_game.c\360</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>67</LineNumber>
+          <LineNumber>359</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1754</Address>
+          <Address>5502</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\Game\game.c</Filename>
+          <Filename>.\Game\util_game.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\sample\Game/game.c\67</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>66</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>1730</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\Game\game.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\sample\Game/game.c\66</Expression>
+          <Expression>\\sample\Game/util_game.c\359</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -313,6 +297,11 @@
           <count>22</count>
           <WinNumber>1</WinNumber>
           <ItemText>moving_entity</ItemText>
+        </Ww>
+        <Ww>
+          <count>23</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ScaleFlag</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

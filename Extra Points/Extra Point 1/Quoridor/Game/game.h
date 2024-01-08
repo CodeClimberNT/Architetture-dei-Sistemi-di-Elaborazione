@@ -208,6 +208,9 @@ void Remove_Player(struct Player player);
 void Create_Hint_Move(struct Player m_player);
 void Remove_Hint_Move(struct Player m_player);
 
+void Create_Highlight(struct Player m_player);
+void Remove_Highlight(struct Player m_player);
+
 void Draw_Wall(void);
 struct Wall Create_Wall(struct Wall wall);
 struct Wall Place_Wall(struct Wall wall);

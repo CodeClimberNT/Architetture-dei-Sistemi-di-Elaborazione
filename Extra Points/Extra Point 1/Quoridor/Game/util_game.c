@@ -1,3 +1,14 @@
+/*--------------File Info---------------------------------------------------------------------------------
+** File name:               util_game.c
+** Descriptions:            The Game Utility File
+**
+**--------------------------------------------------------------------------------------------------------
+** Created by:              Nicolò Taormina
+** Created date:            20/12/2023
+** Version:                 v1.0
+*********************************************************************************************************/
+
+
 #include "game.h"
 
 extern GAME_STATE game_state;
@@ -25,12 +36,13 @@ extern uint8_t current_player;
 
 void Peripheral_Init() {
   LCD_Initialization();
-  // 0x17D7840
+  //0x26259F
   init_timer(0, 0x26259F); 								/* 1s    * 25MHz = 25*10^6   = 0x17D7840 */
   // init_timer(0, 0x1312D0 ); 						/* 50ms  * 25MHz = 1.25*10^6 = 0x1312D0  */
   // init_timer(0, 0x6108 ); 						  /* 1ms   * 25MHz = 25*10^3   = 0x6108    */
   // init_timer(0, 0x4E2 ); 						  /* 500us * 25MHz = 1.25*10^3 = 0x4E2     */
-
+	
+	//0x7A120
   init_RIT(0x7A120); /* 50ms  * 100MHz = 5*10^6 = 0x4C4B40  */
 	enable_RIT();
 	disable_timer(0);
@@ -275,6 +287,7 @@ void Remove_Player(struct Player m_player) {
 }
 
 void Create_Hint_Move(struct Player m_player){
+	Create_Highlight(m_player);
 	m_player.color = PhantomPlayerColor;
 	m_player.ghost = 1;
 	Move_Player(m_player, UP,0);
@@ -284,12 +297,33 @@ void Create_Hint_Move(struct Player m_player){
 }
 
 void Remove_Hint_Move(struct Player m_player){
+	Remove_Highlight(m_player);
 	m_player.color = GameBG;
 	m_player.ghost = 1;
 	Move_Player(m_player, UP,0);
 	Move_Player(m_player, RIGHT,0);
 	Move_Player(m_player, DOWN,0);
 	Move_Player(m_player, LEFT,0);
+}
+
+void Create_Highlight(struct Player m_player){
+	uint16_t m_x0, m_y0;
+
+  // player position to spatial position
+  m_x0 = m_player.pos.x * (SQUARE_SIZE + WALL_WIDTH);
+  m_y0 = m_player.pos.y * (SQUARE_SIZE + WALL_WIDTH);
+	
+	LCD_DrawSquare(m_x0, m_y0, SQUARE_SIZE, Yellow);
+}
+
+void Remove_Highlight(struct Player m_player){
+	uint16_t m_x0, m_y0;
+
+  // player position to spatial position
+  m_x0 = m_player.pos.x * (SQUARE_SIZE + WALL_WIDTH);
+  m_y0 = m_player.pos.y * (SQUARE_SIZE + WALL_WIDTH);
+	
+	LCD_DrawSquare(m_x0, m_y0, SQUARE_SIZE, Black);
 }
 
 void Draw_Board() {
