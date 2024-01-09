@@ -27,8 +27,6 @@ extern MOVING_ENTITY moving_entity;
 extern uint8_t started;
 extern struct Wall wall;
 
-extern struct Wall wall;
-
 extern uint8_t cooldown;
 
 /*button debouncing variables*/

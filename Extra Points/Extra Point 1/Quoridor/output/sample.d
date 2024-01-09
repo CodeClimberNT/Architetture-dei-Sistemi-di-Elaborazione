@@ -10,6 +10,11 @@
 .\output\sample.o: C:\Users\nickt\AppData\Local\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include\system_LPC17xx.h
 .\output\sample.o: Game/game.h
 .\output\sample.o: C:\Keil_v5\ARM\ARMCLANG5\Bin\..\include\stdio.h
+.\output\sample.o: Game/../Draw/draw.h
+.\output\sample.o: Game/../Player/player.h
+.\output\sample.o: Game/../Player/../Game/game.h
+.\output\sample.o: Game/../UI/ui.h
+.\output\sample.o: Game/../Wall/wall.h
 .\output\sample.o: Game/../RIT/RIT.h
 .\output\sample.o: Game/../button_EXINT/button.h
 .\output\sample.o: Game/../joystick/joystick.h

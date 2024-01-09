@@ -1,9 +1,12 @@
 --cpu Cortex-M3
 ".\output\startup_lpc17xx.o"
 ".\output\sample.o"
-".\output\init_game.o"
 ".\output\game.o"
 ".\output\util_game.o"
+".\output\draw.o"
+".\output\player.o"
+".\output\ui.o"
+".\output\wall.o"
 ".\output\core_cm3.o"
 ".\output\system_lpc17xx.o"
 ".\output\irq_button.o"

@@ -9,7 +9,7 @@
 *********************************************************************************************************/
 #include <string.h>
 
-#include "../Game/game.h"
+#include "../UI/ui.h"
 #include "lpc17xx.h"
 #include "timer.h"
 

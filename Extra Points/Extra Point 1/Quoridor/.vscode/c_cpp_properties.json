@@ -3,12 +3,11 @@
         {
             "name": "Win32",
             "forcedInclude": [
-                "C:/Users/nickt/AppData/Local/arm/packs/Keil/LPC1700_DFP/2.7.1/Device/Include/LPC17xx.h",
-                "C:/Users/nickt/AppData/Local/arm/packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include/core_cm3.h"
+                // "C:/Users/nickt/AppData/Local/arm/packs/Keil/LPC1700_DFP/2.7.1/Device/Include/LPC17xx.h",
+                // "C:/Users/nickt/AppData/Local/arm/packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include/core_cm3.h"
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/nickt/AppData/Local/arm/packs/Keil/LPC1700_DFP/2.7.1",
                 "C:/Users/nickt/AppData/Local/arm/packs/Keil/LPC1700_DFP/2.7.1/Device/Include/",
                 "C:/Users/nickt/AppData/Local/arm/packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include"
             ],
