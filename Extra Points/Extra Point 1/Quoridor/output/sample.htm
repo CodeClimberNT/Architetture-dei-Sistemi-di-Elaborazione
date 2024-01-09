@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\output\sample.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\output\sample.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Jan 09 11:35:31 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Jan 09 18:55:58 2024
 <BR><P>
-<H3>Maximum Stack Usage =        540 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        556 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 RIT_IRQHandler &rArr; Place_Wall &rArr; Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 <P>
@@ -490,8 +490,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup
 </UL>
 
-<P><STRONG><a name="[59]"></a>Title_Screen</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 244<LI>Call Chain = Title_Screen &rArr; Show_Big_UI &rArr; LCD_DrawRectWithShadow &rArr; LCD_DrawShadow &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
+<P><STRONG><a name="[59]"></a>Title_Screen</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, game.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 252<LI>Call Chain = Title_Screen &rArr; Show_Big_UI &rArr; LCD_DrawRectWithShadow &rArr; LCD_DrawShadow &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Top_Title
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Bottom_Title
@@ -515,8 +515,8 @@ Global Symbols
 <LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5f]"></a>Game_Over</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 324 + Unknown Stack Size
+<P><STRONG><a name="[5f]"></a>Game_Over</STRONG> (Thumb, 128 bytes, Stack size 32 bytes, game.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 340 + Unknown Stack Size
 <LI>Call Chain = Game_Over &rArr; Setup &rArr; Start_Game &rArr; UI_Init &rArr; UI_Counter_Init &rArr; Update_UI &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
@@ -530,7 +530,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[60]"></a>End_Turn</STRONG> (Thumb, 252 bytes, Stack size 16 bytes, game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 340 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 356 + Unknown Stack Size
 <LI>Call Chain = End_Turn &rArr; Game_Over &rArr; Setup &rArr; Start_Game &rArr; UI_Init &rArr; UI_Counter_Init &rArr; Update_UI &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Timer_UI
@@ -545,7 +545,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[64]"></a>Timer_End_Turn</STRONG> (Thumb, 104 bytes, Stack size 8 bytes, game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 452 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 468 + Unknown Stack Size
 <LI>Call Chain = Timer_End_Turn &rArr; Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
@@ -555,8 +555,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
 </UL>
 
-<P><STRONG><a name="[66]"></a>Switch_Player_Wall</STRONG> (Thumb, 276 bytes, Stack size 32 bytes, game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 476 + Unknown Stack Size
+<P><STRONG><a name="[66]"></a>Switch_Player_Wall</STRONG> (Thumb, 280 bytes, Stack size 32 bytes, game.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 492 + Unknown Stack Size
 <LI>Call Chain = Switch_Player_Wall &rArr; Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
@@ -569,8 +569,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
 </UL>
 
-<P><STRONG><a name="[69]"></a>Move</STRONG> (Thumb, 370 bytes, Stack size 40 bytes, game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 436 + Unknown Stack Size
+<P><STRONG><a name="[69]"></a>Move</STRONG> (Thumb, 374 bytes, Stack size 40 bytes, game.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 452 + Unknown Stack Size
 <LI>Call Chain = Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Wall
@@ -622,43 +622,25 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Switch_Player_Wall
 </UL>
 
-<P><STRONG><a name="[78]"></a>isReachable</STRONG> (Thumb, 196 bytes, Stack size 20 bytes, util_game.o(.text))
+<P><STRONG><a name="[8d]"></a>isReachable</STRONG> (Thumb, 196 bytes, Stack size 20 bytes, util_game.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = isReachable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Wall_Partition_Board
+<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Wall_Partition_Board
 </UL>
 
-<P><STRONG><a name="[76]"></a>Wall_Partition_Board</STRONG> (Thumb, 190 bytes, Stack size 200 bytes, util_game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = Wall_Partition_Board &rArr; isReachable
-</UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isReachable
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-</UL>
-<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Can_Place_Wall
-</UL>
-
-<P><STRONG><a name="[79]"></a>Can_Place_Wall</STRONG> (Thumb, 190 bytes, Stack size 32 bytes, util_game.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 252<LI>Call Chain = Can_Place_Wall &rArr; Wall_Partition_Board &rArr; isReachable
-</UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Wall_Partition_Board
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Wall
-</UL>
-
-<P><STRONG><a name="[7a]"></a>LCD_DrawRect</STRONG> (Thumb, 68 bytes, Stack size 32 bytes, draw.o(.text))
+<P><STRONG><a name="[76]"></a>LCD_DrawRect</STRONG> (Thumb, 68 bytes, Stack size 32 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = LCD_DrawRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 </UL>
 <BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawSquare
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectWithShadow
 </UL>
 
-<P><STRONG><a name="[7c]"></a>LCD_DrawShadow</STRONG> (Thumb, 272 bytes, Stack size 48 bytes, draw.o(.text))
+<P><STRONG><a name="[78]"></a>LCD_DrawShadow</STRONG> (Thumb, 272 bytes, Stack size 48 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = LCD_DrawShadow &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectWithShadow
 </UL>
@@ -666,8 +648,8 @@ Global Symbols
 <P><STRONG><a name="[4f]"></a>LCD_DrawRectWithShadow</STRONG> (Thumb, 52 bytes, Stack size 40 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 180<LI>Call Chain = LCD_DrawRectWithShadow &rArr; LCD_DrawShadow &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawShadow
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRect
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawShadow
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRect
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_Init
@@ -676,47 +658,47 @@ Global Symbols
 <P><STRONG><a name="[74]"></a>LCD_DrawSquare</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = LCD_DrawSquare &rArr; LCD_DrawRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRect
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRect
 </UL>
-<BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Create_Highlight
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Highlight
+<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Create_Highlight
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Highlight
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Checkers
 </UL>
 
-<P><STRONG><a name="[7d]"></a>LCD_FillRect</STRONG> (Thumb, 40 bytes, Stack size 32 bytes, draw.o(.text))
+<P><STRONG><a name="[79]"></a>LCD_FillRect</STRONG> (Thumb, 40 bytes, Stack size 32 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ClearRect
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
+<BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ClearRect
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_UI
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
 </UL>
 
-<P><STRONG><a name="[7e]"></a>LCD_FillSquare</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, draw.o(.text))
+<P><STRONG><a name="[7a]"></a>LCD_FillSquare</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = LCD_FillSquare &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
 </UL>
-<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ClearSquare
+<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ClearSquare
 <LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Player
 </UL>
 
-<P><STRONG><a name="[7f]"></a>LCD_ClearRect</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, draw.o(.text))
+<P><STRONG><a name="[7b]"></a>LCD_ClearRect</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = LCD_ClearRect &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
 </UL>
 <BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
 </UL>
 
-<P><STRONG><a name="[80]"></a>LCD_ClearSquare</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, draw.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
+<P><STRONG><a name="[7c]"></a>LCD_ClearSquare</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, draw.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
 </UL>
 
-<P><STRONG><a name="[84]"></a>Get_Vec_From_Dir</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, draw.o(.text))
+<P><STRONG><a name="[80]"></a>Get_Vec_From_Dir</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, draw.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Get_Vec_From_Dir
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Wall
@@ -734,24 +716,24 @@ Global Symbols
 <P><STRONG><a name="[53]"></a>Draw_Player</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, player.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = Draw_Player &rArr; LCD_FillSquare &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillSquare
 </UL>
-<BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Player
+<BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Player
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Checkers
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Board
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Board_Init
 </UL>
 
-<P><STRONG><a name="[81]"></a>Player_Collide_Wall</STRONG> (Thumb, 198 bytes, Stack size 16 bytes, player.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = Player_Collide_Wall &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
+<P><STRONG><a name="[7d]"></a>Player_Collide_Wall</STRONG> (Thumb, 330 bytes, Stack size 24 bytes, player.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = Player_Collide_Wall &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 </UL>
 
-<P><STRONG><a name="[82]"></a>Remove_Player</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, player.o(.text))
+<P><STRONG><a name="[7e]"></a>Remove_Player</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, player.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = Remove_Player &rArr; Draw_Player &rArr; LCD_FillSquare &rArr; LCD_FillRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Player
@@ -759,7 +741,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 </UL>
 
-<P><STRONG><a name="[83]"></a>Remove_Highlight</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, player.o(.text))
+<P><STRONG><a name="[7f]"></a>Remove_Highlight</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, player.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = Remove_Highlight &rArr; LCD_DrawSquare &rArr; LCD_DrawRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawSquare
@@ -768,10 +750,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[65]"></a>Remove_Hint_Move</STRONG> (Thumb, 108 bytes, Stack size 48 bytes, player.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 444 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 460 + Unknown Stack Size
 <LI>Call Chain = Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Highlight
+<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Highlight
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Wall
@@ -780,14 +762,14 @@ Global Symbols
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer_End_Turn
 </UL>
 
-<P><STRONG><a name="[6a]"></a>Move_Player</STRONG> (Thumb, 256 bytes, Stack size 56 bytes, player.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 396 + Unknown Stack Size
+<P><STRONG><a name="[6a]"></a>Move_Player</STRONG> (Thumb, 258 bytes, Stack size 56 bytes, player.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 412 + Unknown Stack Size
  + In Cycle
 <LI>Call Chain = Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Player
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Player_Collide_Wall
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Vec_From_Dir
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Player
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Player_Collide_Wall
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Vec_From_Dir
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Hint_Move
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 <LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Player
@@ -799,7 +781,7 @@ Global Symbols
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move
 </UL>
 
-<P><STRONG><a name="[85]"></a>Create_Highlight</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, player.o(.text))
+<P><STRONG><a name="[81]"></a>Create_Highlight</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, player.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = Create_Highlight &rArr; LCD_DrawSquare &rArr; LCD_DrawRect &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawSquare
@@ -811,7 +793,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 180 + In Cycle
 <LI>Call Chain = Create_Hint_Move &rArr;  Move_Player (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Create_Highlight
+<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Create_Highlight
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move_Player
 </UL>
 <BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Board
@@ -823,7 +805,7 @@ Global Symbols
 <P><STRONG><a name="[4e]"></a>Create_UI</STRONG> (Thumb, 74 bytes, Stack size 64 bytes, ui.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Create_UI &rArr; __aeabi_memcpy4
 </UL>
-<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_Init
 </UL>
@@ -831,10 +813,10 @@ Global Symbols
 <P><STRONG><a name="[4b]"></a>Update_UI</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, ui.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = Update_UI &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
-<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Timer_UI
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_Counter_Init
 </UL>
@@ -846,11 +828,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_UI
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;End_Turn
+<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;End_Turn
+<LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0_IRQHandler
 </UL>
 
-<P><STRONG><a name="[87]"></a>Update_Wall_UI</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, ui.o(.text))
+<P><STRONG><a name="[83]"></a>Update_Wall_UI</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, ui.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 188 + Unknown Stack Size
 <LI>Call Chain = Update_Wall_UI &rArr; Update_UI &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
@@ -861,27 +843,27 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Wall
 </UL>
 
-<P><STRONG><a name="[5b]"></a>Show_Big_UI</STRONG> (Thumb, 122 bytes, Stack size 48 bytes, ui.o(.text))
+<P><STRONG><a name="[5b]"></a>Show_Big_UI</STRONG> (Thumb, 126 bytes, Stack size 48 bytes, ui.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 228<LI>Call Chain = Show_Big_UI &rArr; LCD_DrawRectWithShadow &rArr; LCD_DrawShadow &rArr; LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait_delay
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRectWithShadow
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Switch_Player_Wall
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Game_Over
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Title_Screen
 </UL>
 
-<P><STRONG><a name="[8b]"></a>Write_Center_Top</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, ui.o(.text), UNUSED)
+<P><STRONG><a name="[87]"></a>Write_Center_Top</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, ui.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
 
-<P><STRONG><a name="[8c]"></a>Write_Center_Bottom</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, ui.o(.text), UNUSED)
+<P><STRONG><a name="[88]"></a>Write_Center_Bottom</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, ui.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
 
@@ -901,20 +883,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Title_Screen
 </UL>
 
-<P><STRONG><a name="[8d]"></a>Get_Position_Of</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, wall.o(.text))
+<P><STRONG><a name="[89]"></a>Get_Position_Of</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
 </UL>
 
-<P><STRONG><a name="[8e]"></a>Preview_Wall</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, wall.o(.text))
+<P><STRONG><a name="[8a]"></a>Preview_Wall</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 204<LI>Call Chain = Preview_Wall &rArr; Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Position_Of
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Position_Of
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
 </UL>
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_Wall
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Wall
@@ -926,19 +908,37 @@ Global Symbols
 <P><STRONG><a name="[75]"></a>Draw_Wall</STRONG> (Thumb, 78 bytes, Stack size 40 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 244<LI>Call Chain = Draw_Wall &rArr; Preview_Wall &rArr; Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 </UL>
 <BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Board
 </UL>
 
+<P><STRONG><a name="[8b]"></a>Wall_Partition_Board</STRONG> (Thumb, 190 bytes, Stack size 200 bytes, wall.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = Wall_Partition_Board &rArr; isReachable
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isReachable
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Can_Place_Wall
+</UL>
+
+<P><STRONG><a name="[8e]"></a>Can_Place_Wall</STRONG> (Thumb, 190 bytes, Stack size 32 bytes, wall.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 252<LI>Call Chain = Can_Place_Wall &rArr; Wall_Partition_Board &rArr; isReachable
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Wall_Partition_Board
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Text
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Wall
+</UL>
+
 <P><STRONG><a name="[8f]"></a>Place_Wall</STRONG> (Thumb, 196 bytes, Stack size 48 bytes, wall.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 492 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 508 + Unknown Stack Size
 <LI>Call Chain = Place_Wall &rArr; Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Can_Place_Wall
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Can_Place_Wall
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Hint_Move
 <LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;End_Turn
 </UL>
@@ -948,7 +948,7 @@ Global Symbols
 <P><STRONG><a name="[67]"></a>Create_Wall</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = Create_Wall &rArr; Preview_Wall &rArr; Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Switch_Player_Wall
 </UL>
@@ -956,8 +956,8 @@ Global Symbols
 <P><STRONG><a name="[62]"></a>Remove_Wall</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 260<LI>Call Chain = Remove_Wall &rArr; Draw_Wall &rArr; Preview_Wall &rArr; Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Position_Of
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ClearRect
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Position_Of
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ClearRect
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Wall
 </UL>
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_Wall
@@ -970,17 +970,17 @@ Global Symbols
 <P><STRONG><a name="[6b]"></a>Move_Wall</STRONG> (Thumb, 120 bytes, Stack size 40 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 300<LI>Call Chain = Move_Wall &rArr; Remove_Wall &rArr; Draw_Wall &rArr; Preview_Wall &rArr; Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Vec_From_Dir
+<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Vec_From_Dir
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Move
 </UL>
 
-<P><STRONG><a name="[90]"></a>Rotate_Wall</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, wall.o(.text))
+<P><STRONG><a name="[90]"></a>Rotate_Wall</STRONG> (Thumb, 148 bytes, Stack size 32 bytes, wall.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 292<LI>Call Chain = Rotate_Wall &rArr; Remove_Wall &rArr; Draw_Wall &rArr; Preview_Wall &rArr; Get_Position_Of &rArr; GUI_Text &rArr; PutChar &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
+<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Preview_Wall
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Remove_Wall
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RIT_IRQHandler
@@ -1010,7 +1010,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[2a]"></a>RIT_IRQHandler</STRONG> (Thumb, 474 bytes, Stack size 48 bytes, irq_rit.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 540 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 556 + Unknown Stack Size
 <LI>Call Chain = RIT_IRQHandler &rArr; Place_Wall &rArr; Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_RIT
@@ -1038,7 +1038,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e]"></a>TIMER0_IRQHandler</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, irq_timer.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 468 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 484 + Unknown Stack Size
 <LI>Call Chain = TIMER0_IRQHandler &rArr; Timer_End_Turn &rArr; Remove_Hint_Move &rArr; Move_Player &rArr;  Remove_Hint_Move (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Timer_UI
@@ -1099,18 +1099,18 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
+<BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawLine
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
 
-<P><STRONG><a name="[7b]"></a>LCD_DrawLine</STRONG> (Thumb, 218 bytes, Stack size 32 bytes, glcd.o(.text))
+<P><STRONG><a name="[77]"></a>LCD_DrawLine</STRONG> (Thumb, 218 bytes, Stack size 32 bytes, glcd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = LCD_DrawLine &rArr; LCD_SetPoint &rArr; LCD_SetCursor
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPoint
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawShadow
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRect
+<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_FillRect
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawShadow
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawRect
 </UL>
 
 <P><STRONG><a name="[9d]"></a>PutChar</STRONG> (Thumb, 92 bytes, Stack size 56 bytes, glcd.o(.text))
@@ -1127,12 +1127,12 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Position_Of
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Center_Bottom
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Center_Top
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Player_Collide_Wall
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Can_Place_Wall
+<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Can_Place_Wall
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Position_Of
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Center_Bottom
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Center_Top
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Player_Collide_Wall
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Top_Title
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Bottom_Title
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_UI
@@ -1148,7 +1148,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Wall_UI
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update_Timer_UI
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_Init
 </UL>
@@ -1175,12 +1175,12 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a2]"></a>__rt_memcpy</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<BR><BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 
 <P><STRONG><a name="[d8]"></a>_memcpy_lastbytes</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rt_memcpy_v6.o(.text), UNUSED)
 
-<P><STRONG><a name="[86]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, rt_memcpy_w.o(.text))
+<P><STRONG><a name="[82]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, rt_memcpy_w.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Create_UI
@@ -1193,10 +1193,10 @@ Global Symbols
 
 <P><STRONG><a name="[db]"></a>_memcpy_lastbytes_aligned</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rt_memcpy_w.o(.text), UNUSED)
 
-<P><STRONG><a name="[77]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, rt_memclr_w.o(.text))
+<P><STRONG><a name="[8c]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, rt_memclr_w.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Wall_Partition_Board
+<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Wall_Partition_Board
 </UL>
 
 <P><STRONG><a name="[dc]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, rt_memclr_w.o(.text), UNUSED)
@@ -1262,7 +1262,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[89]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
+<P><STRONG><a name="[85]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
@@ -1274,7 +1274,7 @@ Global Symbols
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsub1
 </UL>
 
-<P><STRONG><a name="[8a]"></a>__aeabi_d2uiz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu))
+<P><STRONG><a name="[86]"></a>__aeabi_d2uiz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2uiz
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
@@ -1284,7 +1284,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[88]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
+<P><STRONG><a name="[84]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
 <BR><BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Big_UI
 </UL>
 

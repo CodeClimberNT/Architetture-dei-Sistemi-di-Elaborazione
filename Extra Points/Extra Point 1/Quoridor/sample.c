@@ -36,7 +36,6 @@ extern uint8_t ScaleFlag;  // <- ScaleFlag needs to visible in order for the emu
 #endif
 
 extern GAME_STATE game_state;
-extern MOVING_ENTITY moving_entity;
 
 int main(void) {
   SystemInit(); /* System Initialization (i.e., PLL)  */

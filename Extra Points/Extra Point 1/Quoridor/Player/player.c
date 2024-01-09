@@ -28,7 +28,8 @@ void Draw_Player(struct Player m_player) {
   LCD_FillSquare(m_x0, m_y0, PLAYER_SIZE, m_player.color);
 }
 
-uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir) {
+uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir, uint8_t is_double) {
+	if(!is_double)
   switch (dir) {
     case RIGHT:
       return !(((p_pos.x < (NUM_COLUMNS - 1)) && (p_pos.y == 0) &&
@@ -57,6 +58,35 @@ uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir) {
       GUI_Text(0, 0, (uint8_t *)"Check_Move_Player ERROR DIR", Black, White);
       return 0;
   }
+	//if moving two square
+	switch (dir) {
+    case RIGHT:
+      return !(((p_pos.x < (NUM_COLUMNS - 2)) && (p_pos.y == 0) &&
+                (WallMatrixPosition[p_pos.x + 1][p_pos.y] != Vertical)) ||
+               ((p_pos.x < (NUM_COLUMNS - 2)) && (p_pos.y > 0) &&
+                ((WallMatrixPosition[p_pos.x + 1][p_pos.y] != Vertical) && (WallMatrixPosition[p_pos.x + 1][p_pos.y - 1] != Vertical))));
+
+    case LEFT:
+      return !(((p_pos.x > 1) && (p_pos.y == 0) &&
+                (WallMatrixPosition[p_pos.x - 2][p_pos.y] != Vertical)) ||
+               ((p_pos.x > 1) && (p_pos.y > 0) &&
+                ((WallMatrixPosition[p_pos.x - 2][p_pos.y] != Vertical) && (WallMatrixPosition[p_pos.x - 2][p_pos.y - 1] != Vertical))));
+
+    case UP:
+      return !(((p_pos.x == 0) && (p_pos.y > 1) &&
+                (WallMatrixPosition[p_pos.x][p_pos.y - 2] != Horizontal)) ||
+               ((p_pos.x > 0) && (p_pos.y > 1) &&
+                ((WallMatrixPosition[p_pos.x][p_pos.y - 2] != Horizontal) && (WallMatrixPosition[p_pos.x - 1][p_pos.y - 2] != Horizontal))));
+
+    case DOWN:
+      return !(((p_pos.x == 0) && (p_pos.y < (NUM_ROWS - 2)) &&
+                (WallMatrixPosition[p_pos.x][p_pos.y - 1] != Horizontal)) ||
+               ((p_pos.x > 0) && (p_pos.y < (NUM_ROWS - 2)) &&
+                ((WallMatrixPosition[p_pos.x][p_pos.y - 1] != Horizontal) && (WallMatrixPosition[p_pos.x - 1][p_pos.y - 1] != Horizontal))));
+    default:
+      GUI_Text(0, 0, (uint8_t *)"Check_Move_Player ERROR DIR", Black, White);
+      return 0;
+  }
 }
 
 struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_double) {
@@ -67,7 +97,7 @@ struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_doub
     m_vec2d.y = m_vec2d.y * 2;
   }
 
-  if (!Player_Collide_Wall(m_player.pos, dir)) {
+  if (!Player_Collide_Wall(m_player.pos, dir, is_double)) {
     // check if position overlap player, then try two move forward
     if (((m_player.pos.x + m_vec2d.x == player0.pos.x) && (m_player.pos.y + m_vec2d.y == player0.pos.y)) ||
         ((m_player.pos.x + m_vec2d.x == player1.pos.x) && (m_player.pos.y + m_vec2d.y == player1.pos.y))) {

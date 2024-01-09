@@ -112,7 +112,6 @@ void Switch_Player_Wall(void);
 void Draw_Board(void);
 void Draw_Checkers(void);
 
-uint8_t Wall_Partition_Board(struct Wall m_wall);
 uint8_t isReachable(struct Vector2D start, uint8_t row_target, uint8_t tempBoard[NUM_COLUMNS + NUM_COLUMNS_WALL][NUM_ROWS + NUM_ROWS_WALL]);
 
 void Move(DIRECTION dir);

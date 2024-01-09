@@ -62,8 +62,9 @@ void Update_Wall_UI(struct UI m_player_ui, uint8_t wall_value) {
   }
 }
 
-void Show_Big_UI(int16_t txt_xoff, int16_t txt_yoff, uint8_t *p_text, SHADOW_DIRECTION shadow_dir, uint8_t temp_show, uint32_t delay, uint16_t border_color) {
-  LCD_FillRect(BIG_UI_XPOS, BIG_UI_YPOS, BIG_UI_XPOS + BIG_UI_WIDTH, BIG_UI_YPOS + BIG_UI_HEIGHT, GameBG);
+void Show_Big_UI(int16_t txt_xoff, int16_t txt_yoff, uint8_t *p_text, SHADOW_DIRECTION shadow_dir, uint8_t temp_show, uint32_t delay, uint16_t border_color, uint8_t need_to_fill) {
+  if(need_to_fill)
+		LCD_FillRect(BIG_UI_XPOS, BIG_UI_YPOS, BIG_UI_XPOS + BIG_UI_WIDTH, BIG_UI_YPOS + BIG_UI_HEIGHT, GameBG);
   LCD_DrawRectWithShadow(BIG_UI_XPOS, BIG_UI_YPOS, BIG_UI_WIDTH, BIG_UI_HEIGHT, Blue2, shadow_dir, DarkGray);
 
   GUI_Text(BIG_UI_XPOS + txt_xoff, BIG_UI_YPOS + (BIG_UI_HEIGHT / 2) + txt_yoff, p_text, Black, GameBG);

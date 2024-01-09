@@ -6,9 +6,8 @@
 #include "stdint.h"
 #endif
 
+
 #include "../Game/game.h"
-
-
 
 /*CONSTANT*/
 #define WALL_DISCOUNT 1
@@ -21,6 +20,7 @@ typedef enum { NA = 0,
                Vertical = 2 } WALL_DIRECTION;
 
 /**************STRUCT**************/
+
 struct Wall {
   struct Vector2D position;
   WALL_DIRECTION direction;
@@ -38,7 +38,10 @@ struct Wall Rotate_Wall(struct Wall m_wall);
 void Remove_Wall(struct Wall wall);
 uint8_t Can_Place_Wall(struct Wall m_wall);
 
+uint8_t Wall_Partition_Board(struct Wall m_wall);
 
 struct Rect Get_Position_Of(struct Wall m_wall);
+
+
 
 #endif

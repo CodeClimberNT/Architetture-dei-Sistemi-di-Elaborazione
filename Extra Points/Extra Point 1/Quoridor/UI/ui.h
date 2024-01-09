@@ -33,7 +33,7 @@ void Update_UI(struct UI ui);
 void Update_Timer_UI(uint8_t time_value);
 void Update_Wall_UI(struct UI m_player_ui, uint8_t wall_value);
 
-void Show_Big_UI(int16_t txt_xoff, int16_t txt_yoff, uint8_t *p_text, SHADOW_DIRECTION shadow_dir, uint8_t temp_show, uint32_t delay, uint16_t border_color);
+void Show_Big_UI(int16_t txt_xoff, int16_t txt_yoff, uint8_t *p_text, SHADOW_DIRECTION shadow_dir, uint8_t temp_show, uint32_t delay, uint16_t border_color, uint8_t need_to_fill);
 
 void Write_Center_Top(uint8_t *p_text);
 void Write_Center_Bottom(uint8_t *p_text);

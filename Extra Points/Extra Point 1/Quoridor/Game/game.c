@@ -1,6 +1,6 @@
 /*--------------File Info---------------------------------------------------------------------------------
 ** File name:               game.c
-** Descriptions:            The Game Main File
+** Descriptions:            Quoridor
 **
 **--------------------------------------------------------------------------------------------------------
 ** Created by:              Nicolò Taormina
@@ -109,9 +109,18 @@ uint8_t Win_Condition() {
 
 void Game_Over() {
   struct Player winner = player0.pos.y == 0 ? player0 : player1;
-
-  Show_Big_UI(40, -5, (winner.id == 0) ? (uint8_t *)"PLAYER 1 WINS!" : (uint8_t *)"PLAYER 2 WINS!", SUD_OVEST, 1, 5000000, Blue2);
-
+	uint8_t i,j;
+	
+	for (j=0; j<NUM_ROWS_WALL; j++){
+		for (i=0; i<NUM_COLUMNS_WALL; i++){
+			WallMatrixPosition[i][j] = NA;
+		}
+	}
+	
+  Show_Big_UI(40, -5, (winner.id == 0) ? (uint8_t *)"PLAYER 1 WINS!" : (uint8_t *)"PLAYER 2 WINS!", SUD_OVEST, 1, 5000000, Blue2, 1);
+	
+	current_player = 0;
+	
   started = 0;
 
   Setup();
@@ -122,7 +131,7 @@ void Title_Screen() {
 
   Write_Top_Title((uint8_t *)"\"CHRISTMAS\" QUORIDOR", QuoridorRed);
 
-  Show_Big_UI(20, -5, (uint8_t *)"PRESS INT0 TO START", SUD_OVEST, 0, 0, Blue2);
+  Show_Big_UI(20, -5, (uint8_t *)"PRESS INT0 TO START", SUD_OVEST, 0, 0, Blue2, 0);
 
   Write_Bottom_Title((uint8_t *)"FELIZ", ChristmasRed, (uint8_t *)"NAVIDAD", ChristmasGreen);
 }
@@ -132,7 +141,7 @@ void Switch_Player_Wall() {
   if (moving_entity == PLAYER) {
     // check if the player have no more wall left
     if ((current_player == 0 ? player0.wallsRemaining : player1.wallsRemaining) == 0) {
-      Show_Big_UI(20, -5, (uint8_t *)"NO MORE WALL LEFT!", SUD_OVEST, 1, 5000000, Blue2);
+      Show_Big_UI(20, -5, (uint8_t *)"NO MORE WALL LEFT!", SUD_OVEST, 1, 5000000, Blue2, 1);
       Draw_Board();
       return;
     }
