@@ -33,7 +33,8 @@ typedef enum { NORTH,
                NORTH_OVEST,
                OVEST_NORTH_EAST } SHADOW_DIRECTION;
 
-typedef enum { UP,
+typedef enum { CENTER,
+							 UP,
                RIGHT,
                DOWN,
                LEFT } DIRECTION;

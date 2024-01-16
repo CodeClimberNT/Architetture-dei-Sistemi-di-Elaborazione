@@ -11,6 +11,7 @@
 struct Player {
   uint8_t id;
   struct Vector2D pos;
+	DIRECTION curr_dir;
   uint8_t wallsRemaining;
   uint16_t color;
   uint8_t ghost;
@@ -21,8 +22,10 @@ struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color, 
 void Draw_Player(struct Player player);
 
 uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir, uint8_t is_double);
-struct Player Move_Player(struct Player player, DIRECTION dir, uint8_t is_double);
+struct Player Move_Player(struct Player player, uint8_t is_double);
 void Remove_Player(struct Player player);
+
+void Highlight_Move(struct Player *p_player, DIRECTION dir);
 
 void Create_Hint_Move(struct Player m_player);
 void Remove_Hint_Move(struct Player m_player);

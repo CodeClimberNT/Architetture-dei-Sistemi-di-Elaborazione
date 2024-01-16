@@ -14,7 +14,7 @@ struct Player Create_Player(uint8_t id, uint16_t x, uint16_t y, uint16_t color, 
   m_player.wallsRemaining = walls;
   m_player.color = color;
   m_player.ghost = 0;
-
+	m_player.curr_dir = CENTER;
   return m_player;
 };
 
@@ -89,9 +89,10 @@ uint8_t Player_Collide_Wall(struct Vector2D p_pos, DIRECTION dir, uint8_t is_dou
   }
 }
 
-struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_double) {
-  struct Vector2D m_vec2d = Get_Vec_From_Dir(dir);
-
+struct Player Move_Player(struct Player m_player, uint8_t is_double) {
+  DIRECTION dir = m_player.curr_dir;
+	struct Vector2D m_vec2d = Get_Vec_From_Dir(dir);
+	
   if (is_double) {
     m_vec2d.x = m_vec2d.x * 2;
     m_vec2d.y = m_vec2d.y * 2;
@@ -101,7 +102,7 @@ struct Player Move_Player(struct Player m_player, DIRECTION dir, uint8_t is_doub
     // check if position overlap player, then try two move forward
     if (((m_player.pos.x + m_vec2d.x == player0.pos.x) && (m_player.pos.y + m_vec2d.y == player0.pos.y)) ||
         ((m_player.pos.x + m_vec2d.x == player1.pos.x) && (m_player.pos.y + m_vec2d.y == player1.pos.y))) {
-      return Move_Player(m_player, dir, 1);
+      return Move_Player(m_player, 1);
     }
 
     if (!m_player.ghost) {
@@ -133,24 +134,51 @@ void Remove_Player(struct Player m_player) {
   Draw_Player(m_player);
 }
 
+void Highlight_Move(struct Player *p_player, DIRECTION dir){
+	struct Player temp_p;
+	temp_p.pos = p_player->pos;
+	temp_p.ghost = 1;
+	
+	if(p_player->curr_dir != CENTER){ //If curr_dir not center means an higlight move already exist
+		temp_p.curr_dir = p_player->curr_dir;
+		temp_p.color = PhantomPlayerColor;
+		Move_Player(temp_p, 0);
+	}
+	p_player->curr_dir = dir;
+	temp_p.curr_dir = p_player->curr_dir;
+	temp_p.color = Yellow;
+	Move_Player(temp_p, 0);
+	
+}
+
 void Create_Hint_Move(struct Player m_player) {
   Create_Highlight(m_player);
   m_player.color = PhantomPlayerColor;
   m_player.ghost = 1;
-  Move_Player(m_player, UP, 0);
-  Move_Player(m_player, RIGHT, 0);
-  Move_Player(m_player, DOWN, 0);
-  Move_Player(m_player, LEFT, 0);
+	
+	m_player.curr_dir = UP;
+  Move_Player(m_player, 0);
+	m_player.curr_dir = RIGHT;
+  Move_Player(m_player, 0);
+  m_player.curr_dir = DOWN;
+	Move_Player(m_player, 0);
+	m_player.curr_dir = LEFT;
+  Move_Player(m_player, 0);
 }
 
 void Remove_Hint_Move(struct Player m_player) {
   Remove_Highlight(m_player);
   m_player.color = GameBG;
   m_player.ghost = 1;
-  Move_Player(m_player, UP, 0);
-  Move_Player(m_player, RIGHT, 0);
-  Move_Player(m_player, DOWN, 0);
-  Move_Player(m_player, LEFT, 0);
+	
+  m_player.curr_dir = UP;
+  Move_Player(m_player, 0);
+	m_player.curr_dir = RIGHT;
+  Move_Player(m_player, 0);
+  m_player.curr_dir = DOWN;
+	Move_Player(m_player, 0);
+	m_player.curr_dir = LEFT;
+  Move_Player(m_player, 0);
 }
 
 void Create_Highlight(struct Player m_player) {

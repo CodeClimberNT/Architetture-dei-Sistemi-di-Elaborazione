@@ -163,9 +163,9 @@ void Move(DIRECTION dir) {
   switch (moving_entity) {
     case PLAYER:
       if (current_player == 0) {
-        player0 = Move_Player(player0, dir, 0);
+        Highlight_Move(&player0, dir);
       } else {
-        player1 = Move_Player(player1, dir, 0);
+        Highlight_Move(&player1, dir);
       }
       break;
 

@@ -27,6 +27,10 @@ extern MOVING_ENTITY moving_entity;
 extern uint8_t started;
 extern struct Wall wall;
 
+extern struct Player player0;
+extern struct Player player1;
+extern uint8_t current_player;
+
 extern uint8_t cooldown;
 
 /*button debouncing variables*/
@@ -79,6 +83,13 @@ void RIT_IRQHandler(void) {
 			case 1:
 				if(moving_entity == WALL)
 					wall = Place_Wall(wall);
+				else {
+					if(current_player == 0)
+						player0 = Move_Player(player0, 0);
+					else
+						player1 = Move_Player(player1, 0);
+				}
+					
 				break;
 			default:
 				break;

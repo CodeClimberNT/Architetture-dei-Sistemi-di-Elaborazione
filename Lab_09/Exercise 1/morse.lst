@@ -609,8 +609,8 @@ ARM Macro Assembler    Page 10
   104 000004A3                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\morse.d -o.\morse.o -I.\RTE\_Target_1 -IC:\Users\nickt\AppData\L
-ocal\arm\packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\nickt\AppData\Loca
-l\arm\packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="__EVAL SETA 1" -
+ocal\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\nickt\AppData\Loca
+l\Arm\Packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="__EVAL SETA 1" -
 -predefine="__UVISION_VERSION SETA 539" --predefine="_RTE_ SETA 1" --predefine=
 "LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1" --list=.\morse.lst button_EXINT\
 morse.s

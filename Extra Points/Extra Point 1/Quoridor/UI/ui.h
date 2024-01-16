@@ -40,4 +40,7 @@ void Write_Center_Bottom(uint8_t *p_text);
 void Write_Top_Title(uint8_t *p_text, uint16_t color);
 void Write_Bottom_Title(uint8_t *p_first_text, uint16_t first_color, uint8_t *p_second_text, uint16_t second_color);
 
+
+
+
 #endif

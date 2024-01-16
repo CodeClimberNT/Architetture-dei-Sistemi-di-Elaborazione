@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "game.h": "c",
+        "glcd.h": "c",
+        "compare": "c",
+        "stdint.h": "c",
+        "draw.h": "c",
+        "util_game.h": "c",
+        "wall.h": "c"
+    }
+}
