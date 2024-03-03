@@ -1,0 +1,119 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             asm_functions, CODE, READONLY
+    2 00000000         
+    3 00000000         ;definizione di costanti e register renaming
+    4 00000000         ;MY_CONST EQU 36
+    5 00000000         ;my_register RN 0
+    6 00000000         
+    7 00000000         calcola_somma_prodotto
+                               PROC
+    8 00000000                 EXPORT           calcola_somma_prodotto
+    9 00000000         ;R0 VETT
+   10 00000000         ;R1 n
+   11 00000000         ;R2 *alarm
+   12 00000000         
+   13 00000000 E92D 5FF0       PUSH             {r4-r12,lr}
+   14 00000004         
+   15 00000004        0 
+                       vett    RN               0
+   16 00000004        1 
+                       dim     RN               1
+   17 00000004        2 
+                       alarm   RN               2
+   18 00000004         
+   19 00000004        3 
+                       i       RN               3
+   20 00000004        4 
+                       result  RN               4
+   21 00000004         
+   22 00000004        5 
+                       curri   RN               5
+   23 00000004        6 
+                       nexti   RN               6
+   24 00000004 F04F 0300       mov              i, #0
+   25 00000008         loop
+   26 00000008         
+   27 00000008 F850 5023       LDR              curri, [vett, i, lsl#2]
+   28 0000000C F103 0301       add              i, i, #1
+   29 00000010 F850 6023       LDR              nexti, [vett, i, lsl#2]
+   30 00000014 441B            add              i,i
+   31 00000016         
+   32 00000016 FB05 F506       mul              curri, curri, nexti
+   33 0000001A 442C            add              result, curri
+   34 0000001C         
+   35 0000001C 428B            cmp              i, dim
+   36 0000001E DBF3            blt              loop
+   37 00000020         
+   38 00000020 2CFF            cmp              result, #255
+   39 00000022 BFB4 F04F 
+              37FF             movlt            r7, #-1
+   40 00000028 2701            movge            r7, #1
+   41 0000002A 7017            STRB             r7, [alarm]
+   42 0000002C         
+   43 0000002C         the_end
+   44 0000002C 4620            mov              r0, result
+   45 0000002E         
+   46 0000002E E8BD 9FF0       POP              {r4-r12,pc} ;restore di tutti i
+                                                             registri utilizzat
+                                                            i nel mio codice
+   47 00000032                 ENDP
+   48 00000032         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   49 00000032                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\asm_funct.d -o.\asm_funct.o -I.\RTE\_Target_1 -IC:\Users\nickt\A
+ppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\nickt\AppD
+ata\Local\Arm\Packs\Keil\LPC1700_DFP\2.7.1\Device\Include --predefine="__EVAL S
+ETA 1" --predefine="__UVISION_VERSION SETA 539" --predefine="_RTE_ SETA 1" --pr
+edefine="LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1" --list=.\asm_funct.lst A
+SM_funct.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm_functions 00000000
+
+Symbol: asm_functions
+   Definitions
+      At line 1 in file ASM_funct.s
+   Uses
+      None
+Comment: asm_functions unused
+calcola_somma_prodotto 00000000
+
+Symbol: calcola_somma_prodotto
+   Definitions
+      At line 7 in file ASM_funct.s
+   Uses
+      At line 8 in file ASM_funct.s
+Comment: calcola_somma_prodotto used once
+loop 00000008
+
+Symbol: loop
+   Definitions
+      At line 25 in file ASM_funct.s
+   Uses
+      At line 36 in file ASM_funct.s
+Comment: loop used once
+the_end 0000002C
+
+Symbol: the_end
+   Definitions
+      At line 43 in file ASM_funct.s
+   Uses
+      None
+Comment: the_end unused
+4 symbols
+345 symbols in table

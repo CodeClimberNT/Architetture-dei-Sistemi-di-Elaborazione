@@ -33,6 +33,9 @@ void Peripheral_Init() {
 }
 
 void wait_delay(int count) {
+	#ifndef SIMULATOR
+	count *= 500;
+	#endif
   while (count--)
     ;
 }
